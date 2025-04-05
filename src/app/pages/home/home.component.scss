@@ -1,0 +1,24 @@
+.user-avatar{
+    width: 24px;
+    border-radius: 24px;
+}
+
+.small-button {
+    padding: 0px 16px; /* Adjust padding */
+    font-size: 12px;  /* Smaller font size */
+    height: 32px;     /* Adjust button height */
+    min-width: 64px;  /* Adjust button width */
+    position: relative;
+}
+
+.small-button mat-icon {
+    font-size: 16px; /* Adjust icon size */
+    margin-right: 4px; /* Space between icon and text */
+    position: relative;
+    top: 4px;
+}
+
+.table-wrapper{
+    overflow: scroll;
+}
+

@@ -1,0 +1,49 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span {
+  margin: 0;
+
+  &:is(h1) {
+    font-size: clamp(1.5rem, 1.3214rem + 0.8929vw, 1.75rem); //24px to 28px
+    font-weight: 700;
+  }
+
+  &:is(h2) {
+    font-size: clamp(1.125rem, 1.0357rem + 0.4464vw, 1.25rem); //18px to 20px
+    font-weight: 700;
+  }
+
+  &:is(h3) {
+    font-size: clamp(1rem, 0.9107rem + 0.4464vw, 1.125rem); //16px to 18px
+    font-weight: 700;
+  }
+
+  &:is(h4) {
+    font-size: clamp(0.9375rem, 0.8929rem + 0.2232vw, 1rem); //15px to 16px
+  }
+
+  &:is(h5) {
+    font-size: clamp(0.875rem, 0.8304rem + 0.2232vw, 0.9375rem); //14px to 15px
+  }
+
+  &:is(h6) {
+    font-size: clamp(0.75rem, 0.7054rem + 0.2232vw, 0.8125rem); //12px to 13px
+  }
+
+  &:is(p) {
+    font-size: clamp(0.75rem, 0.6607rem + 0.4464vw, 0.875rem); //12px to 14px
+  }
+}
+
+ion-title {
+  font-size: clamp(1rem, 0.8214rem + 0.8929vw, 1.25rem);
+}
+
+.modal-icon-lg {
+  font-size: 64px;
+}

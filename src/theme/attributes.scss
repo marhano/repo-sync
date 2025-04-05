@@ -1,0 +1,32 @@
+// #region color
+[data-color="primary"] {
+    color: var(--ion-color-primary);
+}
+[data-color="secondary"] {
+    color: var(--ion-color-secondary);
+}
+[data-color="light"] {
+    color: var(--ion-color-light);
+}
+[data-color="dark"] {
+    color: var(--ion-color-dark);
+}
+[data-color="dark-shade"] {
+    color: var(--ion-color-dark-shade);
+}
+[data-color="dark-tint"] {
+    color: var(--ion-color-dark-tint);
+}
+  // #endregion
+  
+  // #region background
+[data-background="primary"] {
+    background: var(--ion-color-primary);
+}
+[data-background="primary-tint"] {
+    background: var(--ion-color-primary-tint);
+}
+[data-background="secondary-tint"] {
+    background: #f8fafd;
+}
+  //#endregion

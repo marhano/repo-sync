@@ -1,1 +1,50 @@
-/* You can add global styles to this file, and also import other style files */
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "./theme/typography" as typography;
+@use "./theme/layout" as layout;
+@use "./theme/attributes" as attributes;
+
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+* {
+  @extend %spacing;
+  @extend %flex;
+  @extend %utilities;
+  box-sizing: border-box;
+}
+
+.container {
+  margin: 0 auto;
+  position: relative;
+  min-height: 100%;
+}
+
+.sticky{
+  position: sticky;
+  top: 0;
+  background: #fff;
+  box-shadow: 0 2px 4px 6px rgba($color: #000000, $alpha: 0.2);
+  z-index: 10;
+  padding: 1rem 1rem 0;
+}
+
+.mat-select-search-input{
+  background-color: #fff !important;
+}
