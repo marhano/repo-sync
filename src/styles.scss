@@ -15,7 +15,6 @@ html {
       tertiary: mat.$blue-palette,
     ),
     typography: Roboto,
-    density: 0,
   ));
 }/* You can add global styles to this file, and also import other style files */
 
@@ -29,19 +28,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   box-sizing: border-box;
 }
 
-.container {
-  margin: 0 auto;
-  position: relative;
-  min-height: 100%;
-}
-
 .sticky{
-  position: sticky;
   top: 0;
   background: #fff;
-  box-shadow: 0 2px 4px 6px rgba($color: #000000, $alpha: 0.2);
+  //box-shadow: 0 2px 4px 6px rgba($color: #000000, $alpha: 0.2);
   z-index: 10;
-  padding: 1rem 1rem 0;
+  padding: 3.5rem 1rem 0;
 }
 
 .mat-select-search-input{
@@ -56,4 +48,39 @@ a{
 
 .mat-mdc-dialog-surface{
   border-radius: var(--mat-sys-corner-medium) !important;
-}   
+}
+
+.window-nav-bar{
+  .mat-mdc-icon-button{
+    border-radius: 0 !important;
+  
+    .mat-mdc-button-persistent-ripple{
+        border-radius: 0 !important;
+    }
+  }
+  
+  .mat-mdc-icon-button.window-close  .mat-mdc-button-persistent-ripple::before{
+    background-color: red !important;
+  }
+  .mat-mdc-icon-button:hover>.mat-mdc-button-persistent-ripple::before{
+    opacity: 0.4 !important;
+  }
+}
+
+
+
+.small-input{
+  @include mat.theme((
+    density: -5,
+  ));
+
+  @include mat.theme-overrides((
+    primary: #ebdcff,
+    on-primary: #230f46,
+    on-surface: #ebdcff
+  ));
+
+  .mat-mdc-form-field-subscript-wrapper{
+    display: none;
+  }
+}

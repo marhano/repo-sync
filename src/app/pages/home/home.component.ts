@@ -14,6 +14,8 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { IssueDialogComponent } from '../../components/issue-dialog/issue-dialog.component';
 import { Router } from '@angular/router';
+import { WindowNavBarComponent } from '../../components/window-nav-bar/window-nav-bar.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 export interface Issue {
   issueNumber: number;
@@ -36,6 +38,7 @@ export interface Issue {
     NgxMatSelectSearchModule,
     MatOptionModule,
     ReactiveFormsModule,
+    WindowNavBarComponent,
     
   ],
   templateUrl: './home.component.html',

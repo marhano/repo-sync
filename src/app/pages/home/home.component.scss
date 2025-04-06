@@ -20,5 +20,18 @@
 
 .table-wrapper{
     overflow: scroll;
+    //height: calc(100vh - (40px + 208px));
+}
+
+.layout{
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100vh;
+}
+
+.container {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
 }
 

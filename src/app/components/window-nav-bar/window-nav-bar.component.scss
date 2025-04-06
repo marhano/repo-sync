@@ -1,0 +1,10 @@
+.window-nav-bar{
+    background: var(--mat-sys-on-background);
+    width: 100%;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 11;
+    padding: 0px 0 4px;
+}
