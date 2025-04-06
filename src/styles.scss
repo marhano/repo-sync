@@ -22,7 +22,6 @@ html {
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-
 * {
   @extend %spacing;
   @extend %flex;
@@ -48,3 +47,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-select-search-input{
   background-color: #fff !important;
 }
+
+a{
+  text-decoration: underline;
+  color: var(--mat-sys-primary);
+  cursor: pointer;
+}
+
+.mat-mdc-dialog-surface{
+  border-radius: var(--mat-sys-corner-medium) !important;
+}   

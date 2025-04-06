@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { IssueDialogComponent } from '../../components/issue-dialog/issue-dialog.component';
+import { Router } from '@angular/router';
 
 export interface Issue {
   issueNumber: number;
@@ -34,7 +35,8 @@ export interface Issue {
     MatSelectModule,
     NgxMatSelectSearchModule,
     MatOptionModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -51,7 +53,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private gitApiService: GitApiService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ){}
 
   async ngOnInit(){
@@ -70,8 +73,7 @@ export class HomeComponent implements OnInit {
 
   createIssue(): void{
     this.dialog.open(IssueDialogComponent, {
-      width: '400px',
-      data: { message: "Hello dialog!" },
+      width: '500px',
     });
   }
 
@@ -84,6 +86,10 @@ export class HomeComponent implements OnInit {
 
     this.dataSource = response;
     
+  }
+
+  navigateIssue(){
+    this.router.navigate(['/issue']);
   }
 
   protected filterRepo() {

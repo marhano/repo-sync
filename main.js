@@ -1,20 +1,30 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
+const url = require('url');
 
 let win;
 
-function createWindow() {
-  win = new BrowserWindow({
+let mainWindow;
+
+app.on('ready', () => {
+  mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
-      contextIsolation: false
     },
+    frame: false,
   });
 
-  win.loadFile('dist/repo-sync/browser/index.html');
-}
+  mainWindow.loadURL(
+    url.format({
+      pathname: path.join(__dirname, 'dist/repo-sync/browser', 'index.csr.html'), // Ensure this points to your index.html
+      protocol: 'file:',
+      slashes: true,
+    })
+  );
 
-app.on('ready', createWindow);
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
+});

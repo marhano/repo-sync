@@ -1,16 +1,26 @@
 <h1 mat-dialog-title>Create new issue</h1>
 <div mat-dialog-content>
     <div class="flex-group flex-column">
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Select a project</mat-label>
+            <mat-icon matPrefix>folder</mat-icon>
+            <mat-select>
+              <mat-option value="item">
+                Repo 1
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
             <mat-label>Add a title</mat-label>
             <input matInput>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
             <mat-label>Add a description</mat-label>
             <textarea matInput></textarea>
         </mat-form-field>
     </div>
 </div>
 <div mat-dialog-actions>
-  <button mat-button mat-dialog-close>Close</button>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-flat-button>Create</button>
 </div>
