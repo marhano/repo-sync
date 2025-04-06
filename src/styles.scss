@@ -28,12 +28,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   box-sizing: border-box;
 }
 
+.grid-group{
+  display: grid;
+}
+
 .sticky{
   top: 0;
   background: #fff;
   //box-shadow: 0 2px 4px 6px rgba($color: #000000, $alpha: 0.2);
   z-index: 10;
-  padding: 3.5rem 1rem 0;
+  padding: 4rem 1rem 0;
 }
 
 .mat-select-search-input{
@@ -41,9 +45,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 a{
-  text-decoration: underline;
-  color: var(--mat-sys-primary);
   cursor: pointer;
+
+  &:hover{
+    text-decoration: underline;
+    color: var(--mat-sys-primary);
+  }
 }
 
 .mat-mdc-dialog-surface{
@@ -83,4 +90,10 @@ a{
   .mat-mdc-form-field-subscript-wrapper{
     display: none;
   }
+}
+
+mat-form-field{
+  @include mat.theme((
+    density: -4,
+  ));
 }

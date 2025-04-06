@@ -1,6 +1,7 @@
 <h1 mat-dialog-title>Create new issue</h1>
 <div mat-dialog-content>
-    <div class="flex-group flex-column">
+    <div class="grid-group">
+      <div class="flex-group flex-column main-content">
         <mat-form-field appearance="outline">
             <mat-label>Select a project</mat-label>
             <mat-icon matPrefix>folder</mat-icon>
@@ -14,10 +15,85 @@
             <mat-label>Add a title</mat-label>
             <input matInput>
         </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Add a description</mat-label>
-            <textarea matInput></textarea>
-        </mat-form-field>
+        <div class="markdown-editor-module">
+          <header class="flex-group space-between">
+            <div class="tabs">
+              <button class="active">Write</button>
+              <button>Preview</button>
+            </div>
+            <div class="toolbar">
+              <button mat-icon-button>
+                <mat-icon>title</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>format_bold</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>format_italic</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>code</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>link</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>format_list_bulleted</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>format_list_numbered</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>checklist</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>alternate_email</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>article_shortcut</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>reply</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>keyboard_command_key</mat-icon>
+              </button>
+            </div>
+          </header>
+          <textarea placeholder="Type your description here..."></textarea>
+        </div>
+        <button mat-button class="align-self-start">
+          <mat-icon matPrefix>attach_file</mat-icon>
+          Paste, drop, or click to add files
+        </button>
+      </div>
+
+      <mat-list class="flex-group flex-column gap-24 side-nav">
+        <div class="flex-group gap-8 flex-column">
+          <div class="flex-group align-center space-between setting-button">
+            <mat-label>Assignees</mat-label>
+            <button mat-icon-button>
+              <mat-icon>settings</mat-icon>
+            </button>
+          </div>
+          <div class="flex-group flex-column">
+            <span>No one</span>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="flex-group gap-8 flex-column">
+          <div class="flex-group align-center space-between setting-button">
+            <mat-label>Labels</mat-label>
+            <button mat-icon-button>
+              <mat-icon>settings</mat-icon>
+            </button>
+          </div>
+          <div class="flex-group flex-column">
+            <span>No Labels</span>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+      </mat-list>
     </div>
 </div>
 <div mat-dialog-actions>

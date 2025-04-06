@@ -1,0 +1,81 @@
+.markdown-editor-module{
+    header{
+        background: #151B23;
+        border-radius: .5rem .5rem 0 0;
+
+        .tabs{
+            display: flex;
+            align-items: flex-end;
+
+            button{
+                margin: 0;
+                padding: 1rem;
+                border: none;
+                font-family: inherit;
+                background: inherit;
+                font-size: 14px;
+                color: #8198A1;
+                cursor: pointer;
+                
+
+                &.active{
+                    border-radius: .5rem .5rem 0 0;
+                    background: #0D1117;
+                    color: #F0F6FC;
+                    border-width: 1px 1px 0;
+                    border-top-style: solid;
+                    border-right-style: solid;
+                    border-left-style: solid;
+                    border-bottom-style: initial;
+                }
+            }
+        }
+
+        .toolbar{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+    }
+    textarea{
+        padding: 1rem;
+        width: 100%;
+        min-height: 300px;
+        border-radius: 0 0 .5rem .5rem;
+        font-size: 16px;
+        font-family: inherit;
+        background-color: #0D1117;
+        color: #F0F6FC;
+        resize: vertical !important;
+    }
+}
+
+.grid-group{
+    grid-template-columns: 3fr 1fr;
+    gap: 1.5rem;
+    padding-top: .5rem;
+}
+
+.side-nav{
+    display: flex !important;
+
+    .setting-button{
+        border-radius: .5rem;
+        transition: all 0.2s ease;
+        padding: 0 .5rem;
+
+        &:hover{
+            background: rgba($color: #000000, $alpha: 0.1);
+            cursor: pointer;
+        }
+
+        mat-label{
+            font-weight: 500;
+        }
+    }
+
+    span{
+        padding: 0 .5rem;
+    }
+}

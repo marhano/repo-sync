@@ -76,7 +76,8 @@ export class HomeComponent implements OnInit {
 
   createIssue(): void{
     this.dialog.open(IssueDialogComponent, {
-      width: '500px',
+      width: '100%',
+      maxWidth: '90vw',
     });
   }
 
