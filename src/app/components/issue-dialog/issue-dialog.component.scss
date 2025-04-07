@@ -1,7 +1,10 @@
 .markdown-editor-module{
     header{
-        background: #151B23;
+        background: #FBFBFB;
         border-radius: .5rem .5rem 0 0;
+        border-width: 1px 1px 0;
+        border-top-style: solid;
+        border-right-style: solid;
 
         .tabs{
             display: flex;
@@ -14,14 +17,14 @@
                 font-family: inherit;
                 background: inherit;
                 font-size: 14px;
-                color: #8198A1;
+                color: var(--mat-sys-on-surface-variant);
                 cursor: pointer;
                 
 
                 &.active{
                     border-radius: .5rem .5rem 0 0;
-                    background: #0D1117;
-                    color: #F0F6FC;
+                    background: #FAF9FD;
+                    color: var(--mat-sys-on-surface-variant);
                     border-width: 1px 1px 0;
                     border-top-style: solid;
                     border-right-style: solid;
@@ -45,7 +48,7 @@
         border-radius: 0 0 .5rem .5rem;
         font-size: 16px;
         font-family: inherit;
-        background-color: #0D1117;
+        background-color: inherit;
         color: #F0F6FC;
         resize: vertical !important;
     }

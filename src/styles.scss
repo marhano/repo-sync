@@ -81,12 +81,6 @@ a{
     density: -5,
   ));
 
-  @include mat.theme-overrides((
-    primary: #ebdcff,
-    on-primary: #230f46,
-    on-surface: #ebdcff
-  ));
-
   .mat-mdc-form-field-subscript-wrapper{
     display: none;
   }
@@ -96,4 +90,13 @@ mat-form-field{
   @include mat.theme((
     density: -4,
   ));
+}
+
+.mat-mdc-menu-content{
+  button{
+    p{
+      font-size: 10px;
+      color: var(--mat-sys-on-surface-variant);
+    }
+  }
 }

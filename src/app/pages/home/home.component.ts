@@ -16,6 +16,7 @@ import { IssueDialogComponent } from '../../components/issue-dialog/issue-dialog
 import { Router } from '@angular/router';
 import { WindowNavBarComponent } from '../../components/window-nav-bar/window-nav-bar.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatMenuModule } from '@angular/material/menu';
 
 export interface Issue {
   issueNumber: number;
@@ -39,7 +40,7 @@ export interface Issue {
     MatOptionModule,
     ReactiveFormsModule,
     WindowNavBarComponent,
-    
+    MatMenuModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
