@@ -55,6 +55,19 @@ h1{
         border-left-style: solid;
         border-right-style: solid;
         border-bottom-style: solid;
+
+        markdown{
+
+            p{
+                display: none !important;
+            }
+
+            img{
+                width: 100% !important;
+            }
+        }
+
+        
     }
 }
 
@@ -122,7 +135,7 @@ h1{
         grid-area: comment;
 
         textarea{
-            min-height: 120px;
+            min-height: 120px !important;
         }
     }
 

@@ -1,0 +1,50 @@
+<div class="markdown-editor-module">
+  <header class="flex-group space-between">
+    <div class="tabs">
+      <button (click)="activateTab('write')" [class.active]="activeTab === 'write'">Write</button>
+      <button (click)="activateTab('preview')" [class.active]="activeTab === 'preview'" >Preview</button>
+    </div>
+    <div class="toolbar">
+      <button mat-icon-button (click)="insertMarkdown('###')">
+        <mat-icon>title</mat-icon>
+      </button>
+      <button mat-icon-button (click)="insertMarkdown('**')">
+        <mat-icon>format_bold</mat-icon>
+      </button>
+      <button mat-icon-button (click)="insertMarkdown('_')">
+        <mat-icon>format_italic</mat-icon>
+      </button>
+      <button mat-icon-button (click)="insertMarkdown('`')">
+        <mat-icon>code</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>link</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>format_list_bulleted</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>format_list_numbered</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>checklist</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>alternate_email</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>article_shortcut</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>reply</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>keyboard_command_key</mat-icon>
+      </button>
+    </div>
+  </header>
+  <textarea *ngIf="activeTab === 'write'" [(ngModel)]="markdownContent" (input)="autoResize($event)" placeholder="Type your description here..."></textarea>
+  <div *ngIf="activeTab === 'preview'" class="markdown-preview">
+    <markdown [data]="markdownContent">Nothing to preview</markdown>
+  </div>
+</div>

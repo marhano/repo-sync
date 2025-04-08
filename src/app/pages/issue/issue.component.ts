@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
+import { MarkdownEditorComponent } from '../../components/markdown-editor/markdown-editor.component';
+import { MarkdownModule } from 'ngx-markdown';
 
 @Component({
   selector: 'app-issue',
@@ -18,7 +20,9 @@ import { MatMenuModule } from '@angular/material/menu';
     MatButtonModule,
     MatListModule,
     MatFormFieldModule,
-    MatMenuModule
+    MatMenuModule,
+    MarkdownEditorComponent,
+    MarkdownModule
   ],
   templateUrl: './issue.component.html',
   styleUrl: './issue.component.scss'
@@ -26,6 +30,7 @@ import { MatMenuModule } from '@angular/material/menu';
 export class IssueComponent implements OnInit{
   issue?: any;
   user?: any;
+  editMode: boolean = false;
 
   private readonly route = inject(ActivatedRoute);
 
@@ -44,6 +49,10 @@ export class IssueComponent implements OnInit{
 
     this.user = await this.gitApiService.getAuthUserInformation();
     console.log(this.user);
+  }
+
+  commentEdit(){
+    this.editMode = !this.editMode;
   }
 
 }
