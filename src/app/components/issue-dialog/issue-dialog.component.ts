@@ -8,6 +8,10 @@ import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
+import { MarkdownModule } from 'ngx-markdown';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MarkdownEditorComponent } from '../markdown-editor/markdown-editor.component';
 
 @Component({
   selector: 'app-issue-dialog',
@@ -20,11 +24,15 @@ import { MatDividerModule } from '@angular/material/divider';
     NgxMatSelectSearchModule,
     MatIconModule,
     MatListModule,
-    MatDividerModule
+    MatDividerModule,
+    MarkdownModule,
+    CommonModule,
+    FormsModule,
+    MarkdownEditorComponent
   ],
   templateUrl: './issue-dialog.component.html',
   styleUrl: './issue-dialog.component.scss'
 })
 export class IssueDialogComponent {
-
+  
 }

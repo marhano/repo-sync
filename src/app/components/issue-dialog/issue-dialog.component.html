@@ -15,53 +15,7 @@
             <mat-label>Add a title</mat-label>
             <input matInput>
         </mat-form-field>
-        <div class="markdown-editor-module">
-          <header class="flex-group space-between">
-            <div class="tabs">
-              <button class="active">Write</button>
-              <button>Preview</button>
-            </div>
-            <div class="toolbar">
-              <button mat-icon-button>
-                <mat-icon>title</mat-icon>
-              </button>
-              <button mat-icon-button>
-                <mat-icon>format_bold</mat-icon>
-              </button>
-              <button mat-icon-button>
-                <mat-icon>format_italic</mat-icon>
-              </button>
-              <button mat-icon-button>
-                <mat-icon>code</mat-icon>
-              </button>
-              <button mat-icon-button>
-                <mat-icon>link</mat-icon>
-              </button>
-              <button mat-icon-button>
-                <mat-icon>format_list_bulleted</mat-icon>
-              </button>
-              <button mat-icon-button>
-                <mat-icon>format_list_numbered</mat-icon>
-              </button>
-              <button mat-icon-button>
-                <mat-icon>checklist</mat-icon>
-              </button>
-              <button mat-icon-button>
-                <mat-icon>alternate_email</mat-icon>
-              </button>
-              <button mat-icon-button>
-                <mat-icon>article_shortcut</mat-icon>
-              </button>
-              <button mat-icon-button>
-                <mat-icon>reply</mat-icon>
-              </button>
-              <button mat-icon-button>
-                <mat-icon>keyboard_command_key</mat-icon>
-              </button>
-            </div>
-          </header>
-          <textarea placeholder="Type your description here..."></textarea>
-        </div>
+        <app-markdown-editor></app-markdown-editor>
         <button mat-button class="align-self-start">
           <mat-icon matPrefix>attach_file</mat-icon>
           Paste, drop, or click to add files

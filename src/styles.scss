@@ -114,58 +114,19 @@ mat-form-field{
   'opsz' 24
 }
 
-.markdown-editor-module{
-  header{
-      background: #FBFBFB;
-      border-radius: .5rem .5rem 0 0;
-      border-width: 1px 1px 0;
-      border-top-style: solid;
-      border-right-style: solid;
-      border-left-style: solid;
-
-      .tabs{
-          display: flex;
-          align-items: flex-end;
-
-          button{
-              margin: 0;
-              padding: 1rem;
-              border: none;
-              font-family: inherit;
-              background: inherit;
-              font-size: 14px;
-              color: var(--mat-sys-on-surface-variant);
-              cursor: pointer;
-              
-
-              &.active{
-                  border-radius: .5rem .5rem 0 0;
-                  background: #FAF9FD;
-                  color: var(--mat-sys-on-surface-variant);
-                  border-width: 1px 1px 0;
-                  border-top-style: solid;
-                  border-right-style: solid;
-                  border-left-style: solid;
-                  border-bottom-style: initial;
-              }
-          }
-      }
-
-      .toolbar{
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: flex-end;
-      }
-
+.comment-markdown-module{
+  .markdown-editor-module{
+    textarea{
+      min-height: 120px !important;
+    }
+    .markdown-preview{
+      min-height: 120px !important;
+    }
   }
-  textarea{
-      padding: 1rem;
-      width: 100%;
-      min-height: 300px;
-      border-radius: 0 0 .5rem .5rem;
-      font-size: 16px;
-      font-family: inherit;
-      background-color: inherit;
-      resize: vertical !important;
+}
+
+markdown{
+  img{
+    width: 100%;
   }
 }

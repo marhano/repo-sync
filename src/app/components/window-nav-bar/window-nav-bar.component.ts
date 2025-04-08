@@ -28,4 +28,8 @@ export class WindowNavBarComponent {
   goBack(){
     this.location.back();
   }
+
+  goForward(){
+    this.location.forward();
+  }
 }

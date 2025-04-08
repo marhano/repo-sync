@@ -43,66 +43,48 @@
                             <a>{{issue.user.login}}</a>
                             <span>opened {{issue.created_at}}</span>
                         </div>
-                        <button mat-icon-button>
+                        <button mat-icon-button [matMenuTriggerFor]="commentMenu">
                             <mat-icon>more_horiz</mat-icon>
                         </button>
+                        <mat-menu #commentMenu="matMenu">
+                            <button mat-menu-item>
+                                <mat-icon>format_quote</mat-icon>
+                                <span>Quote reply</span>
+                            </button>
+                            <button (click)="commentEdit()" mat-menu-item>
+                                <mat-icon>edit</mat-icon>
+                                <span>Edit</span>
+                            </button>
+                        </mat-menu>
                     </header>
                     <div class="flex-group p-16 comment-body">
-                        <span class="italic">No description provided.</span>
+                        <div *ngIf="editMode" class="flex-group flex-column">
+                            <app-markdown-editor ></app-markdown-editor>
+                            <div class="flex-group space-between">
+                                <button mat-button class="align-self-start">
+                                    <mat-icon matPrefix>attach_file</mat-icon>
+                                    Paste, drop, or click to add files
+                                </button>
+                                <div class="flex-group gap-8">
+                                    <button mat-button>
+                                        Cancel
+                                    </button>
+                                    <button mat-flat-button>
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <markdown *ngIf="!editMode" [data]="issue.body_html">No description provided.</markdown>
                     </div>
                 </div>
             </div>
             <div class="comment-markdown-module gap-16 flex-group align-self-start w-100">
                 <img class="user-avatar align-self-start" src="{{user?.avatar_url}}" alt="">
                 <mat-label class="comment-label">Add a comment</mat-label>
-                <div class="markdown-editor-module">
-                    <header class="flex-group space-between">
-                      <div class="tabs">
-                        <button class="active">Write</button>
-                        <button>Preview</button>
-                      </div>
-                      <div class="toolbar">
-                        <button mat-icon-button>
-                          <mat-icon>title</mat-icon>
-                        </button>
-                        <button mat-icon-button>
-                          <mat-icon>format_bold</mat-icon>
-                        </button>
-                        <button mat-icon-button>
-                          <mat-icon>format_italic</mat-icon>
-                        </button>
-                        <button mat-icon-button>
-                          <mat-icon>code</mat-icon>
-                        </button>
-                        <button mat-icon-button>
-                          <mat-icon>link</mat-icon>
-                        </button>
-                        <button mat-icon-button>
-                          <mat-icon>format_list_bulleted</mat-icon>
-                        </button>
-                        <button mat-icon-button>
-                          <mat-icon>format_list_numbered</mat-icon>
-                        </button>
-                        <button mat-icon-button>
-                          <mat-icon>checklist</mat-icon>
-                        </button>
-                        <button mat-icon-button>
-                          <mat-icon>alternate_email</mat-icon>
-                        </button>
-                        <button mat-icon-button>
-                          <mat-icon>article_shortcut</mat-icon>
-                        </button>
-                        <button mat-icon-button>
-                          <mat-icon>reply</mat-icon>
-                        </button>
-                        <button mat-icon-button>
-                          <mat-icon>keyboard_command_key</mat-icon>
-                        </button>
-                      </div>
-                    </header>
-                    <textarea placeholder="Type your description here..."></textarea>
-                </div>
-                <div class="flex-group space-between footer">
+                <app-markdown-editor></app-markdown-editor>
+                <div class="flex-group space-between flex-wrap footer">
                     <button mat-button class="align-self-start">
                         <mat-icon matPrefix>attach_file</mat-icon>
                         Paste, drop, or click to add files

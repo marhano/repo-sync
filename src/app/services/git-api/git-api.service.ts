@@ -18,7 +18,7 @@ export class GitApiService {
   private getHeaders(){
     return new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
-      Accept: 'application/vnd.github+json'
+      Accept: 'application/vnd.github.full+json'
     });
   }
 
