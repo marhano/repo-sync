@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { response } from 'express';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, map } from 'rxjs';
+import { User } from '../../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -46,20 +47,34 @@ export class GitApiService {
       const filteredIssues = response.filter((issue: any) => !issue.pull_request);
       console.log(filteredIssues);
 
-      return filteredIssues.map((issue: any) => ({
-        issueNumber: issue.number,
-        title: issue.title,
-        author: issue.user.login,
-        authorAvatar: issue.user.avatar_url,
-        assignee: issue.assignee ? issue.assignee.login : null,
-        assigneeAvatar: issue.assignee ? issue.assignee.avatar_url : null
-      }));
+      return filteredIssues;
     });
   }
 
   listRepositoryPullRequest(name: string): Promise<any>{
     const url = `${this.baseUrl}/repos/${name}/pulls`;
     return lastValueFrom(this.http.get(url, { headers: this.getHeaders() }));
+  }
+
+  getAuthUserInformation(){
+    const url = `${this.baseUrl}/user`;
+    return lastValueFrom(
+      this.http.get(url, { headers: this.getHeaders() }).pipe(
+        map((response: any) => {
+          return {
+            avatar_url: response.avatar_url,
+            bio: response.bio,
+            id: response.id,
+            login: response.login,
+          } as User;
+        })
+      ));
+  }
+
+  sendRequest(url: string):Promise<any>{
+    return lastValueFrom(
+      this.http.get(url, { headers: this.getHeaders() })
+    );
   }
 
 

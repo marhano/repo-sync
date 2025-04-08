@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 import { WindowNavBarComponent } from '../../components/window-nav-bar/window-nav-bar.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
+import { User } from '../../interfaces/user.interface';
 
 export interface Issue {
   issueNumber: number;
@@ -75,6 +76,10 @@ export class HomeComponent implements OnInit {
       });
   }
 
+  async ngAfterViewInit(){
+    const user = await this.gitApiService.getAuthUserInformation();
+  }
+
   createIssue(): void{
     this.dialog.open(IssueDialogComponent, {
       width: '100%',
@@ -93,8 +98,9 @@ export class HomeComponent implements OnInit {
     
   }
 
-  navigateIssue(){
-    this.router.navigate(['/issue']);
+  navigateIssue(data: any){
+    const serializedData = JSON.stringify(data);
+    this.router.navigate(['/issue'], { queryParams: { data: serializedData }});
   }
 
   protected filterRepo() {

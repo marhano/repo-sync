@@ -1,6 +1,143 @@
-<div class="container">
-    <div class="flex-group flex-column">
-        <h1>Title</h1>
-        <p>Description</p>
+<div class="layout">
+    <app-window-nav-bar></app-window-nav-bar>
+    <div class="container pt-64">
+        <div class="flex-group flex-column gap-8 title-bar">
+            <h1>{{issue.title}} <span>#{{issue.number}}</span></h1>
+            <div class="chip flex-group align-center gap-8">
+                <mat-icon fontIcon="do_not_disturb_on"></mat-icon>
+                <span>Open</span>
+            </div>
+        </div>
+        <mat-list class="flex-group flex-column gap-24 side-nav">
+            <div class="flex-group gap-8 flex-column">
+              <div class="flex-group align-center space-between setting-button">
+                <mat-label>Assignees</mat-label>
+                <button mat-icon-button>
+                  <mat-icon>settings</mat-icon>
+                </button>
+              </div>
+              <div class="flex-group flex-column">
+                <span>No one</span>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="flex-group gap-8 flex-column">
+              <div class="flex-group align-center space-between setting-button">
+                <mat-label>Labels</mat-label>
+                <button mat-icon-button>
+                  <mat-icon>settings</mat-icon>
+                </button>
+              </div>
+              <div class="flex-group flex-column">
+                <span>No Labels</span>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+        </mat-list>
+        <div class="flex-group flex-column gap-40 main-content">
+            <div class="comment-module gap-16 flex-group align-self-start w-100">
+                <img class="user-avatar align-self-start" src="{{issue.user.avatar_url}}" alt="">
+                <div class="comment-container w-100">
+                    <header class="flex-group space-between px-16 align-center">
+                        <div class="flex-group gap-8">
+                            <a>{{issue.user.login}}</a>
+                            <span>opened {{issue.created_at}}</span>
+                        </div>
+                        <button mat-icon-button>
+                            <mat-icon>more_horiz</mat-icon>
+                        </button>
+                    </header>
+                    <div class="flex-group p-16 comment-body">
+                        <span class="italic">No description provided.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="comment-markdown-module gap-16 flex-group align-self-start w-100">
+                <img class="user-avatar align-self-start" src="{{user?.avatar_url}}" alt="">
+                <mat-label class="comment-label">Add a comment</mat-label>
+                <div class="markdown-editor-module">
+                    <header class="flex-group space-between">
+                      <div class="tabs">
+                        <button class="active">Write</button>
+                        <button>Preview</button>
+                      </div>
+                      <div class="toolbar">
+                        <button mat-icon-button>
+                          <mat-icon>title</mat-icon>
+                        </button>
+                        <button mat-icon-button>
+                          <mat-icon>format_bold</mat-icon>
+                        </button>
+                        <button mat-icon-button>
+                          <mat-icon>format_italic</mat-icon>
+                        </button>
+                        <button mat-icon-button>
+                          <mat-icon>code</mat-icon>
+                        </button>
+                        <button mat-icon-button>
+                          <mat-icon>link</mat-icon>
+                        </button>
+                        <button mat-icon-button>
+                          <mat-icon>format_list_bulleted</mat-icon>
+                        </button>
+                        <button mat-icon-button>
+                          <mat-icon>format_list_numbered</mat-icon>
+                        </button>
+                        <button mat-icon-button>
+                          <mat-icon>checklist</mat-icon>
+                        </button>
+                        <button mat-icon-button>
+                          <mat-icon>alternate_email</mat-icon>
+                        </button>
+                        <button mat-icon-button>
+                          <mat-icon>article_shortcut</mat-icon>
+                        </button>
+                        <button mat-icon-button>
+                          <mat-icon>reply</mat-icon>
+                        </button>
+                        <button mat-icon-button>
+                          <mat-icon>keyboard_command_key</mat-icon>
+                        </button>
+                      </div>
+                    </header>
+                    <textarea placeholder="Type your description here..."></textarea>
+                </div>
+                <div class="flex-group space-between footer">
+                    <button mat-button class="align-self-start">
+                        <mat-icon matPrefix>attach_file</mat-icon>
+                        Paste, drop, or click to add files
+                    </button>
+                    <div class="flex-group gap-8">
+                        <button mat-stroked-button>
+                            <mat-icon>check_circle</mat-icon>
+                            Close issue
+                        </button>
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item>
+                                <mat-icon>check_circle</mat-icon>
+                                <span>Close as not planned</span>
+                                <p>Won't fix, can't repro, stale</p>
+                            </button>
+                            <button mat-menu-item>
+                                <mat-icon>check_circle</mat-icon>
+                                <span>Close as duplicate</span>
+                                <p>Duplicate of another issue</p>
+                            </button>
+                            <button mat-menu-item>
+                                <mat-icon>insights</mat-icon>
+                                <span>Create a branch</span>
+                                <p>Create a branch for this issue</p>
+                            </button>
+                        </mat-menu>
+                        <button mat-flat-button>
+                            Comment
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

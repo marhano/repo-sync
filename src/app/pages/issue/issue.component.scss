@@ -1,0 +1,132 @@
+.layout{
+    display: grid;
+    height: 100vh;
+    grid-template-rows: auto 1fr;
+}
+
+h1{
+    font-weight: 500;
+    span{
+        color: var(--mat-sys-on-surface-variant);
+        font-weight: 400;
+    }
+}
+
+.user-avatar{
+    width: 40px;
+}
+
+.container{
+    display: grid;
+    grid-template-areas: 
+    "title-bar title-bar"
+    "main-content side-nav";
+    grid-template-columns: 1fr 300px;
+    grid-template-rows: auto 1fr;
+    padding-left: 24px;
+    padding-right: 24px;
+    gap: 1.5rem;
+}
+
+
+.title-bar{
+    grid-area: title-bar;
+}
+
+
+.main-content{
+    grid-area: main-content;
+    padding: 24px 0px;
+}
+
+.comment-module{
+    header{
+        background: #FBFBFB;
+        border-top-right-radius: .5rem;
+        border-top-left-radius: .5rem;
+        border: 1px solid;
+    }
+    .comment-body{
+        background: inherit;
+        border-bottom-left-radius: .5rem;
+        border-bottom-right-radius: .5rem;
+        min-height: 120px;
+        border-width: 1px 1px 1px;
+        border-left-style: solid;
+        border-right-style: solid;
+        border-bottom-style: solid;
+    }
+}
+
+.side-nav{
+    grid-area: side-nav;
+    display: flex !important;
+
+    .setting-button{
+        border-radius: .5rem;
+        transition: all 0.2s ease;
+        padding: 0 .5rem;
+
+        &:hover{
+            background: rgba($color: #000000, $alpha: 0.1);
+            cursor: pointer;
+        }
+
+        mat-label{
+            font-weight: 500;
+        }
+    }
+
+    span{
+        padding: 0 .5rem;
+    }
+}
+
+.chip{
+    background: #BD561D;
+    align-self: flex-start;
+    padding: 6px 16px;
+    border-radius: 16px;
+    color: #fff;
+
+    mat-icon{
+        font-size: 20px;
+        height: fit-content;
+        width: fit-content;
+    }
+
+    span{
+        font-size: 14px;
+        font-weight: 500;
+    }
+}
+
+.comment-markdown-module{
+    display: grid;
+    grid-template-areas: 
+    "avatar label"
+    "avatar comment"
+    "avatar footer";
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 1fr auto;
+
+    .user-avatar{
+        grid-area: avatar;
+    }
+
+    .comment-label{
+        grid-area: label;
+    }
+
+    .markdown-editor-module{
+        grid-area: comment;
+
+        textarea{
+            min-height: 120px;
+        }
+    }
+
+    .footer{
+        grid-area: footer;
+    }
+}

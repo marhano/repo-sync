@@ -5,14 +5,14 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-root',
   imports: [
-    RouterOutlet
+    RouterOutlet,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   providers: [
     GitApiService
   ],
-  standalone: true
+  standalone: true,
 })
 export class AppComponent {
   title = 'repo-sync';
