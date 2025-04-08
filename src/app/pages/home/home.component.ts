@@ -50,6 +50,7 @@ export interface Issue {
 export class HomeComponent implements OnInit {
   displayedColumns: string[] = ['issue_number', 'title', 'author', 'assignee', 'actions'];
   dataSource: any;
+  selectedProject: any;
   
   public repoFilterCtrl: FormControl = new FormControl();
   public filteredRepo: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
@@ -74,6 +75,12 @@ export class HomeComponent implements OnInit {
       .subscribe(() => {
         this.filterRepo();
       });
+
+    const savedProject = localStorage.getItem('selectedProject');
+    if(savedProject){
+      this.selectedProject = savedProject;
+      this.dataSource = await this.gitApiService.listRepositoryIssues(savedProject);
+    }
   }
 
   async ngAfterViewInit(){
@@ -88,10 +95,12 @@ export class HomeComponent implements OnInit {
   }
 
   async onProjectChange(event: MatSelectChange){
-    const selectedProject = event.value;
-    console.log("Selected Project: ", selectedProject);
+    this.selectedProject = event.value;
+    console.log("Selected Project: ", this.selectedProject);
 
-    const response = await this.gitApiService.listRepositoryIssues(selectedProject.full_name);
+    localStorage.setItem('selectedProject', this.selectedProject.full_name);
+
+    const response = await this.gitApiService.listRepositoryIssues(this.selectedProject.full_name);
     console.log(response);
 
     this.dataSource = response;
