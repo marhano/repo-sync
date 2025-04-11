@@ -10,6 +10,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
 import { MarkdownEditorComponent } from '../../components/markdown-editor/markdown-editor.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { FormControl } from '@angular/forms';
+import { ReplaySubject } from 'rxjs';
 
 @Component({
   selector: 'app-issue',

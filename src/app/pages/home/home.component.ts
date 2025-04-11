@@ -51,6 +51,7 @@ export class HomeComponent implements OnInit {
   displayedColumns: string[] = ['issue_number', 'title', 'author', 'assignee', 'actions'];
   dataSource: any;
   selectedProject: any;
+  assignees: any;
   
   public repoFilterCtrl: FormControl = new FormControl();
   public filteredRepo: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
@@ -80,6 +81,7 @@ export class HomeComponent implements OnInit {
     if(savedProject){
       this.selectedProject = savedProject;
       this.dataSource = await this.gitApiService.listRepositoryIssues(savedProject);
+      this.assignees = await this.gitApiService.listAssignees(savedProject);
     }
   }
 

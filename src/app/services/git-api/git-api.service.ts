@@ -77,5 +77,19 @@ export class GitApiService {
     );
   }
 
+  listAssignees(name: string){
+    const url = `${this.baseUrl}/repos/${name}/assignees`;
+    return lastValueFrom(this.http.get(url, { headers: this.getHeaders() }));
+  }
+
+  createIssue(name: string, param: any): Promise<any>{
+    const url = `${this.baseUrl}/repos/${name}/issues`;
+    return lastValueFrom(this.http.post(url, param, { headers: this.getHeaders(), observe: 'response' }));
+  }
+
+  listLabels(name: string){
+    const url = `${this.baseUrl}/repos/${name}/labels`;
+    return lastValueFrom(this.http.get(url, { headers: this.getHeaders() }));
+  }
 
 }

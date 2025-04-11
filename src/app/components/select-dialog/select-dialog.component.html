@@ -1,0 +1,30 @@
+<div class="select-dialog-container">
+    <button (click)="showSelectDialog($event)" class="flex-group align-center space-between setting-button">
+      <mat-label>{{label}}</mat-label>
+      <mat-icon>settings</mat-icon>
+    </button>
+
+    <div class="select-dialog">
+      <label>{{title}}</label>
+      <mat-form-field appearance="outline" class="small-input mt-8">
+        <mat-icon matPrefix>search</mat-icon>
+        <input placeholder="{{placeholder}}" matInput>
+      </mat-form-field>
+      <div *ngFor="let item of data" class="flex-group flex-column mt-8">
+        <mat-checkbox
+            (change)="onCheckboxChange(item, $event.checked)">
+            <div *ngIf="item.login" class="flex-group align-center gap-8">
+                <img class="user-avatar" src="{{item.avatar_url}}" alt="">{{item.login}}
+            </div>
+
+            <div *ngIf="item.color" class="flex-group gap-8 label-container">
+                <div [ngStyle]="{'background-color': '#'+item.color}" class="label-color align-self-center"></div>
+                <div class="flex-group flex-column">
+                    {{item.name}}
+                    <span>{{item.description}}</span>
+                </div>
+            </div>
+        </mat-checkbox>
+      </div>
+    </div>
+</div>

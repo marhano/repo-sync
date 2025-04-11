@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MarkdownModule } from 'ngx-markdown';
@@ -12,12 +12,15 @@ import { MarkdownModule } from 'ngx-markdown';
     MarkdownModule,
     CommonModule,
     FormsModule,
-    MatButtonModule
+    MatButtonModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './markdown-editor.component.html',
   styleUrl: './markdown-editor.component.scss'
 })
 export class MarkdownEditorComponent {
+  @Input() control!: FormControl;
+
   activeTab: string = 'write';
   markdownContent: string = ``;
 
@@ -55,7 +58,7 @@ export class MarkdownEditorComponent {
     }, 0);
   }
 
-  autoResize(event: Event) {
+  autoResize(event: any) {
     const textarea = event.target as HTMLTextAreaElement;
     textarea.style.height = 'auto'; // Reset height to auto for accurate calculation
     textarea.style.height = `${textarea.scrollHeight}px`; // Set height based on content
