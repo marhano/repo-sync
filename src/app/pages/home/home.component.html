@@ -19,7 +19,9 @@
                     <mat-label>Assignee</mat-label>
                     <mat-icon matPrefix>person</mat-icon>
                     <mat-select>
-                        <mat-option value="Value">marhano</mat-option>
+                        <mat-option *ngFor="let item of assignees" [value]="item">
+                            {{item.login}}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>

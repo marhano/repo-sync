@@ -130,3 +130,9 @@ markdown{
     width: 100%;
   }
 }
+
+mat-checkbox .mdc-label{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

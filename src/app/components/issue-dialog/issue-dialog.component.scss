@@ -6,25 +6,23 @@
     padding-top: .5rem;
 }
 
+mat-list{
+    padding: 0;
+}
+
 .side-nav{
     display: flex !important;
-
-    .setting-button{
-        border-radius: .5rem;
-        transition: all 0.2s ease;
-        padding: 0 .5rem;
-
-        &:hover{
-            background: rgba($color: #000000, $alpha: 0.1);
-            cursor: pointer;
-        }
-
-        mat-label{
-            font-weight: 500;
-        }
-    }
 
     span{
         padding: 0 .5rem;
     }
 }
+
+.badge{
+    padding: 0px 4px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+
+
