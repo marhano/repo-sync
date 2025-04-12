@@ -27,6 +27,7 @@
     display: grid;
     grid-template-rows: auto 1fr;
     overflow: hidden;
+    background: var(--mat-sys-background);
 }
 
 .mat-mdc-menu-content{

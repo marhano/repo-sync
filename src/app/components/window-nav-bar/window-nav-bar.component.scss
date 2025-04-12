@@ -1,5 +1,5 @@
 .window-nav-bar{
-    background: #fbfbfb;//var(--mat-sys-on-background);
+    background: var(--mat-sys-surface-container);  //var(--mat-sys-on-background); //#fbfbfb;
     width: 100%;
     overflow: hidden;
     position: fixed;
