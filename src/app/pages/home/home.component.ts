@@ -77,12 +77,12 @@ export class HomeComponent implements OnInit {
         this.filterRepo();
       });
 
-    const savedProject = localStorage.getItem('selectedProject');
-    if(savedProject){
-      this.selectedProject = savedProject;
-      this.dataSource = await this.gitApiService.listRepositoryIssues(savedProject);
-      this.assignees = await this.gitApiService.listAssignees(savedProject);
-    }
+    // const savedProject = localStorage.getItem('selectedProject');
+    // if(savedProject){
+    //   this.selectedProject = savedProject;
+    //   this.dataSource = await this.gitApiService.listRepositoryIssues(savedProject);
+    //   this.assignees = await this.gitApiService.listAssignees(savedProject);
+    // }
   }
 
   async ngAfterViewInit(){
@@ -100,7 +100,7 @@ export class HomeComponent implements OnInit {
     this.selectedProject = event.value;
     console.log("Selected Project: ", this.selectedProject);
 
-    localStorage.setItem('selectedProject', this.selectedProject.full_name);
+    //localStorage.setItem('selectedProject', this.selectedProject.full_name);
 
     const response = await this.gitApiService.listRepositoryIssues(this.selectedProject.full_name);
     console.log(response);

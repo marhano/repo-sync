@@ -24,6 +24,12 @@ export class MarkdownEditorComponent {
   activeTab: string = 'write';
   markdownContent: string = ``;
 
+  ngOnInit(){
+    if(!this.control){
+      this.control = new FormControl();
+    }
+  }
+
   activateTab(tab: string){
     this.activeTab = tab;
   }

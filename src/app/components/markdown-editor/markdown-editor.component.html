@@ -43,7 +43,8 @@
       </button>
     </div>
   </header>
-  <textarea [formControl]="control" *ngIf="activeTab === 'write'" [(ngModel)]="markdownContent" (input)="autoResize($event)" placeholder="Type your description here..."></textarea>
+  <textarea [formControl]="control" *ngIf="activeTab === 'write' && control" [(ngModel)]="markdownContent" (input)="autoResize($event)" placeholder="Type your description here..."></textarea>
+  <textarea *ngIf="activeTab === 'write' && !control" [(ngModel)]="markdownContent" (input)="autoResize($event)" placeholder="Type your description here..."></textarea>
   <div *ngIf="activeTab === 'preview'" class="markdown-preview">
     <markdown [data]="markdownContent">Nothing to preview</markdown>
   </div>
