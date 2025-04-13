@@ -13,12 +13,13 @@ export class SessionService {
   }
 
   async setSession(newData: { [key: string]: any }){
-    const currentData = this.getSession();
+    const currentData = await this.getSession();
 
     const updatedData = { ...currentData, ...newData };
     
     //localStorage.setItem(this.key, JSON.stringify(updatedData));
-    await this.jsonService.setItem(this.key, JSON.stringify(updatedData));
+    console.log(updatedData);
+    await this.jsonService.setItem(this.key, updatedData);
   }
 
   async getSession(key?: string): Promise<any>{

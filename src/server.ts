@@ -116,8 +116,7 @@ app.get('/api/session/:key', (req, res) => {
 
     let value = data[key]; // Get the value by key
     if (value === undefined) {
-
-      value = null;
+      value = {};
       data[key] = value;
       fs.writeFileSync(jsonFilePath, JSON.stringify(data, null, 2), 'utf-8');
       console.log(`New key "${key}" added with default value`);
