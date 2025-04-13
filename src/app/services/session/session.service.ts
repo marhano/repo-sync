@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-
-declare const window: any;
+import { JsonService } from '../json/json.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,23 +7,29 @@ declare const window: any;
 export class SessionService {
   private key: string = 'reposync__dev__session';
 
-  constructor() { }
-
-  setSession(newData: { [key: string]: any }){
-    const currentData = this.getSession();
-    const updatedData = { ...currentData, ...newData };
-    localStorage.setItem(this.key, JSON.stringify(updatedData));
+  constructor(
+    private jsonService: JsonService,
+  ) { 
   }
 
-  getSession(key?: string): any{
-    const storedData = localStorage.getItem(this.key);
+  async setSession(newData: { [key: string]: any }){
+    const currentData = this.getSession();
+
+    const updatedData = { ...currentData, ...newData };
+    
+    //localStorage.setItem(this.key, JSON.stringify(updatedData));
+    await this.jsonService.setItem(this.key, JSON.stringify(updatedData));
+  }
+
+  async getSession(key?: string): Promise<any>{
+    //const storedData = localStorage.getItem(this.key);
+    const storedData = await this.jsonService.getItem(this.key);
     
     if(!storedData){
       return key ? null : {};
     }
 
-    const parseData = JSON.parse(storedData);
     
-    return key ? parseData[key] || null : parseData;
+    return key ? storedData[key] || null : storedData;
   }
 }

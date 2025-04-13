@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { SessionService } from '../../services/session/session.service';
 import { GitApiService } from '../../services/git-api/git-api.service';
 import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -21,27 +22,33 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit{
   appVersion: string = environment.APP_VERSION;
+  private isBrowser!:boolean;
+
+  private platformId = inject(PLATFORM_ID);
 
   constructor(
     private sessionService: SessionService,
     private gitApiService: GitApiService,
     private router: Router
   ){
-
+    this.isBrowser = isPlatformBrowser(this.platformId);
   }
-  ngOnInit(){
-    console.log('on');
-    const token = this.sessionService.getSession('token');
+  async ngOnInit(){
+    const token = await this.sessionService.getSession('token');
     if(token){
       this.gitApiService.token = token;
-      console.log('__token ',token);
       this.router.navigate(['/home']);
     }
   }
 
   githubAuth(){
-    const authUrl = `https://github.com/login/oauth/authorize?client_id=${environment.GIT_CLIENT_ID}&scope=repo,user`;
-    window.location.href = authUrl;
+    const authUrl = `https://github.com/login/oauth/authorize?client_id=${environment.CLIENT_ID}&scope=repo,user`;
+    if(this.isBrowser){
+      window.location.href = authUrl;
+    }else{
+      console.log('Server-side execution, skipping window-based logic');
+    }
+    
   }
 
 }

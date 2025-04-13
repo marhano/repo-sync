@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { GitApiService } from '../../services/git-api/git-api.service';
@@ -20,25 +20,35 @@ declare const window: any;
 })
 export class AuthorizeComponent implements OnInit{
   public errorDescription: string | null = '';
+  private isBrowser!: boolean;
+
+  private platformId = inject(PLATFORM_ID);
 
   constructor(
     private gitApiService: GitApiService,
     private sessionService: SessionService,
     private router: Router
-  ){}
+  ){
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
 
   async ngOnInit(): Promise<void> {
     try{
-      this.errorDescription = new URLSearchParams(window.location.search).get('error_description');
-      const code = new URLSearchParams(window.location.search).get('code');
-      if(code){
-        const token = await this.gitApiService.requestAccessToken(code);
-        this.sessionService.setSession({
-          token: token.access_token
-        });
-        this.gitApiService.token = token;
-        this.router.navigate(['/home']);
+      if(this.isBrowser){
+        this.errorDescription = new URLSearchParams(window.location.search).get('error_description');
+        const code = new URLSearchParams(window.location.search).get('code');
+        if(code){
+          const token = await this.gitApiService.requestAccessToken(code);
+          this.sessionService.setSession({
+            token: token.access_token
+          });
+          this.gitApiService.token = token;
+          this.router.navigate(['/home']);
+        }
+      }else{
+        console.log('Server-side execution, skipping window-based logic');
       }
+      
     }catch(error){
       console.log(error);
     }

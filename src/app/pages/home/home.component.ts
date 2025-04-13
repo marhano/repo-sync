@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
   ){}
 
   async ngOnInit(){
-    const token = this.sessionService.getSession('token');
+    const token = await this.sessionService.getSession('token');
     if(token){
       this.gitApiService.token = token;
     }else{
@@ -96,7 +96,7 @@ export class HomeComponent implements OnInit {
   }
 
   async ngAfterViewInit(){
-    const user = await this.gitApiService.getAuthUserInformation();
+    //const user = await this.gitApiService.getAuthUserInformation();
   }
 
   createIssue(): void{
