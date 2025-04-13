@@ -12,9 +12,9 @@
             </mat-form-field>
             <div class="flex-group flex-wrap gap-8">
                 <button mat-flat-button class="custom-theme">Sign In</button>
-                <button mat-stroked-button color="accent"><mat-icon matIconPrefix>hub</mat-icon> Sign in with Github</button>
+                <button (click)="githubAuth()" mat-stroked-button color="accent"><mat-icon matIconPrefix>hub</mat-icon> Sign in with Github</button>
             </div>
-            <span>v0.0.1</span>
+            <span>{{appVersion}}</span>
         </div>
         
     </div>

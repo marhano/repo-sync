@@ -1,25 +1,37 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { response } from 'express';
 import { lastValueFrom, map } from 'rxjs';
 import { User } from '../../interfaces/user.interface';
+import { SessionService } from '../session/session.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GitApiService {
   private baseUrl = 'https://api.github.com';
-  private token = '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';
+  public token = ''//'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';
 
   constructor(
-    private http: HttpClient
-  ) { }
+    private http: HttpClient,
+    private sessionService: SessionService
+  ) { 
+    const token = this.sessionService.getSession("token");
+    if(token){
+      this.token = token;
+    }
+  }
 
   private getHeaders(){
     return new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
       Accept: 'application/vnd.github.full+json'
     });
+  }
+
+  requestAccessToken(code: string): Promise<any>{
+    return lastValueFrom(this.http.post('http://localhost:4000/api/exchange-token', { code }, {
+      headers: { 'Content-Type': 'application/json' }
+    }));
   }
 
   listRepositories(): Promise<any>{
