@@ -34,6 +34,13 @@ export class AuthorizeComponent implements OnInit{
 
   async ngOnInit(): Promise<void> {
     try{
+      const token = await this.sessionService.getSession('token');
+      if(token){
+        this.gitApiService.token = token;
+        this.router.navigate(['/home']);
+        return;
+      }
+
       if(this.isBrowser){
         this.errorDescription = new URLSearchParams(window.location.search).get('error_description');
         const code = new URLSearchParams(window.location.search).get('code');
