@@ -1,13 +1,25 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { IssueComponent } from './pages/issue/issue.component';
 
 export const routes: Routes = [
     { 
         path: 'home',
         loadComponent: () => import('./pages/home/home.component').then(c => c.HomeComponent)
     },
-    { path: 'issue', component: IssueComponent },
-    { path: '', redirectTo: 'home', pathMatch: 'full' },
-    { path: '**', component: HomeComponent }
+    { 
+        path: 'issue', 
+        loadComponent: () => import('./pages/issue/issue.component').then(c => c.IssueComponent)     
+    },
+    {
+        path: 'login',
+        loadComponent: () => import('./pages/login/login.component').then(c => c.LoginComponent)
+    },
+    {
+        path: 'authorize',
+        loadComponent: () => import('./pages/authorize/authorize.component').then(c => c.AuthorizeComponent)
+    },
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    { 
+        path: '**', 
+        loadComponent: () => import('./pages/login/login.component').then(c => c.LoginComponent)
+    }
 ];

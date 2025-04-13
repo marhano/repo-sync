@@ -1,6 +1,6 @@
 .markdown-editor-module{
   header{
-      background: #FBFBFB;
+      background: var(--mat-sys-surface-container);
       border-radius: .5rem .5rem 0 0;
       border-width: 1px 1px 0;
       border-top-style: solid;
@@ -24,7 +24,7 @@
 
               &.active{
                   border-radius: .5rem .5rem 0 0;
-                  background: #FAF9FD;
+                  background: var(--mat-sys-surface);
                   color: var(--mat-sys-on-surface-variant);
                   border-width: 1px 1px 0;
                   border-top-style: solid;

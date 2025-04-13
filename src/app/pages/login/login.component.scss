@@ -1,0 +1,41 @@
+.container{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: var(--mat-sys-background);
+}
+
+.app-title{
+    h6{
+        line-height: 0;
+        opacity: 0.4;
+    }
+}
+.login-container{
+    position: absolute;
+    max-width: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    h1{
+        color: var(--mat-sys-on-surface);
+    }
+
+    .login-panel{
+        background: var(--mat-sys-surface-container);
+        color: var(--mat-sys-on-surface);
+        padding: 24px 24px 32px;
+        border-radius: 16px;
+    }
+}
+
+span{
+    font-size: 10px;
+    color: var(--mat-sys-on-surface);
+    text-align: right;
+    opacity: 0.2;
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+}

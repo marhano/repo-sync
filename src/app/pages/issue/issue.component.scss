@@ -26,6 +26,7 @@ h1{
     padding-left: 24px;
     padding-right: 24px;
     gap: 1.5rem;
+    background: var(--mat-sys-background);
 }
 
 
@@ -41,7 +42,7 @@ h1{
 
 .comment-module{
     header{
-        background: #FBFBFB;
+        background: var(--mat-sys-surface-container);
         border-top-right-radius: .5rem;
         border-top-left-radius: .5rem;
         border: 1px solid;

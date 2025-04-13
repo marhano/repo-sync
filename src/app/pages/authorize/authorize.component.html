@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="card card-center flex-group flex-column gap-16">
+        <div *ngIf="errorDescription" class="flex-group flex-column gap-8">
+            <h1>Authorization Cancelled</h1>
+            <p>{{errorDescription}}. No problem! You can try again whenever you're ready.</p>
+        </div>
+        <div class="flex-group align-self-end">
+            <button mat-flat-button>Retry</button>
+        </div>
+    </div>
+</div>

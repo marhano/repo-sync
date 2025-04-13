@@ -18,6 +18,8 @@ import { WindowNavBarComponent } from '../../components/window-nav-bar/window-na
 import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
 import { User } from '../../interfaces/user.interface';
+import { environment } from '../../../environments/environment';
+import { SessionService } from '../../services/session/session.service';
 
 export interface Issue {
   issueNumber: number;
@@ -61,10 +63,18 @@ export class HomeComponent implements OnInit {
   constructor(
     private gitApiService: GitApiService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private sessionService: SessionService
   ){}
 
   async ngOnInit(){
+    const token = this.sessionService.getSession('token');
+    if(token){
+      this.gitApiService.token = token;
+    }else{
+      this.router.navigate(['/login']);
+    }
+
     const response = await this.gitApiService.listRepositories();
 
     this.repos = response;
