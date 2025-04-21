@@ -75,7 +75,9 @@ export class WindowNavBarComponent {
   }
 
   ngAfterViewInit(){
-    document.addEventListener('click', this.handleOutsideClick.bind(this));
+    if(typeof document !== 'undefined'){
+      document.addEventListener('click', this.handleOutsideClick.bind(this));
+    }
   }
 
   openSettings(){
