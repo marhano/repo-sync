@@ -18,7 +18,6 @@ export class SessionService {
     const updatedData = { ...currentData, ...newData };
     
     //localStorage.setItem(this.key, JSON.stringify(updatedData));
-    console.log(updatedData);
     await this.jsonService.setItem(this.key, updatedData);
   }
 
@@ -30,7 +29,6 @@ export class SessionService {
       return key ? null : {};
     }
 
-    
-    return key ? storedData[key] || null : storedData;
+    return key ? storedData[key] : storedData;
   }
 }

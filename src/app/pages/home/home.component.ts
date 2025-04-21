@@ -96,7 +96,29 @@ export class HomeComponent implements OnInit {
   }
 
   async ngAfterViewInit(){
-    //const user = await this.gitApiService.getAuthUserInformation();
+    if(typeof document !== 'undefined'){
+       //const user = await this.gitApiService.getAuthUserInformation();
+      const mode = await this.sessionService.getSession('darkMode');
+      const theme = await this.sessionService.getSession('theme');
+
+      const container = document.querySelector('html') as HTMLElement;
+
+      if(mode){
+        container.classList.add('dark-mode');
+      }else{
+        container.classList.remove('dark-mode');
+      }
+
+      if(theme){
+        container.classList.forEach((className) => {
+          if (className.includes('palette')) {
+            container.classList.remove(className);
+          }
+        });
+    
+        container.classList.add(theme);
+      }
+    }
   }
 
   createIssue(): void{

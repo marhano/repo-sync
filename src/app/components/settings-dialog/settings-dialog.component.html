@@ -1,0 +1,36 @@
+
+<div class="grid-group">
+    <div class="sidebar">
+        <ul>
+            <li><mat-icon>settings</mat-icon> General</li>
+            <li class="active"><mat-icon>palette</mat-icon> Themes</li>
+            <li><mat-icon>info</mat-icon> About</li>
+            <mat-slide-toggle (change)="onToggle($event)" [(ngModel)]="darkMode"><mat-icon>dark_mode</mat-icon></mat-slide-toggle>
+        </ul>
+    </div>
+    <div class="main-content">
+
+        <div class="general-settings-container d-none">
+            <div class="flex-group flex-column gap-8">
+                <h1>General</h1>
+            </div>
+        </div>
+
+        <div class="themes-container">
+            <div class="flex-group flex-column gap-8">
+                <h1>Themes</h1>
+                <p>Personalize your experience with themes that match your style. Manually select a theme or sync with system settings and let the machine set your day and night themes.</p>
+                
+                <mat-form-field appearance="outline">
+                    <mat-label>Palette</mat-label>
+                    <mat-select (selectionChange)="onChange($event)">
+                        <mat-option value="red-palette">Red</mat-option>
+                        <mat-option value="green-palette">Green</mat-option>
+                        <mat-option value="azure-palette">Azure</mat-option>
+                        <mat-option value="violet-palette">Violet</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>
