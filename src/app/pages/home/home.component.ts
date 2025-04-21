@@ -20,6 +20,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { User } from '../../interfaces/user.interface';
 import { environment } from '../../../environments/environment';
 import { SessionService } from '../../services/session/session.service';
+import { CookieService } from 'ngx-cookie-service';
 
 export interface Issue {
   issueNumber: number;
@@ -43,10 +44,13 @@ export interface Issue {
     MatOptionModule,
     ReactiveFormsModule,
     WindowNavBarComponent,
-    MatMenuModule
+    MatMenuModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
+  providers: [
+    CookieService
+  ]
 })
 
 export class HomeComponent implements OnInit {
@@ -64,7 +68,8 @@ export class HomeComponent implements OnInit {
     private gitApiService: GitApiService,
     private dialog: MatDialog,
     private router: Router,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private cookieService: CookieService
   ){}
 
   async ngOnInit(){
@@ -87,12 +92,13 @@ export class HomeComponent implements OnInit {
         this.filterRepo();
       });
 
-    // const savedProject = localStorage.getItem('selectedProject');
-    // if(savedProject){
-    //   this.selectedProject = savedProject;
-    //   this.dataSource = await this.gitApiService.listRepositoryIssues(savedProject);
-    //   this.assignees = await this.gitApiService.listAssignees(savedProject);
-    // }
+    const savedProject =  this.cookieService.get('selectedProject');
+    if(savedProject){
+      this.selectedProject = savedProject;
+      this.dataSource = await this.gitApiService.listRepositoryIssues(savedProject);
+      this.assignees = await this.gitApiService.listAssignees(savedProject);
+    }
+
   }
 
   async ngAfterViewInit(){
@@ -130,14 +136,15 @@ export class HomeComponent implements OnInit {
 
   async onProjectChange(event: MatSelectChange){
     this.selectedProject = event.value;
-    console.log("Selected Project: ", this.selectedProject);
 
-    //localStorage.setItem('selectedProject', this.selectedProject.full_name);
+    const expires = new Date();
+    expires.setDate(expires.getDate() + 1);
+    this.cookieService.set('selectedProject', this.selectedProject.full_name, { path: '/', expires});
 
     const response = await this.gitApiService.listRepositoryIssues(this.selectedProject.full_name);
-    console.log(response);
 
     this.dataSource = response;
+    this.assignees = await this.gitApiService.listAssignees(this.selectedProject.full_name);
     
   }
 

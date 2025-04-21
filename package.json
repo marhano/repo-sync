@@ -33,6 +33,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "marked": "^15.0.7",
+    "ngx-cookie-service": "^19.1.2",
     "ngx-markdown": "^19.1.1",
     "ngx-mat-select-search": "^8.0.0",
     "rxjs": "~7.8.0",
