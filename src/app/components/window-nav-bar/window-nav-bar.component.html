@@ -1,4 +1,4 @@
-<div class="flex-group space-between window-nav-bar">
+<!-- <div class="flex-group space-between window-nav-bar">
     <div class="flex-group">
         <button mat-icon-button>
             <mat-icon>menu</mat-icon>
@@ -28,4 +28,52 @@
             <mat-icon>close</mat-icon>
         </button>
     </div>
-</div>
+</div> -->
+<mat-toolbar>
+    <div class="flex-group">
+        <button mat-icon-button>
+            <mat-icon>menu</mat-icon>
+        </button>
+        <button (click)="goBack()" mat-icon-button>
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <button (click)="goForward()" mat-icon-button>
+            <mat-icon>arrow_forward</mat-icon>
+        </button>
+    </div>
+    <span class="example-spacer"></span>
+    <button mat-icon-button>
+        <mat-icon>notifications</mat-icon>
+    </button>
+    <div class="profile-menu-container">
+        <button (click)="showProfileMenu($event)" mat-icon-button class="profile-button">
+            <mat-icon>account_circle</mat-icon>
+        </button>
+
+        <div class="profile-menu">
+            <div class="flex-group flex-column align-center">
+                <mat-icon>account_circle</mat-icon>
+                <h6>marhano</h6>
+                <span>carullomarjan&#64;gmail.com</span>
+                <button class="button-small-corner w-100" mat-stroked-button>
+                    View Profile
+                </button>
+                <ul>
+                    <li (click)="openSettings()">Settings</li>
+                    <li>Sign Out</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="flex-group">
+        <button id="minimize-button" mat-icon-button>
+            <mat-icon>minimize</mat-icon>
+        </button>
+        <button id="maximize-button" mat-icon-button>
+            <mat-icon>crop_square</mat-icon>
+        </button>
+        <button mat-icon-button class="window-close">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</mat-toolbar>

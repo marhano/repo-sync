@@ -8,3 +8,62 @@
     z-index: 11;
     padding: 0px 0 4px;
 }
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.profile-menu-container{
+    position: relative;
+}
+
+.profile-button{
+    mat-icon{
+        pointer-events: none;
+    }
+    span{
+        pointer-events: none;
+    }
+}
+
+.profile-menu{
+    position: absolute;
+    background: var(--mat-sys-surface-container);
+    z-index: 100;
+    right: 0;
+    padding: 1rem;
+    // line-height: 1rem;
+    border-radius: 0.5rem;
+    min-width: 250px;
+    display: none;
+
+    h6{
+        font-size: 16px;
+        margin: 0;
+    }
+
+    span{
+        font-size: 10px;
+    }
+
+    ul{
+        list-style-type:none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        padding-top: 1rem;
+
+        li{
+            font-size: 12px;
+            text-align: start;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+
+            &:hover{
+                background: var(--mat-sys-background);
+            }
+        }
+    }
+}
