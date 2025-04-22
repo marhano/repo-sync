@@ -149,6 +149,11 @@ mat-form-field{
 .user-avatar{
   width: 24px;
   border-radius: 24px;
+
+  &__lg{
+    width: 48px;
+    border-radius: 48px;
+  }
 }
 
 ::-webkit-scrollbar { display: none; }

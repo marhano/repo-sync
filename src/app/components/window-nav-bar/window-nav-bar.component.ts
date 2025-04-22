@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SettingsDialogComponent } from '../settings-dialog/settings-dialog.component';
 import { IpcRenderer } from 'electron'; 
 import { SessionService } from '../../services/session/session.service';
+import { GitApiService } from '../../services/git-api/git-api.service';
 
 @Component({
   selector: 'app-window-nav-bar',
@@ -27,9 +28,11 @@ import { SessionService } from '../../services/session/session.service';
 export class WindowNavBarComponent {
   private ipc!: IpcRenderer;
   maximizeIcon = signal('crop_square');
+  userProfile!: any;
 
   private sessionService = inject(SessionService);
   private router = inject(Router);
+  private gitApiService = inject(GitApiService);
 
   constructor(
     private location: Location,
@@ -73,8 +76,6 @@ export class WindowNavBarComponent {
     if(container){
       const profileMenu = container.querySelector('.profile-menu') as HTMLElement;
 
-      console.log(profileMenu);
-
       if(profileMenu){
         const isVisible = profileMenu.style.display === "block";
         profileMenu.style.display = isVisible ? 'none' : 'block';
@@ -102,10 +103,14 @@ export class WindowNavBarComponent {
     }
   }
 
-  ngAfterViewInit(){
+  async ngAfterViewInit(){
     if(typeof document !== 'undefined'){
       document.addEventListener('click', this.handleOutsideClick.bind(this));
     }
+
+    this.userProfile = await this.gitApiService.getAuthUserInformation();
+
+    console.log(this.userProfile);
   }
 
   openSettings(){

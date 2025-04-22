@@ -16,13 +16,13 @@
     </button>
     <div class="profile-menu-container">
         <button (click)="showProfileMenu($event)" mat-icon-button class="profile-button">
-            <mat-icon>account_circle</mat-icon>
+            <img class="user-avatar" src="{{userProfile?.avatar_url}}" alt="">
         </button>
 
         <div class="profile-menu">
-            <div class="flex-group flex-column align-center">
-                <mat-icon>account_circle</mat-icon>
-                <h6>marhano</h6>
+            <div class="flex-group flex-column align-center gap-8">
+                <img class="user-avatar__lg" src="{{userProfile?.avatar_url}}" alt="">
+                <h6>{{userProfile?.login}}</h6>
                 <span>carullomarjan&#64;gmail.com</span>
                 <button class="button-small-corner w-100" mat-stroked-button>
                     View Profile
