@@ -38,7 +38,7 @@ export class GitApiService {
         headers: await this.getHeaders(),
         params: {
           visibility: 'all',
-          affiliation: 'collaborator',
+          affiliation: 'owner,collaborator,organization_member',
           per_page: "100"
         }
     }));
