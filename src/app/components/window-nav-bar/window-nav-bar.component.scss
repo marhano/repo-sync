@@ -1,12 +1,14 @@
 .window-nav-bar{
     background: var(--mat-sys-surface-container);  //var(--mat-sys-on-background); //#fbfbfb;
     width: 100%;
-    overflow: hidden;
-    position: fixed;
+    // overflow: hidden;
+    // position: fixed;
     top: 0;
     left: 0;
     z-index: 11;
     padding: 0px 0 4px;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .example-spacer {
@@ -18,12 +20,18 @@
 }
 
 .profile-button{
+    margin-right: 0.5rem;
+
     mat-icon{
         pointer-events: none;
     }
     span{
         pointer-events: none;
     }
+}
+
+::-webkit-scrollbar {
+    width: 20px;
 }
 
 .profile-menu{
@@ -65,5 +73,19 @@
                 background: var(--mat-sys-background);
             }
         }
+    }
+}
+
+.example-spacer{
+    -webkit-app-region: drag;
+}
+
+.btn{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:hover{
+        background-color: var(--mat-sys-outline-variant);
     }
 }

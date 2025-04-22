@@ -1,35 +1,4 @@
-<!-- <div class="flex-group space-between window-nav-bar">
-    <div class="flex-group">
-        <button mat-icon-button>
-            <mat-icon>menu</mat-icon>
-        </button>
-        <button (click)="goBack()" mat-icon-button>
-            <mat-icon>arrow_back</mat-icon>
-        </button>
-        <button (click)="goForward()" mat-icon-button>
-            <mat-icon>arrow_forward</mat-icon>
-        </button>
-    </div>
-    <div class="flex-group gap-8">
-        <mat-form-field appearance="outline" class="small-input mt-8">
-            <mat-label>Search</mat-label>
-            <mat-icon matPrefix>search</mat-icon>
-            <input matInput>
-        </mat-form-field>
-    </div>
-    <div class="flex-group">
-        <button id="minimize-button" mat-icon-button>
-            <mat-icon>minimize</mat-icon>
-        </button>
-        <button id="maximize-button" mat-icon-button>
-            <mat-icon>crop_square</mat-icon>
-        </button>
-        <button  mat-icon-button class="window-close">
-            <mat-icon>close</mat-icon>
-        </button>
-    </div>
-</div> -->
-<mat-toolbar>
+<div class="flex-group space-between window-nav-bar">
     <div class="flex-group">
         <button mat-icon-button>
             <mat-icon>menu</mat-icon>
@@ -60,20 +29,20 @@
                 </button>
                 <ul>
                     <li (click)="openSettings()">Settings</li>
-                    <li>Sign Out</li>
+                    <li (click)="signOut()">Sign Out</li>
                 </ul>
             </div>
         </div>
     </div>
     <div class="flex-group">
-        <button id="minimize-button" mat-icon-button>
+        <button class="btn" (click)="minimizeWindow()">
             <mat-icon>minimize</mat-icon>
         </button>
-        <button id="maximize-button" mat-icon-button>
-            <mat-icon>crop_square</mat-icon>
+        <button class="btn" (click)="maximizeWindow()">
+            <mat-icon>{{maximizeIcon()}}</mat-icon>
         </button>
-        <button mat-icon-button class="window-close">
+        <button class="btn window-close" (click)="closeWindow()">
             <mat-icon>close</mat-icon>
         </button>
     </div>
-</mat-toolbar>
+</div>

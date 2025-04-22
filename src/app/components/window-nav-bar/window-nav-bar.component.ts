@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { Component, Input, Signal, ViewChild, inject, signal } from '@angular/core';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -9,6 +9,8 @@ import { Location } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsDialogComponent } from '../settings-dialog/settings-dialog.component';
+import { IpcRenderer } from 'electron'; 
+import { SessionService } from '../../services/session/session.service';
 
 @Component({
   selector: 'app-window-nav-bar',
@@ -23,11 +25,35 @@ import { SettingsDialogComponent } from '../settings-dialog/settings-dialog.comp
   styleUrl: './window-nav-bar.component.scss'
 })
 export class WindowNavBarComponent {
+  private ipc!: IpcRenderer;
+  maximizeIcon = signal('crop_square');
+
+  private sessionService = inject(SessionService);
+  private router = inject(Router);
+
   constructor(
     private location: Location,
     private dialog: MatDialog
   ){
+    if(typeof window !== 'undefined'){
+      if((<any>window).require){
+        try{
+          this.ipc = (<any>window).require('electron').ipcRenderer;
 
+          this.ipc.on('unmaximize-window', () => {
+            this.maximizeIcon.set('crop_square');
+          });
+
+          this.ipc.on('maximized-window', () => {
+            this.maximizeIcon.set('filter_none');
+          });
+        }catch(error){
+          throw error;
+        }
+      }else{
+        console.warn('App not running inside Electron!');
+      }
+    }
   }
 
   goBack(){
@@ -46,6 +72,8 @@ export class WindowNavBarComponent {
 
     if(container){
       const profileMenu = container.querySelector('.profile-menu') as HTMLElement;
+
+      console.log(profileMenu);
 
       if(profileMenu){
         const isVisible = profileMenu.style.display === "block";
@@ -87,5 +115,37 @@ export class WindowNavBarComponent {
     });
 
     this.closeAllDialogs();
+  }
+
+  async signOut(){
+    await this.sessionService.removeSession('token');
+
+    this.router.navigate(['/login']);
+
+    this.closeAllDialogs();
+  }
+
+  minimizeWindow(){
+    if(!this.ipc){
+      console.warn('App not running inside Electron!');
+      return;
+    }
+    this.ipc.send('minimize-window');
+  }
+
+  maximizeWindow(){
+    if(!this.ipc){
+      console.warn('App not running inside Electron!');
+      return;
+    }
+    this.ipc.send('maximize-window');
+  }
+
+  closeWindow(){
+    if(!this.ipc){
+      console.warn('App not running inside Electron!');
+      return;
+    }
+    this.ipc.send('close-window');
   }
 }

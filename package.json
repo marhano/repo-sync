@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "main.js",
   "scripts": {
-    "electron": "ng build --base-href ./ && electron .",
+    "electron": "electron .",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
@@ -14,7 +14,7 @@
     "start:prod": "ng serve --configuration=production",
     "start:ssr": "node dist/repo-sync/server/server.mjs",
     "start:web": "concurrently \"ng build\" \"npm run start:ssr\" \"npm run start\"",
-    "start:electron": "concurrently \"ng build\" \"npm run start:ssr\" \"npm run electron\""
+    "start:electron": "ng build --base-href ./ && concurrently \"npm run start:ssr\" \"npm run electron\""
   },
   "private": true,
   "dependencies": {
