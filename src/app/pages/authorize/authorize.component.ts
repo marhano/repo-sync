@@ -46,11 +46,13 @@ export class AuthorizeComponent implements OnInit{
         const code = new URLSearchParams(window.location.search).get('code');
         if(code){
           const token = await this.gitApiService.requestAccessToken(code);
-          this.sessionService.setSession({
+          await this.sessionService.setSession({
             token: token.access_token
           });
           this.gitApiService.token = token;
-          this.router.navigate(['/home']);
+          setTimeout(() => {
+            this.router.navigate(['/home']);
+          }, 2000);
         }
       }else{
         console.log('Server-side execution, skipping window-based logic');

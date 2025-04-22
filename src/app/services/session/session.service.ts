@@ -31,4 +31,8 @@ export class SessionService {
 
     return key ? storedData[key] : storedData;
   }
+
+  async removeSession(key?: string): Promise<any>{
+    await this.jsonService.removeItem(this.key);
+  }
 }
