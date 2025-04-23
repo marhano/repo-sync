@@ -5,7 +5,9 @@ const path = require('path');
 const url = require('url');
 const axios = require('axios');
 const { spawn } = require('child_process');
-require('dotenv').config();
+require('dotenv').config({
+  path: path.join(process.resourcesPath, '.env')
+});
 
 if(require('electron-squirrel-startup')) app.quit();
 
@@ -39,19 +41,28 @@ function createWindow(){
 }
 
 async function getAccessToken(authCode){
-  const response = await axios.post(
-    'https://github.com/login/oauth/access_token',
-    {
-      client_id: process.env.CLIENT_ID,
-      client_secret: process.env.CLIENT_SECRET,
-      code: authCode,
-    },
-    {
-      headers: { Accept: 'application/json' },
-    }
-  );
-
-  return response.data;
+  try{
+    const response = await axios.post(
+      'https://github.com/login/oauth/access_token',
+      new URLSearchParams({
+        client_id: process.env.CLIENT_ID,
+        client_secret: process.env.CLIENT_SECRET,
+        code: authCode
+      }).toString(),
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+    );
+  
+    return response.data;
+  }catch(error){
+    console.error(error);
+    return null;
+  }
+ 
 }
 
 app.setAppUserModelId("com.marhano.RepoSync.RepoSync");
@@ -75,16 +86,16 @@ if(!gotTheLock){
       mainWindow.focus();
     }
 
-    const deepLink = commandLine.find(arg => arg.startsWith('repo-sync://auth'));
+    const deepLink = commandLine[commandLine.length - 1];
 
-    if (deepLink) {
+    if (deepLink.startsWith('repo-sync://auth')) {
       const authCode = new URL(deepLink).searchParams.get('code');
 
       getAccessToken(authCode).then(data => {
         mainWindow.loadURL(`file://${__dirname}/dist/repo-sync/browser/index.html#/authorize`);
         setTimeout(() => {
           mainWindow.webContents.send('auth-success', data);
-        }, 2000);
+        }, 3000);
       });
     }
   });
