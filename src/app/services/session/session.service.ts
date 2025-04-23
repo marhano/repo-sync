@@ -17,13 +17,15 @@ export class SessionService {
 
     const updatedData = { ...currentData, ...newData };
     
-    //localStorage.setItem(this.key, JSON.stringify(updatedData));
-    await this.jsonService.setItem(this.key, updatedData);
+    localStorage.setItem(this.key, JSON.stringify(updatedData));
   }
 
   async getSession(key?: string): Promise<any>{
-    //const storedData = localStorage.getItem(this.key);
-    const storedData = await this.jsonService.getItem(this.key);
+    const storedDatas = localStorage.getItem(this.key) as any;
+    let storedData;
+    if(storedDatas){
+      storedData = JSON.parse(storedDatas);
+    }
     
     if(!storedData){
       return key ? null : {};
@@ -33,6 +35,16 @@ export class SessionService {
   }
 
   async removeSession(key?: string): Promise<any>{
-    await this.jsonService.removeItem(this.key);
+    const storedDatas = localStorage.getItem(this.key);
+    if (!storedDatas) return;
+
+    const storedData = JSON.parse(storedDatas);
+
+    if (key) {
+      delete storedData[key];
+      localStorage.setItem(this.key, JSON.stringify(storedData));
+    } else {
+      localStorage.removeItem(this.key);
+    }
   }
 }

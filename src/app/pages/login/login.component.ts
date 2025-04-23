@@ -8,6 +8,7 @@ import { SessionService } from '../../services/session/session.service';
 import { GitApiService } from '../../services/git-api/git-api.service';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
+import { WindowNavBarComponent } from '../../components/window-nav-bar/window-nav-bar.component';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ import { isPlatformBrowser } from '@angular/common';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    WindowNavBarComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -35,6 +37,7 @@ export class LoginComponent implements OnInit{
   }
   async ngOnInit(){
     const token = await this.sessionService.getSession('token');
+    console.log(token);
     if(token){
       this.gitApiService.token = token;
       this.router.navigate(['/home']);

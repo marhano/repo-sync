@@ -5,15 +5,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { GitApiService } from '../../services/git-api/git-api.service';
 import { SessionService } from '../../services/session/session.service';
 import { Router } from '@angular/router';
-
-declare const window: any;
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { WindowNavBarComponent } from '../../components/window-nav-bar/window-nav-bar.component';
 
 @Component({
   selector: 'app-authorize',
   imports: [
     MatButtonModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    MatProgressSpinnerModule,
+    WindowNavBarComponent
   ],
   templateUrl: './authorize.component.html',
   styleUrl: './authorize.component.scss'

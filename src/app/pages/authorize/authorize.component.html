@@ -1,8 +1,14 @@
+<app-window-nav-bar [default]="false" [positionFixed]="true"></app-window-nav-bar>
 <div class="container">
     <div class="card card-center flex-group flex-column gap-16">
         <div *ngIf="errorDescription" class="flex-group flex-column gap-8">
             <h1>Authorization Cancelled</h1>
             <p>{{errorDescription}}. No problem! You can try again whenever you're ready.</p>
+        </div>
+
+        <div *ngIf="!errorDescription" class="flex-group flex-column align-center gap-16">
+            <mat-spinner></mat-spinner>
+            <p>Authenticating with GitHub...</p>
         </div>
         <div class="flex-group align-self-end">
             <button mat-flat-button>Retry</button>

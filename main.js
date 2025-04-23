@@ -1,8 +1,11 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url');
+const axios = require('axios');
+const { spawn } = require('child_process');
 
 let mainWindow;
+let nodeServer;
 
 function createWindow(){
   mainWindow = new BrowserWindow({
@@ -12,14 +15,14 @@ function createWindow(){
       nodeIntegration: true,
       contextIsolation: false,
       devTools: true,
-      //preload: path.join(__dirname, "preload.js")
+      preload: path.join(__dirname, "preload.js")
     },
     frame: false
   });
 
   mainWindow.loadURL(
     url.format({
-      pathname: path.join(__dirname, 'dist/repo-sync/browser', 'index.csr.html'), // Ensure this points to your index.html
+      pathname: path.join(__dirname, 'dist/repo-sync/browser', 'index.html'), // Ensure this points to your index.html
       protocol: 'file:',
       slashes: true,
     })
@@ -30,7 +33,19 @@ function createWindow(){
   });
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  nodeServer = spawn('node', [path.join(__dirname, 'server.js')], {
+    stdio: 'inherit',
+    shell: true
+  });
+
+  createWindow();
+});
+
+app.on('quit', () => {
+  if (nodeServer) nodeServer.kill();
+});
+
 
 ipcMain.on('minimize-window', () => {
   mainWindow.minimize();
@@ -48,5 +63,15 @@ ipcMain.on('maximize-window', () => {
 
 ipcMain.on('close-window', () => {
   mainWindow.close();
+});
+
+ipcMain.on('exchange-token', async (event, code) => {
+  try{
+    const response = await axios.post('http://localhost:3000/api/exchange-token', { code });
+    event.reply('token-response', response.data);
+  }catch(error){
+    console.error('Error exchanging token: ', error);
+    event.reply('token-response', null);
+  }
 });
 

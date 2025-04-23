@@ -5,13 +5,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { User } from '../../interfaces/user.interface';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsDialogComponent } from '../settings-dialog/settings-dialog.component';
 import { IpcRenderer } from 'electron'; 
 import { SessionService } from '../../services/session/session.service';
 import { GitApiService } from '../../services/git-api/git-api.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-window-nav-bar',
@@ -20,7 +21,9 @@ import { GitApiService } from '../../services/git-api/git-api.service';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatToolbarModule
+    MatToolbarModule,
+    CommonModule,
+    FormsModule
   ],
   templateUrl: './window-nav-bar.component.html',
   styleUrl: './window-nav-bar.component.scss'
@@ -29,6 +32,9 @@ export class WindowNavBarComponent {
   private ipc!: IpcRenderer;
   maximizeIcon = signal('crop_square');
   userProfile!: any;
+
+  @Input() positionFixed: boolean = false;
+  @Input() default: boolean = true;
 
   private sessionService = inject(SessionService);
   private router = inject(Router);
@@ -108,9 +114,9 @@ export class WindowNavBarComponent {
       document.addEventListener('click', this.handleOutsideClick.bind(this));
     }
 
-    this.userProfile = await this.gitApiService.getAuthUserInformation();
-
-    console.log(this.userProfile);
+    if(this.default){
+      this.userProfile = await this.gitApiService.getAuthUserInformation();
+    }
   }
 
   openSettings(){

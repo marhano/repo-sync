@@ -1,36 +1,40 @@
-<div class="flex-group space-between window-nav-bar">
+<div [class.fixed]="positionFixed" class="flex-group space-between window-nav-bar">
     <div class="flex-group">
         <button mat-icon-button>
             <mat-icon>menu</mat-icon>
         </button>
-        <button (click)="goBack()" mat-icon-button>
-            <mat-icon>arrow_back</mat-icon>
-        </button>
-        <button (click)="goForward()" mat-icon-button>
-            <mat-icon>arrow_forward</mat-icon>
-        </button>
+        <div *ngIf="default" class="flex-group">
+            <button (click)="goBack()" mat-icon-button>
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <button (click)="goForward()" mat-icon-button>
+                <mat-icon>arrow_forward</mat-icon>
+            </button>
+        </div>
     </div>
     <span class="example-spacer"></span>
-    <button mat-icon-button>
-        <mat-icon>notifications</mat-icon>
-    </button>
-    <div class="profile-menu-container">
-        <button (click)="showProfileMenu($event)" mat-icon-button class="profile-button">
-            <img class="user-avatar" src="{{userProfile?.avatar_url}}" alt="">
+    <div class="flex-group" *ngIf="default">
+        <button mat-icon-button>
+            <mat-icon>notifications</mat-icon>
         </button>
-
-        <div class="profile-menu">
-            <div class="flex-group flex-column align-center gap-8">
-                <img class="user-avatar__lg" src="{{userProfile?.avatar_url}}" alt="">
-                <h6>{{userProfile?.login}}</h6>
-                <span>carullomarjan&#64;gmail.com</span>
-                <button class="button-small-corner w-100" mat-stroked-button>
-                    View Profile
-                </button>
-                <ul>
-                    <li (click)="openSettings()">Settings</li>
-                    <li (click)="signOut()">Sign Out</li>
-                </ul>
+        <div class="profile-menu-container">
+            <button (click)="showProfileMenu($event)" mat-icon-button class="profile-button">
+                <img class="user-avatar" src="{{userProfile?.avatar_url}}" alt="">
+            </button>
+    
+            <div class="profile-menu">
+                <div class="flex-group flex-column align-center gap-8">
+                    <img class="user-avatar__lg" src="{{userProfile?.avatar_url}}" alt="">
+                    <h6>{{userProfile?.login}}</h6>
+                    <span>carullomarjan&#64;gmail.com</span>
+                    <button class="button-small-corner w-100" mat-stroked-button>
+                        View Profile
+                    </button>
+                    <ul>
+                        <li (click)="openSettings()">Settings</li>
+                        <li (click)="signOut()">Sign Out</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

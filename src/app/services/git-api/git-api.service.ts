@@ -26,7 +26,7 @@ export class GitApiService {
   }
 
   requestAccessToken(code: string): Promise<any>{
-    return lastValueFrom(this.http.post('http://localhost:4000/api/exchange-token', { code }, {
+    return lastValueFrom(this.http.post('http://localhost:3000/api/exchange-token', { code }, {
       headers: { 'Content-Type': 'application/json' }
     }));
   }
