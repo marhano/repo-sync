@@ -9,7 +9,7 @@ app.use(express.json());
 
 app.post('/api/exchange-token', async (req, res) => {
   const { code } = req.body;
-
+console.log(code);
   try {
     const response = await axios.post(
       'https://github.com/login/oauth/access_token',
