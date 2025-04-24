@@ -92,7 +92,7 @@ export class HomeComponent implements OnInit {
         this.filterRepo();
       });
 
-    const savedProject =  this.cookieService.get('selectedProject');
+    const savedProject = await this.sessionService.getSession('selectedProject');
     if(savedProject){
       this.selectedProject = savedProject;
       this.dataSource = await this.gitApiService.listRepositoryIssues(savedProject);
@@ -137,9 +137,9 @@ export class HomeComponent implements OnInit {
   async onProjectChange(event: MatSelectChange){
     this.selectedProject = event.value;
 
-    const expires = new Date();
-    expires.setDate(expires.getDate() + 1);
-    this.cookieService.set('selectedProject', this.selectedProject.full_name, { path: '/', expires});
+    await this.sessionService.setSession({
+      selectedProject: this.selectedProject.full_name
+    });
 
     const response = await this.gitApiService.listRepositoryIssues(this.selectedProject.full_name);
 
