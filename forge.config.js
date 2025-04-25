@@ -18,7 +18,8 @@ module.exports = {
   packagerConfig: {
     asar: true,
     extraResource: [
-      "./.env"
+      "./.env",
+      "./.env.keys"
     ]
   },
   rebuildConfig: {},

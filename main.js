@@ -2,17 +2,33 @@ const { updateElectronApp } = require('update-electron-app');
 updateElectronApp();
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const fs = require('fs');
 const url = require('url');
 const axios = require('axios');
 const dotenvx = require('@dotenvx/dotenvx');
 
-if (process.env.NODE_ENV === 'production') {
-  dotenvx.config({
-    path: path.join(process.resourcesPath, '.env') // Use this only in production
-  });
+if (!process.defaultApp) {
+  console.log("PRODUCTION");
+
+  const envPath = path.join(process.resourcesPath, '.env');
+  const envKeysPath = path.join(process.resourcesPath, '.env.keys');
+
+  if(fs.existsSync(envKeysPath)){
+    const envKeys = fs.readFileSync(envKeysPath, 'utf-8');
+    const match = envKeys.match(/DOTENV_PRIVATE_KEY="(.+?)"/);
+
+    if(match){
+      process.env.DOTENV_PRIVATE_KEY = match[1];
+    }
+  }
+
+  dotenvx.config({ path: envPath }); // Use this only in production
 } else {
+  console.log("DEVELOPMENT");
   dotenvx.config(); // Defaults to loading `.env` in development
 }
+
+console.log(process.env.CLIENT_ID);
 
 if(require('electron-squirrel-startup')) app.quit();
 
