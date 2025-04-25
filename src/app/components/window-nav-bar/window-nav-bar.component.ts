@@ -9,10 +9,10 @@ import { CommonModule, Location } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsDialogComponent } from '../settings-dialog/settings-dialog.component';
-import { IpcRenderer } from 'electron'; 
 import { SessionService } from '../../services/session/session.service';
 import { GitApiService } from '../../services/git-api/git-api.service';
 import { FormsModule } from '@angular/forms';
+import { ElectronService } from 'ngx-electronyzer';
 
 @Component({
   selector: 'app-window-nav-bar',
@@ -29,7 +29,6 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './window-nav-bar.component.scss'
 })
 export class WindowNavBarComponent {
-  private ipc!: IpcRenderer;
   maximizeIcon = signal('crop_square');
   userProfile!: any;
 
@@ -39,29 +38,24 @@ export class WindowNavBarComponent {
   private sessionService = inject(SessionService);
   private router = inject(Router);
   private gitApiService = inject(GitApiService);
+  private electronService = inject(ElectronService);
 
   constructor(
     private location: Location,
     private dialog: MatDialog
   ){
-    if(typeof window !== 'undefined'){
-      if((<any>window).require){
-        try{
-          this.ipc = (<any>window).require('electron').ipcRenderer;
-
-          this.ipc.on('unmaximize-window', () => {
-            this.maximizeIcon.set('crop_square');
-          });
-
-          this.ipc.on('maximized-window', () => {
-            this.maximizeIcon.set('filter_none');
-          });
-        }catch(error){
-          throw error;
-        }
-      }else{
-        console.warn('App not running inside Electron!');
+    try{
+      if(this.electronService.isElectronApp){
+        this.electronService.ipcRenderer.on('unmaximize-window', () => {
+          this.maximizeIcon.set('crop_square');
+        });
+  
+        this.electronService.ipcRenderer.on('maximized-window', () => {
+          this.maximizeIcon.set('filter_none');
+        });
       }
+    }catch(error){
+      throw error;
     }
   }
 
@@ -137,26 +131,26 @@ export class WindowNavBarComponent {
   }
 
   minimizeWindow(){
-    if(!this.ipc){
+    if(!this.electronService.isElectronApp){
       console.warn('App not running inside Electron!');
       return;
     }
-    this.ipc.send('minimize-window');
+    this.electronService.ipcRenderer.send('minimize-window');
   }
 
   maximizeWindow(){
-    if(!this.ipc){
+    if(!this.electronService.isElectronApp){
       console.warn('App not running inside Electron!');
       return;
     }
-    this.ipc.send('maximize-window');
+    this.electronService.ipcRenderer.send('maximize-window');
   }
 
   closeWindow(){
-    if(!this.ipc){
+    if(!this.electronService.isElectronApp){
       console.warn('App not running inside Electron!');
       return;
     }
-    this.ipc.send('close-window');
+    this.electronService.ipcRenderer.send('close-window');
   }
 }

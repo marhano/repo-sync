@@ -41,6 +41,6 @@ testem.log
 .DS_Store
 Thumbs.db
 
-.env
+.env.keys
 /out
 /environments
