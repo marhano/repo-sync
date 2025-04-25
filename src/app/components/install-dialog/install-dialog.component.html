@@ -1,0 +1,13 @@
+<div mat-dialog-content>
+    <div class="flex-group flex-column gap-16">
+        <h1>Update Ready!</h1>
+        <div class="flex-group flex-column">
+            <p>Latest version has been downloaded.</p>
+            <p>You need to restart the application to apply the update.</p>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Later</button>
+    <button (click)="restartNow()" mat-flat-button>Restart Now</button>
+</div>

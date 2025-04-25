@@ -1,11 +1,17 @@
-const { updateElectronApp } = require('update-electron-app');
-updateElectronApp();
+// const { updateElectronApp } = require('update-electron-app');
+// updateElectronApp();
+const { autoUpdater } = require('electron-updater');
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
 const axios = require('axios');
 const dotenvx = require('@dotenvx/dotenvx');
+const storage = require('node-persist');
+
+storage.init();
+
+autoUpdater.checkForUpdates();
 
 if (!process.defaultApp) {
   console.log("PRODUCTION");
@@ -121,12 +127,21 @@ if(!gotTheLock){
     }
   });
 
-  app.whenReady().then(() => {
-    // nodeServer = spawn('node', [path.join(__dirname, 'server.js')], {
-    //   stdio: 'inherit',
-    //   shell: true
-    // });
+  app.whenReady().then(async () => {
     createWindow();
+
+    if(await storage.get('updateReady')){
+      mainWindow.webContents.send('update-downloaded');
+    }else{
+      autoUpdater.on('update-available', (updateInfo) => {
+        mainWindow.webContents.send('update-available', updateInfo);
+      });
+      
+      autoUpdater.on('update-downloaded', async () => {
+        await storage.setItem('updateReady', true);
+        mainWindow.webContents.send('update-downloaded');
+      });
+    }
   });
 
   app.on('quit', () => {
@@ -134,7 +149,7 @@ if(!gotTheLock){
   });
 }
 
-
+// Window nav bar listeners
 ipcMain.on('minimize-window', () => {
   mainWindow.minimize();
 });
@@ -151,4 +166,14 @@ ipcMain.on('maximize-window', () => {
 
 ipcMain.on('close-window', () => {
   mainWindow.close();
+});
+
+// Auto update listeners
+ipcMain.on('download-update', () => {
+  autoUpdater.downloadUpdate();
+});
+
+ipcMain.on('install-update', async () => {
+  autoUpdater.quitAndInstall();
+  await storage.setItem('updateReady', false);
 });
