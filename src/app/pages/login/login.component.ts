@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit{
   }
   async ngOnInit(){
     const token = await this.sessionService.getSession('token');
-    console.log(token);
     if(token){
       this.gitApiService.token = token;
       this.router.navigate(['/home']);

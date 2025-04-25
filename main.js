@@ -1,13 +1,18 @@
 const { updateElectronApp } = require('update-electron-app');
 updateElectronApp();
-const { app, BrowserWindow, ipcMain, shell } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url');
 const axios = require('axios');
-const { spawn } = require('child_process');
-require('dotenv').config({
-  path: path.join(process.resourcesPath, '.env')
-});
+const dotenvx = require('@dotenvx/dotenvx');
+
+if (process.env.NODE_ENV === 'production') {
+  dotenvx.config({
+    path: path.join(process.resourcesPath, '.env') // Use this only in production
+  });
+} else {
+  dotenvx.config(); // Defaults to loading `.env` in development
+}
 
 if(require('electron-squirrel-startup')) app.quit();
 
