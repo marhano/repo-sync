@@ -1,7 +1,6 @@
-// const { updateElectronApp } = require('update-electron-app');
+//const { updateElectronApp } = require('update-electron-app');
 // updateElectronApp();
-const { autoUpdater } = require('electron-updater');
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, autoUpdater } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
@@ -11,6 +10,10 @@ const storage = require('node-persist');
 
 storage.init();
 
+const server = 'https://update.electronjs.org';
+const feed = `${server}/marhano/repo-sync/${process.platform}-${process.arch}/${app.getVersion()}`;
+
+autoUpdater.setFeedURL(feed);
 autoUpdater.checkForUpdates();
 
 if (!process.defaultApp) {
