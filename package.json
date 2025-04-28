@@ -7,6 +7,15 @@
     "type": "git",
     "url": "https://github.com/marhano/repo-sync"
   },
+  "build": {
+    "publish": [
+      {
+        "provider": "github",
+        "repo": "repo-sync",
+        "owner": "marhano"
+      }
+    ]
+  },
   "version": "0.0.5",
   "main": "main.js",
   "scripts": {

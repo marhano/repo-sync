@@ -3,12 +3,12 @@
         <div class="flex-group flex-column gap-8">
             <mat-icon>notifications_active</mat-icon>
             <h1>New version available!</h1>
-            <p>v{{updateInfo.version}}</p>
+            <p>{{updateInfo.releaseName}}</p>
         </div>
-        <markdown [data]="releaseNotes">Nothing to preview</markdown>
+        <markdown [data]="updateInfo.releaseNotes">Nothing to preview</markdown>
     </div>
 </div>
 <div mat-dialog-actions>
     <button mat-button mat-dialog-close>Not now</button>
-    <button (click)="download()" mat-flat-button>Download</button>
+    <button (click)="download()" mat-flat-button>Install</button>
 </div>
