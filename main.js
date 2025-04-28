@@ -1,5 +1,3 @@
-//const { updateElectronApp } = require('update-electron-app');
-// updateElectronApp();
 const { app, BrowserWindow, ipcMain, autoUpdater } = require('electron');
 const path = require('path');
 const fs = require('fs');
@@ -9,12 +7,6 @@ const dotenvx = require('@dotenvx/dotenvx');
 const storage = require('node-persist');
 
 storage.init();
-
-const server = 'https://update.electronjs.org';
-const feed = `${server}/marhano/repo-sync/${process.platform}-${process.arch}/${app.getVersion()}`;
-
-autoUpdater.setFeedURL(feed);
-autoUpdater.checkForUpdates();
 
 if (!process.defaultApp) {
   console.log("PRODUCTION");
@@ -37,12 +29,55 @@ if (!process.defaultApp) {
   dotenvx.config(); // Defaults to loading `.env` in development
 }
 
-console.log(process.env.CLIENT_ID);
-
 if(require('electron-squirrel-startup')) app.quit();
 
 let mainWindow;
-let nodeServer;
+
+function updateApp(){
+  const server = 'https://update.electronjs.org';
+  const feed = `${server}/marhano/repo-sync/${process.platform}-${process.arch}/${app.getVersion()}`;
+
+  autoUpdater.setFeedURL(feed);
+
+  autoUpdater.on('error', (error) => {
+    console.error('Error in auto-updater:', error);
+  });
+
+  autoUpdater.on('checking-for-update', () => {
+    console.log('Checking for updates...');
+  });
+
+  autoUpdater.on('update-available', () => {
+    console.log('Update available. Downloading...');
+  });
+
+  autoUpdater.on('update-not-available', () => {
+    console.log('No updates available.');
+  });
+
+  autoUpdater.on('update-downloaded', 
+    async (event, releaseNotes, releaseName, releaseDate, updateURL) => {
+    console.log("Update downloaded: ", [event, releaseNotes, releaseName, releaseDate, updateURL]);
+
+    try{
+      const response = await axios.get(updateURL);
+
+      mainWindow.webContents.send('update-downloaded', {
+        releaseNotes: response.data.notes, 
+        releaseName: response.data.name,
+        updateURL,
+        releaseDate 
+      });
+    }catch(error){
+      console.error("Error in trigger-update: ", error);
+    }
+  });
+
+  autoUpdater.checkForUpdates();
+  setInterval(() => {
+    autoUpdater.checkForUpdates();
+  }, 10 * 60 * 1000);
+}
 
 function createWindow(){
   mainWindow = new BrowserWindow({
@@ -133,23 +168,18 @@ if(!gotTheLock){
   app.whenReady().then(async () => {
     createWindow();
 
-    if(await storage.get('updateReady')){
-      mainWindow.webContents.send('update-downloaded');
+    if(!app.isPackaged){
+      const message = 'Aborting updates since app is in development mode.';
+      console.log(message);
     }else{
-      autoUpdater.on('update-available', (updateInfo) => {
-        mainWindow.webContents.send('update-available', updateInfo);
-      });
-      
-      autoUpdater.on('update-downloaded', async () => {
-        await storage.setItem('updateReady', true);
-        mainWindow.webContents.send('update-downloaded');
-      });
+      updateApp();
     }
   });
 
   app.on('quit', () => {
-    if (nodeServer) nodeServer.kill();
+    console.log('App is exiting...');
   });
+  
 }
 
 // Window nav bar listeners
@@ -172,11 +202,6 @@ ipcMain.on('close-window', () => {
 });
 
 // Auto update listeners
-ipcMain.on('download-update', () => {
-  autoUpdater.downloadUpdate();
-});
-
 ipcMain.on('install-update', async () => {
   autoUpdater.quitAndInstall();
-  await storage.setItem('updateReady', false);
 });
