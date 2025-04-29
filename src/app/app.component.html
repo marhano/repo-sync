@@ -1,1 +1,15 @@
-<router-outlet></router-outlet>
+
+<div class="flex-group flex-column h-100 overflow-hidden">
+    <app-window-nav-bar class="navbar"></app-window-nav-bar>
+    <div class="flex-group h-100">
+        <nav class="sidebar" *ngIf="showSidebar">
+            <ul>
+                <li routerLink="/dashboard" routerLinkActive="active" ariaCurrentWhenActive="page"><mat-icon>space_dashboard</mat-icon> Dashboard</li>
+                <li routerLink="/projects" routerLinkActive="active" ariaCurrentWhenActive="page"><mat-icon>workspaces</mat-icon> Projects</li>
+                <li routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page"><mat-icon>bug_report</mat-icon> Issues</li>
+            </ul>
+        </nav>
+        <router-outlet></router-outlet>
+    </div>
+</div>
+

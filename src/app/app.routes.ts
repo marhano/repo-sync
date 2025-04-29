@@ -17,6 +17,14 @@ export const routes: Routes = [
         path: 'authorize',
         loadComponent: () => import('./pages/authorize/authorize.component').then(c => c.AuthorizeComponent)
     },
+    {
+        path: 'dashboard',
+        loadComponent: () => import('./pages/dashboard/dashboard.component').then(c => c.DashboardComponent)
+    },
+    {
+        path: 'projects',
+        loadComponent: () => import('./pages/projects/projects.component').then(c => c.ProjectsComponent)
+    },
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { 
         path: '**', 
