@@ -1,0 +1,18 @@
+.container{
+    padding: 24px;
+    height: 100%;
+}
+
+.card{
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    border-radius: 0.5rem;
+    flex: 1;
+
+    &:hover{
+        background: var(--mat-sys-outline-variant);
+        transform: scale(1.03);
+        border-radius: 1rem;
+    }
+}

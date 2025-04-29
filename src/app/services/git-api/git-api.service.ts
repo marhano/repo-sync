@@ -31,16 +31,12 @@ export class GitApiService {
     }));
   }
 
-  async listRepositories(): Promise<any>{
+  async listRepositories(params: any): Promise<any>{
     const url = `${this.baseUrl}/user/repos`;
     const response = lastValueFrom(this.http.get(url, 
       { 
         headers: await this.getHeaders(),
-        params: {
-          visibility: 'all',
-          affiliation: 'owner,collaborator,organization_member',
-          per_page: "100"
-        }
+        params
     }));
     return response
   }

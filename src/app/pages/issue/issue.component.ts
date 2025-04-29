@@ -1,5 +1,4 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { WindowNavBarComponent } from '../../components/window-nav-bar/window-nav-bar.component';
 import { GitApiService } from '../../services/git-api/git-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -10,13 +9,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
 import { MarkdownEditorComponent } from '../../components/markdown-editor/markdown-editor.component';
 import { MarkdownModule } from 'ngx-markdown';
-import { FormControl } from '@angular/forms';
-import { ReplaySubject } from 'rxjs';
 
 @Component({
   selector: 'app-issue',
   imports: [
-    WindowNavBarComponent,
     CommonModule,
     MatIconModule,
     MatButtonModule,

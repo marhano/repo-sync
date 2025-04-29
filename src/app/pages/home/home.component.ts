@@ -75,7 +75,11 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['/login']);
     }
 
-    const response = await this.gitApiService.listRepositories();
+    const response = await this.gitApiService.listRepositories({
+      visibility: 'all',
+      affiliation: 'owner,collaborator,organization_member',
+      per_page: 100,
+    });
 
     this.repos = response;
 
