@@ -9,6 +9,7 @@
     padding: 0px 0 4px;
     -webkit-user-select: none;
     user-select: none;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
 
     &.fixed{
         position: fixed;

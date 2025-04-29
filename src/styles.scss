@@ -156,6 +156,10 @@ mat-form-field{
   }
 }
 
+router-outlet ~ * {
+  width: 100%;
+}
+
 ::-webkit-scrollbar { display: none; }
 
 .comment-markdown-module{

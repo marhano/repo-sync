@@ -1,123 +1,120 @@
-<div class="layout">
-    <app-window-nav-bar></app-window-nav-bar>
-    <div class="container pt-8">
-        <div class="flex-group flex-column gap-8 title-bar">
-            <h1>{{issue.title}} <span>#{{issue.number}}</span></h1>
-            <div class="chip flex-group align-center gap-8">
-                <mat-icon fontIcon="do_not_disturb_on"></mat-icon>
-                <span>Open</span>
-            </div>
+<div class="container pt-8">
+    <div class="flex-group flex-column gap-8 title-bar">
+        <h1>{{issue.title}} <span>#{{issue.number}}</span></h1>
+        <div class="chip flex-group align-center gap-8">
+            <mat-icon fontIcon="do_not_disturb_on"></mat-icon>
+            <span>Open</span>
         </div>
-        <mat-list class="flex-group flex-column gap-24 side-nav">
-            <div class="flex-group gap-8 flex-column">
-              <div class="flex-group align-center space-between setting-button">
-                <mat-label>Assignees</mat-label>
-                <button mat-icon-button>
-                  <mat-icon>settings</mat-icon>
-                </button>
-              </div>
-              <div class="flex-group flex-column">
-                <span>No one</span>
-              </div>
-            </div>
-            <mat-divider></mat-divider>
-            <div class="flex-group gap-8 flex-column">
-              <div class="flex-group align-center space-between setting-button">
-                <mat-label>Labels</mat-label>
-                <button mat-icon-button>
-                  <mat-icon>settings</mat-icon>
-                </button>
-              </div>
-              <div class="flex-group flex-column">
-                <span>No Labels</span>
-              </div>
-            </div>
-            <mat-divider></mat-divider>
-        </mat-list>
-        <div class="flex-group flex-column gap-40 main-content">
-            <div class="comment-module gap-16 flex-group align-self-start w-100">
-                <img class="user-avatar align-self-start" src="{{issue.user.avatar_url}}" alt="">
-                <div class="comment-container w-100">
-                    <header class="flex-group space-between px-16 align-center">
-                        <div class="flex-group gap-8">
-                            <a>{{issue.user.login}}</a>
-                            <span>opened {{issue.created_at}}</span>
-                        </div>
-                        <button mat-icon-button [matMenuTriggerFor]="commentMenu">
-                            <mat-icon>more_horiz</mat-icon>
+    </div>
+    <mat-list class="flex-group flex-column gap-24 side-nav">
+        <div class="flex-group gap-8 flex-column">
+          <div class="flex-group align-center space-between setting-button">
+            <mat-label>Assignees</mat-label>
+            <button mat-icon-button>
+              <mat-icon>settings</mat-icon>
+            </button>
+          </div>
+          <div class="flex-group flex-column">
+            <span>No one</span>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="flex-group gap-8 flex-column">
+          <div class="flex-group align-center space-between setting-button">
+            <mat-label>Labels</mat-label>
+            <button mat-icon-button>
+              <mat-icon>settings</mat-icon>
+            </button>
+          </div>
+          <div class="flex-group flex-column">
+            <span>No Labels</span>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+    </mat-list>
+    <div class="flex-group flex-column gap-40 main-content">
+        <div class="comment-module gap-16 flex-group align-self-start w-100">
+            <img class="user-avatar align-self-start" src="{{issue.user.avatar_url}}" alt="">
+            <div class="comment-container w-100">
+                <header class="flex-group space-between px-16 align-center">
+                    <div class="flex-group gap-8">
+                        <a>{{issue.user.login}}</a>
+                        <span>opened {{issue.created_at}}</span>
+                    </div>
+                    <button mat-icon-button [matMenuTriggerFor]="commentMenu">
+                        <mat-icon>more_horiz</mat-icon>
+                    </button>
+                    <mat-menu #commentMenu="matMenu">
+                        <button mat-menu-item>
+                            <mat-icon>format_quote</mat-icon>
+                            <span>Quote reply</span>
                         </button>
-                        <mat-menu #commentMenu="matMenu">
-                            <button mat-menu-item>
-                                <mat-icon>format_quote</mat-icon>
-                                <span>Quote reply</span>
+                        <button (click)="commentEdit()" mat-menu-item>
+                            <mat-icon>edit</mat-icon>
+                            <span>Edit</span>
+                        </button>
+                    </mat-menu>
+                </header>
+                <div class="flex-group p-16 comment-body">
+                    <div *ngIf="editMode" class="flex-group flex-column">
+                        <app-markdown-editor ></app-markdown-editor>
+                        <div class="flex-group space-between">
+                            <button mat-button class="align-self-start">
+                                <mat-icon matPrefix>attach_file</mat-icon>
+                                Paste, drop, or click to add files
                             </button>
-                            <button (click)="commentEdit()" mat-menu-item>
-                                <mat-icon>edit</mat-icon>
-                                <span>Edit</span>
-                            </button>
-                        </mat-menu>
-                    </header>
-                    <div class="flex-group p-16 comment-body">
-                        <div *ngIf="editMode" class="flex-group flex-column">
-                            <app-markdown-editor ></app-markdown-editor>
-                            <div class="flex-group space-between">
-                                <button mat-button class="align-self-start">
-                                    <mat-icon matPrefix>attach_file</mat-icon>
-                                    Paste, drop, or click to add files
+                            <div class="flex-group gap-8">
+                                <button mat-button>
+                                    Cancel
                                 </button>
-                                <div class="flex-group gap-8">
-                                    <button mat-button>
-                                        Cancel
-                                    </button>
-                                    <button mat-flat-button>
-                                        Save
-                                    </button>
-                                </div>
+                                <button mat-flat-button>
+                                    Save
+                                </button>
                             </div>
                         </div>
-                        
-                        <markdown *ngIf="!editMode" [data]="issue.body_html">No description provided.</markdown>
                     </div>
+                    
+                    <markdown *ngIf="!editMode" [data]="issue.body_html">No description provided.</markdown>
                 </div>
             </div>
-            <div class="comment-markdown-module gap-16 flex-group align-self-start w-100">
-                <img class="user-avatar align-self-start" src="{{user?.avatar_url}}" alt="">
-                <mat-label class="comment-label">Add a comment</mat-label>
-                <app-markdown-editor></app-markdown-editor>
-                <div class="flex-group space-between flex-wrap footer">
-                    <button mat-button class="align-self-start">
-                        <mat-icon matPrefix>attach_file</mat-icon>
-                        Paste, drop, or click to add files
+        </div>
+        <div class="comment-markdown-module gap-16 flex-group align-self-start w-100">
+            <img class="user-avatar align-self-start" src="{{user?.avatar_url}}" alt="">
+            <mat-label class="comment-label">Add a comment</mat-label>
+            <app-markdown-editor></app-markdown-editor>
+            <div class="flex-group space-between flex-wrap footer">
+                <button mat-button class="align-self-start">
+                    <mat-icon matPrefix>attach_file</mat-icon>
+                    Paste, drop, or click to add files
+                </button>
+                <div class="flex-group gap-8">
+                    <button mat-stroked-button>
+                        <mat-icon>check_circle</mat-icon>
+                        Close issue
                     </button>
-                    <div class="flex-group gap-8">
-                        <button mat-stroked-button>
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
                             <mat-icon>check_circle</mat-icon>
-                            Close issue
+                            <span>Close as not planned</span>
+                            <p>Won't fix, can't repro, stale</p>
                         </button>
-                        <button mat-icon-button [matMenuTriggerFor]="menu">
-                            <mat-icon>more_vert</mat-icon>
+                        <button mat-menu-item>
+                            <mat-icon>check_circle</mat-icon>
+                            <span>Close as duplicate</span>
+                            <p>Duplicate of another issue</p>
                         </button>
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item>
-                                <mat-icon>check_circle</mat-icon>
-                                <span>Close as not planned</span>
-                                <p>Won't fix, can't repro, stale</p>
-                            </button>
-                            <button mat-menu-item>
-                                <mat-icon>check_circle</mat-icon>
-                                <span>Close as duplicate</span>
-                                <p>Duplicate of another issue</p>
-                            </button>
-                            <button mat-menu-item>
-                                <mat-icon>insights</mat-icon>
-                                <span>Create a branch</span>
-                                <p>Create a branch for this issue</p>
-                            </button>
-                        </mat-menu>
-                        <button mat-flat-button>
-                            Comment
+                        <button mat-menu-item>
+                            <mat-icon>insights</mat-icon>
+                            <span>Create a branch</span>
+                            <p>Create a branch for this issue</p>
                         </button>
-                    </div>
+                    </mat-menu>
+                    <button mat-flat-button>
+                        Comment
+                    </button>
                 </div>
             </div>
         </div>

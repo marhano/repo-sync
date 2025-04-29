@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,11 +14,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { IssueDialogComponent } from '../../components/issue-dialog/issue-dialog.component';
 import { Router } from '@angular/router';
-import { WindowNavBarComponent } from '../../components/window-nav-bar/window-nav-bar.component';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
-import { User } from '../../interfaces/user.interface';
-import { environment } from '../../../environments/environment';
 import { SessionService } from '../../services/session/session.service';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -43,7 +39,6 @@ export interface Issue {
     NgxMatSelectSearchModule,
     MatOptionModule,
     ReactiveFormsModule,
-    WindowNavBarComponent,
     MatMenuModule,
   ],
   templateUrl: './home.component.html',
@@ -102,29 +97,6 @@ export class HomeComponent implements OnInit {
   }
 
   async ngAfterViewInit(){
-    if(typeof document !== 'undefined'){
-       //const user = await this.gitApiService.getAuthUserInformation();
-      const mode = await this.sessionService.getSession('darkMode');
-      const theme = await this.sessionService.getSession('theme');
-
-      const container = document.querySelector('html') as HTMLElement;
-
-      if(mode){
-        container.classList.add('dark-mode');
-      }else{
-        container.classList.remove('dark-mode');
-      }
-
-      if(theme){
-        container.classList.forEach((className) => {
-          if (className.includes('palette')) {
-            container.classList.remove(className);
-          }
-        });
-    
-        container.classList.add(theme);
-      }
-    }
   }
 
   createIssue(): void{
