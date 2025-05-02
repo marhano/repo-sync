@@ -53,8 +53,8 @@ export class DashboardComponent {
   }
 
   onMouseMove(event: MouseEvent){
-    this.mouseX = event.clientX + 8;
-    this.mouseY = event.clientY + 8;
+    this.mouseX = event.clientX + 4;
+    this.mouseY = event.clientY + 4;
 
     const viewportWidth = window.innerWidth;
 

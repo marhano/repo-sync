@@ -13,12 +13,12 @@ h3{
     border-radius: 0.5rem;
     flex: 1;
     position: relative;
+    cursor: pointer;
 
     &:hover{
         background: var(--mat-sys-outline-variant);
         transform: scale(1.03);
         border-radius: 1rem;
-        cursor: none;
     }
 
     mat-icon{
@@ -40,7 +40,7 @@ h3{
     -webkit-backdrop-filter: blur(7px);
     border: 1px solid color-mix(in srgb, var(--mat-sys-background) 18%, transparent);
     padding: 1rem;
-    min-width: 500px;  /* Minimum width */
+    min-width: 600px;  /* Minimum width */
     max-width: 600px;  /* Max width (optional, for control) */
     width: fit-content; /* Adjust based on content */
 
