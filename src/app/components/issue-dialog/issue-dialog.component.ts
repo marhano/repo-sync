@@ -69,7 +69,11 @@ export class IssueDialogComponent{
       title: ['', Validators.required],
       markdownContent: ['']
     });
-    this.repos = await this.gitApiService.listRepositories();
+    this.repos = await this.gitApiService.listRepositories({
+      visibility: 'all',
+      affiliation: 'owner,collaborator,organization_member',
+      per_page: 100,
+    });
 
     this.filteredRepo.next(this.repos.slice());
 

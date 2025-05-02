@@ -28,6 +28,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            color: var(--mat-sys-on-surface);
 
             &:hover{
                 background: var(--mat-sys-outline-variant);
@@ -41,6 +42,8 @@
 
             &.active{
                 background: var(--mat-sys-outline-variant);
+                // background: var(--mat-sys-primary);
+                // color: var(--mat-sys-on-primary);
             }
 
             a{

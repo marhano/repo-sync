@@ -116,7 +116,7 @@ export class WindowNavBarComponent {
   openSettings(){
     this.dialog.open(SettingsDialogComponent, {
       width: '100%',
-      maxWidth: '90vw',
+      maxWidth: '60vw',
     });
 
     this.closeAllDialogs();

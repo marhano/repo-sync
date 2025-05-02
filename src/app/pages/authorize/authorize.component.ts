@@ -39,7 +39,7 @@ export class AuthorizeComponent implements OnInit{
       const token = await this.sessionService.getSession('token');
       if(token){
         this.gitApiService.token = token;
-        this.router.navigate(['/home']);
+        this.router.navigate(['/dashboard']);
         return;
       }
 
@@ -51,7 +51,7 @@ export class AuthorizeComponent implements OnInit{
 
           this.gitApiService.token = token;
           setTimeout(() => {
-            this.router.navigate(['/home']);
+            this.router.navigate(['/dashboard']);
           }, 2000);
         });
       }else{
@@ -66,7 +66,7 @@ export class AuthorizeComponent implements OnInit{
           });
           this.gitApiService.token = token;
           setTimeout(() => {
-            this.router.navigate(['/home']);
+            this.router.navigate(['/dashboard']);
           }, 2000);
         }
       }

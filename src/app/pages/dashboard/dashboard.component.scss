@@ -1,0 +1,51 @@
+.container{
+    padding: 24px;
+    height: 100%;
+}
+
+h3{
+    color: var(--mat-sys-outline);
+}
+
+.card{
+    padding: 24px;
+    transition: all 0.1s ease;
+    border-radius: 0.5rem;
+    flex: 1;
+    position: relative;
+    cursor: pointer;
+
+    &:hover{
+        background: var(--mat-sys-outline-variant);
+        transform: scale(1.03);
+        border-radius: 1rem;
+    }
+
+    mat-icon{
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        color: var(--mat-sys-primary);
+    }
+}
+
+.hover-container{
+    position: fixed;
+    color: var(--mat-sys-on-surface);
+    /* From https://css.glass */
+    background: color-mix(in srgb, var(--mat-sys-background) 14%, transparent); //rgba(0, 0, 0, 0.14);
+    border-radius: 8px;
+    box-shadow: 0 4px 30px color-mix(in srgb, var(--mat-sys-background) 10%, transparent);;
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    border: 1px solid color-mix(in srgb, var(--mat-sys-background) 18%, transparent);
+    padding: 1rem;  /* Minimum width */
+    max-width: 500px;  /* Max width (optional, for control) */
+    width: fit-content; /* Adjust based on content */
+    z-index: 1000;
+
+    mat-spinner{
+        width: 24px !important;
+        height: 24px !important;
+    }
+}

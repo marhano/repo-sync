@@ -31,18 +31,30 @@ export class GitApiService {
     }));
   }
 
-  async listRepositories(): Promise<any>{
+  async listRepositories(params: any): Promise<any>{
     const url = `${this.baseUrl}/user/repos`;
     const response = lastValueFrom(this.http.get(url, 
       { 
         headers: await this.getHeaders(),
-        params: {
-          visibility: 'all',
-          affiliation: 'owner,collaborator,organization_member',
-          per_page: "100"
-        }
+        params
     }));
     return response
+  }
+
+  async listIssuesAssigned(): Promise<any>{
+    const url = `${this.baseUrl}/issues`;
+    
+    return lastValueFrom(
+      this.http.get(url, { 
+        headers: await this.getHeaders(), 
+        params: { state: "open", sort: "updated", direction: "desc" }
+      })
+    ).then((response: any) => {
+      const filteredIssues = response.filter((issue: any) => !issue.pull_request);
+      console.log(filteredIssues);
+
+      return filteredIssues;
+    });
   }
 
   async listRepositoryIssues(name: string): Promise<any>{
@@ -99,6 +111,11 @@ export class GitApiService {
 
   async listLabels(name: string){
     const url = `${this.baseUrl}/repos/${name}/labels`;
+    return lastValueFrom(this.http.get(url, { headers: await this.getHeaders() }));
+  }
+
+  async getRepositoryReadme(name: string){
+    const url = `${this.baseUrl}/repos/${name}/readme`;
     return lastValueFrom(this.http.get(url, { headers: await this.getHeaders() }));
   }
 
