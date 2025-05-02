@@ -42,6 +42,7 @@ h3{
     padding: 1rem;  /* Minimum width */
     max-width: 500px;  /* Max width (optional, for control) */
     width: fit-content; /* Adjust based on content */
+    z-index: 1000;
 
     mat-spinner{
         width: 24px !important;

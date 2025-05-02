@@ -41,6 +41,22 @@ export class GitApiService {
     return response
   }
 
+  async listIssuesAssigned(): Promise<any>{
+    const url = `${this.baseUrl}/issues`;
+    
+    return lastValueFrom(
+      this.http.get(url, { 
+        headers: await this.getHeaders(), 
+        params: { state: "open", sort: "updated", direction: "desc" }
+      })
+    ).then((response: any) => {
+      const filteredIssues = response.filter((issue: any) => !issue.pull_request);
+      console.log(filteredIssues);
+
+      return filteredIssues;
+    });
+  }
+
   async listRepositoryIssues(name: string): Promise<any>{
     const url = `${this.baseUrl}/repos/${name}/issues`;
 

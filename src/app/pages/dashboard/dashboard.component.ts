@@ -6,6 +6,9 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MarkdownModule } from 'ngx-markdown';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +18,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     CommonModule,
     MatIconModule,
     MarkdownModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatMenuModule,
+    MatTableModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
@@ -30,10 +35,14 @@ export class DashboardComponent {
   public isLoading: boolean = true;
   public containerWidth: number = 0;
 
+  public dataSource: any;
+  public displayedColumns: string[] = ['issue_number', 'title', 'author', 'assignee', 'actions'];
+
   @ViewChild('hoverContainer', { static: false }) hoverContainer!: ElementRef;
 
   constructor(
     private gitApiService: GitApiService,
+    private router: Router
   ) {
     // Constructor logic here if needed
   }
@@ -46,7 +55,14 @@ export class DashboardComponent {
       sort: "updated",
     });
 
+    this.dataSource = await this.gitApiService.listIssuesAssigned();
+
     this.repositories = response;
+  }
+
+  navigateIssue(data: any){
+    const serializedData = JSON.stringify(data);
+    this.router.navigate(['/issue'], { queryParams: { data: serializedData }});
   }
 
   async onMouseEnter(item: any){
