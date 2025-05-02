@@ -9,6 +9,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -42,20 +44,26 @@ export class DashboardComponent {
 
   constructor(
     private gitApiService: GitApiService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {
     // Constructor logic here if needed
   }
   
   async ngOnInit() {
     const response = await this.gitApiService.listRepositories({
-      visibility: 'all',
-      affiliation: 'owner,collaborator,organization_member',
-      per_page: 5,
-      sort: "updated",
+      params: {
+        visibility: 'all',
+        affiliation: 'owner,collaborator,organization_member',
+        per_page: 5,
+        sort: "updated",
+      },
+      owner: 'bastionqa'
     });
 
-    this.dataSource = await this.gitApiService.listIssuesAssigned();
+    this.dataSource = await this.gitApiService.listIssuesAssigned({
+      owner: 'bastionqa'
+    });
 
     this.repositories = response;
   }
@@ -94,6 +102,21 @@ export class DashboardComponent {
   onMouseLeave(){
     this.isHovered = false;
     this.readme = null
+  }
+
+  async closeIssue(issue: any){
+
+    this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(async (result: any) => {
+      if(result === 'yes'){
+        const response = await this.gitApiService.updateIssue(issue, {
+          state: 'closed'
+        });
+
+        console.log(response);
+      }
+    });
+
+    
   }
 
 }

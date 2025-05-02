@@ -70,9 +70,13 @@ export class IssueDialogComponent{
       markdownContent: ['']
     });
     this.repos = await this.gitApiService.listRepositories({
-      visibility: 'all',
-      affiliation: 'owner,collaborator,organization_member',
-      per_page: 100,
+      params: {
+        visibility: 'all',
+        affiliation: 'owner,collaborator,organization_member',
+        per_page: 100,
+      },
+      owner: 'bastionqa'
+      
     });
 
     this.filteredRepo.next(this.repos.slice());
