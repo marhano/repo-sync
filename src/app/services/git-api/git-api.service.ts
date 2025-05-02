@@ -98,4 +98,9 @@ export class GitApiService {
     return lastValueFrom(this.http.get(url, { headers: await this.getHeaders() }));
   }
 
+  async getRepositoryReadme(name: string){
+    const url = `${this.baseUrl}/repos/${name}/readme`;
+    return lastValueFrom(this.http.get(url, { headers: await this.getHeaders() }));
+  }
+
 }

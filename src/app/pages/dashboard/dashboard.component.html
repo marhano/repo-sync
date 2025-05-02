@@ -2,15 +2,31 @@
     <div class="flex-group flex-column gap-8">
         <h3>Recent projects</h3>
         <div class="flex-group gap-8 flex-wrap">
-            <div class="card" *ngFor="let item of repositories">
-                <div class="card-header">
-                    <h2>{{item.name}}</h2>
+            <ng-container *ngFor="let item of repositories">
+                <div class="card"
+                (mousemove)="onMouseMove($event)"
+                (mouseleave)="onMouseLeave()"
+                (mouseenter)="onMouseEnter(item)">
+                    <mat-icon>favorite_border</mat-icon>
+                    <div class="card-header">
+                        <h2>{{item.name}}</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>{{item.description}}</p>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p>{{item.description}}</p>
+            </ng-container>
+            <div class="hover-container" *ngIf="isHovered" [ngStyle]="{ 
+                'top': mouseY + 'px', 
+                'left': hoverDirection === 'right' ? (mouseX + 20) + 'px' : (mouseX - 520) + 'px',
+                }">
+                <div class="hover-card">
+                    <mat-progress-bar *ngIf="!readme" mode="indeterminate"></mat-progress-bar>
+                    <markdown [data]="readme"></markdown>
                 </div>
             </div>
         </div>
+        <a class="align-self-end" href="#">See more...</a>
     </div>
 
     <div class="flex-group flex-column gap-8">

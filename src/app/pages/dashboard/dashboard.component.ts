@@ -3,19 +3,30 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { GitApiService } from '../../services/git-api/git-api.service';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MarkdownModule } from 'ngx-markdown';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-dashboard',
   imports: [
     MatCardModule,
     MatButtonModule,
-    CommonModule
+    CommonModule,
+    MatIconModule,
+    MarkdownModule,
+    MatProgressBarModule,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
   public repositories: any[] = [];
+  public isHovered: boolean = false;
+  public mouseX: number = 0;
+  public mouseY: number = 0;
+  public readme: any;
+  public hoverDirection: string = 'right'; 
 
   constructor(
     private gitApiService: GitApiService,
@@ -30,9 +41,29 @@ export class DashboardComponent {
       per_page: 5,
       sort: "updated",
     });
-    console.log(response);
 
     this.repositories = response;
-  }  
+  }
+
+  async onMouseEnter(item: any){
+    this.isHovered = true;
+
+    const response: any = await this.gitApiService.getRepositoryReadme(item.full_name);
+    this.readme = response.content ? atob(response.content) : null;
+  }
+
+  onMouseMove(event: MouseEvent){
+    this.mouseX = event.clientX + 8;
+    this.mouseY = event.clientY + 8;
+
+    const viewportWidth = window.innerWidth;
+
+    this.hoverDirection = this.mouseX + 550 > viewportWidth ? 'left' : 'right';
+  }
+
+  onMouseLeave(){
+    this.isHovered = false;
+    this.readme = null
+  }
 
 }
