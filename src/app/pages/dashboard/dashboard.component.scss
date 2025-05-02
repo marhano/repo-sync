@@ -39,9 +39,12 @@ h3{
     backdrop-filter: blur(7px);
     -webkit-backdrop-filter: blur(7px);
     border: 1px solid color-mix(in srgb, var(--mat-sys-background) 18%, transparent);
-    padding: 1rem;
-    min-width: 600px;  /* Minimum width */
-    max-width: 600px;  /* Max width (optional, for control) */
+    padding: 1rem;  /* Minimum width */
+    max-width: 500px;  /* Max width (optional, for control) */
     width: fit-content; /* Adjust based on content */
 
+    mat-spinner{
+        width: 24px !important;
+        height: 24px !important;
+    }
 }
