@@ -81,7 +81,7 @@ export class HomeComponent implements OnInit {
         affiliation: 'owner,collaborator,organization_member',
         per_page: 100,
       },
-      owner: 'bastionqa'
+      owner: await this.sessionService.getSession('owner')
     });
 
     this.repos = response;

@@ -11,6 +11,7 @@ import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../components/confirmation-dialog/confirmation-dialog.component';
+import { SessionService } from '../../services/session/session.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -45,7 +46,8 @@ export class DashboardComponent {
   constructor(
     private gitApiService: GitApiService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private sessionService: SessionService
   ) {
     // Constructor logic here if needed
   }
@@ -58,11 +60,11 @@ export class DashboardComponent {
         per_page: 5,
         sort: "updated",
       },
-      owner: 'bastionqa'
+      owner: await this.sessionService.getSession('owner')
     });
 
     this.dataSource = await this.gitApiService.listIssuesAssigned({
-      owner: 'bastionqa'
+      owner: await this.sessionService.getSession('owner')
     });
 
     this.repositories = response;

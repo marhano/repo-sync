@@ -18,6 +18,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectDialogComponent } from '../select-dialog/select-dialog.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { SessionService } from '../../services/session/session.service';
 
 @Component({
   selector: 'app-issue-dialog',
@@ -49,6 +50,7 @@ export class IssueDialogComponent{
   private readonly gitApiService = inject(GitApiService);
   private readonly formBuilder = inject(FormBuilder);
   private readonly dialogRef = inject(MatDialogRef<IssueDialogComponent>);
+  private readonly sessionService = inject(SessionService);
 
   public repoFilterCtrl: FormControl = new FormControl();
   public filteredRepo: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
@@ -75,7 +77,7 @@ export class IssueDialogComponent{
         affiliation: 'owner,collaborator,organization_member',
         per_page: 100,
       },
-      owner: 'bastionqa'
+      owner: await this.sessionService.getSession('owner')
       
     });
 

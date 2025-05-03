@@ -195,3 +195,17 @@ mat-checkbox .mdc-label{
 .container{
   background: var(--mat-sys-background);
 }
+
+.small-button {
+  padding: 0px 16px !important; /* Adjust padding */
+  font-size: 12px !important;  /* Smaller font size */
+  height: 32px !important;     /* Adjust button height */
+  min-width: 64px !important;  /* Adjust button width */
+  position: relative !important;
+}
+
+.small-button mat-icon {
+  font-size: 16px !important; /* Adjust icon size */
+  margin-right: 4px !important; /* Space between icon and text */
+  position: relative !important;
+}
