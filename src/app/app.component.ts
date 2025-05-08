@@ -67,7 +67,7 @@ export class AppComponent {
   async ngAfterViewInit(){
     //const user = await this.gitApiService.getAuthUserInformation();
     // Set default repo owner
-    this.sessionService.setSession({ owner: 'bastionqa' });
+    this.sessionService.setSession({ owner: 'sddteam' });
     const mode = await this.sessionService.getSession('darkMode');
     const theme = await this.sessionService.getSession('theme');
 
