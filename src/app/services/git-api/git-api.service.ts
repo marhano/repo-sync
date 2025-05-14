@@ -31,17 +31,21 @@ export class GitApiService {
     }));
   }
 
-  async listRepositories(params: any): Promise<any>{
+  async listRepositories(data: any): Promise<any>{
     const url = `${this.baseUrl}/user/repos`;
-    const response = lastValueFrom(this.http.get(url, 
-      { 
+    return lastValueFrom(
+      this.http.get(url, { 
         headers: await this.getHeaders(),
-        params
-    }));
-    return response
+        params: data.params
+      })
+    ).then((response: any) => {
+      const filteredRepos = response.filter((repo: any) => repo.owner.login === data.owner);
+
+      return filteredRepos;
+    });
   }
 
-  async listIssuesAssigned(): Promise<any>{
+  async listIssuesAssigned(data: any): Promise<any>{
     const url = `${this.baseUrl}/issues`;
     
     return lastValueFrom(
@@ -50,7 +54,7 @@ export class GitApiService {
         params: { state: "open", sort: "updated", direction: "desc" }
       })
     ).then((response: any) => {
-      const filteredIssues = response.filter((issue: any) => !issue.pull_request);
+      const filteredIssues = response.filter((issue: any) => !issue.pull_request).filter((issue: any) => issue.repository.owner.login === data.owner);
       console.log(filteredIssues);
 
       return filteredIssues;
@@ -67,7 +71,6 @@ export class GitApiService {
       })
     ).then((response: any) => {
       const filteredIssues = response.filter((issue: any) => !issue.pull_request);
-      console.log(filteredIssues);
 
       return filteredIssues;
     });
@@ -117,6 +120,12 @@ export class GitApiService {
   async getRepositoryReadme(name: string){
     const url = `${this.baseUrl}/repos/${name}/readme`;
     return lastValueFrom(this.http.get(url, { headers: await this.getHeaders() }));
+  }
+
+  async updateIssue(url: string, params: any): Promise<any>{
+    return lastValueFrom(this.http.patch(url, params, {
+      headers: await this.getHeaders()
+    }))
   }
 
 }

@@ -9,6 +9,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../components/confirmation-dialog/confirmation-dialog.component';
+import { SessionService } from '../../services/session/session.service';
+import { IssueTrackerService } from '../../services/issue-tracker/issue-tracker.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -34,6 +38,7 @@ export class DashboardComponent {
   public hoverDirection: string = 'right'; 
   public isLoading: boolean = true;
   public containerWidth: number = 0;
+  public viewedData: any;
 
   public dataSource: any;
   public displayedColumns: string[] = ['issue_number', 'title', 'author', 'assignee', 'actions'];
@@ -42,27 +47,69 @@ export class DashboardComponent {
 
   constructor(
     private gitApiService: GitApiService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog,
+    private sessionService: SessionService,
+    private issueTrackerService: IssueTrackerService
   ) {
     // Constructor logic here if needed
   }
   
   async ngOnInit() {
     const response = await this.gitApiService.listRepositories({
-      visibility: 'all',
-      affiliation: 'owner,collaborator,organization_member',
-      per_page: 5,
-      sort: "updated",
+      params: {
+        visibility: 'all',
+        affiliation: 'owner,collaborator,organization_member',
+        per_page: 5,
+        sort: "updated",
+      },
+      owner: await this.sessionService.getSession('owner')
     });
 
-    this.dataSource = await this.gitApiService.listIssuesAssigned();
+    console.log(response);
+
+    this.dataSource = await this.gitApiService.listIssuesAssigned({
+      owner: await this.sessionService.getSession('owner')
+    });
 
     this.repositories = response;
+
+    this.viewedData = await this.sessionService.getSession('viewed') || [];
+
+    this.repositories.forEach(async element => {
+      const read = await this.newIssues(element);
+
+      element.unread = read;
+    });
+  }
+
+  isViewed(issue: any){
+    const url = this.issueTrackerService.extractRepositoryName(issue.url);
+
+    if(this.viewedData &&
+      this.viewedData[url.owner] &&
+      this.viewedData[url.owner][url.repo]){
+        return this.viewedData[url.owner][url.repo].includes(issue.id);
+      }
+
+    return false;
+  }
+
+  async newIssues(data: any){
+    const url = this.issueTrackerService.extractRepositoryName(data.url);
+    const issueTrackerData = this.viewedData[url.owner][url.repo] || [];
+
+    if(!issueTrackerData){
+      return data.open_issues;
+    } 
+
+    const issues = await this.gitApiService.listRepositoryIssues(data.full_name);
+    const newIssues = issues.filter((issue: any) => !issueTrackerData.includes(issue.id));
+    return newIssues.length;
   }
 
   navigateIssue(data: any){
-    const serializedData = JSON.stringify(data);
-    this.router.navigate(['/issue'], { queryParams: { data: serializedData }});
+    this.router.navigate(['/issue'], { queryParams: { url: data.url }});
   }
 
   async onMouseEnter(item: any){
@@ -94,6 +141,21 @@ export class DashboardComponent {
   onMouseLeave(){
     this.isHovered = false;
     this.readme = null
+  }
+
+  async closeIssue(issue: any){
+
+    this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(async (result: any) => {
+      if(result === 'yes'){
+        const response = await this.gitApiService.updateIssue(issue, {
+          state: 'closed'
+        });
+
+        console.log(response);
+      }
+    });
+
+    
   }
 
 }

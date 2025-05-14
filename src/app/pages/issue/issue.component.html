@@ -1,6 +1,6 @@
 <div class="container pt-8">
     <div class="flex-group flex-column gap-8 title-bar">
-        <h1>{{issue.title}} <span>#{{issue.number}}</span></h1>
+        <h1>{{issue?.title}} <span>#{{issue?.number}}</span></h1>
         <div class="chip flex-group align-center gap-8">
             <mat-icon fontIcon="do_not_disturb_on"></mat-icon>
             <span>Open</span>
@@ -34,12 +34,12 @@
     </mat-list>
     <div class="flex-group flex-column gap-40 main-content">
         <div class="comment-module gap-16 flex-group align-self-start w-100">
-            <img class="user-avatar align-self-start" src="{{issue.user.avatar_url}}" alt="">
+            <img class="user-avatar align-self-start" src="{{issue?.user.avatar_url}}" alt="">
             <div class="comment-container w-100">
                 <header class="flex-group space-between px-16 align-center">
                     <div class="flex-group gap-8">
-                        <a>{{issue.user.login}}</a>
-                        <span>opened {{issue.created_at}}</span>
+                        <a>{{issue?.user.login}}</a>
+                        <span>opened {{issue?.created_at}}</span>
                     </div>
                     <button mat-icon-button [matMenuTriggerFor]="commentMenu">
                         <mat-icon>more_horiz</mat-icon>
@@ -74,7 +74,7 @@
                         </div>
                     </div>
                     
-                    <markdown *ngIf="!editMode" [data]="issue.body_html">No description provided.</markdown>
+                    <markdown *ngIf="!editMode" [data]="issue?.body_html">No description provided.</markdown>
                 </div>
             </div>
         </div>

@@ -14,6 +14,18 @@ h3{
     flex: 1;
     position: relative;
     cursor: pointer;
+    max-width: 300px;
+
+    .new{
+        background: var(--mat-sys-primary);
+        color: var(--mat-sys-on-primary);
+        padding: 2px 4px;
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        border-radius: 0.2rem;
+        font-size: 12px;
+    }
 
     &:hover{
         background: var(--mat-sys-outline-variant);
@@ -26,6 +38,7 @@ h3{
         top: 8px;
         right: 8px;
         color: var(--mat-sys-primary);
+        display: none;
     }
 }
 

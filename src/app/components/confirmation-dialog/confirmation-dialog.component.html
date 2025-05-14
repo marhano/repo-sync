@@ -1,0 +1,11 @@
+<div mat-dialog-content>
+    <div class="flex-group flex-column gap-16">
+        <div class="flex-group flex-column">
+            <p>Are you sure you want to close this issue?</p>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Maybe not</button>
+    <button mat-flat-button (click)="dialogRef.close('yes')">Yes</button>
+</div>
