@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { SessionService } from '../../services/session/session.service';
 import { CookieService } from 'ngx-cookie-service';
+import { IssueTrackerService } from '../../services/issue-tracker/issue-tracker.service';
 
 export interface Issue {
   issueNumber: number;
@@ -58,13 +59,15 @@ export class HomeComponent implements OnInit {
   public filteredRepo: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
   protected _onDestroy = new Subject<void>();
   repos!: any[];
+  public viewedData: any;
 
   constructor(
     private gitApiService: GitApiService,
     private dialog: MatDialog,
     private router: Router,
     private sessionService: SessionService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private issueTrackerService: IssueTrackerService
   ){}
 
   async ngOnInit(){
@@ -101,6 +104,7 @@ export class HomeComponent implements OnInit {
       this.assignees = await this.gitApiService.listAssignees(savedProject);
     }
 
+    this.viewedData = await this.sessionService.getSession('viewed') || [];
   }
 
   async ngAfterViewInit(){
@@ -127,9 +131,20 @@ export class HomeComponent implements OnInit {
     
   }
 
+  isViewed(issue: any){
+    const url = this.issueTrackerService.extractRepositoryName(issue.url);
+
+    if(this.viewedData &&
+      this.viewedData[url.owner] &&
+      this.viewedData[url.owner][url.repo]){
+        return this.viewedData[url.owner][url.repo].includes(issue.id);
+      }
+
+    return false;
+  }
+
   navigateIssue(data: any){
-    const serializedData = JSON.stringify(data);
-    this.router.navigate(['/issue'], { queryParams: { data: serializedData }});
+    this.router.navigate(['/issue'], { queryParams: { url: data.url }});
   }
 
   protected filterRepo() {

@@ -9,6 +9,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
 import { MarkdownEditorComponent } from '../../components/markdown-editor/markdown-editor.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { SessionService } from '../../services/session/session.service';
+import { IssueTrackerService } from '../../services/issue-tracker/issue-tracker.service';
 
 @Component({
   selector: 'app-issue',
@@ -26,27 +28,30 @@ import { MarkdownModule } from 'ngx-markdown';
   styleUrl: './issue.component.scss'
 })
 export class IssueComponent implements OnInit{
-  issue?: any;
-  user?: any;
-  editMode: boolean = false;
+  public issue!: any;
+  public user: any;
+  public editMode: boolean = false;
 
   private readonly route = inject(ActivatedRoute);
 
   constructor(
     private gitApiService: GitApiService,
+    private sessionService: SessionService,
+    private issueTrackerService: IssueTrackerService
   ){
     
   }
 
   async ngOnInit() {
     this.route?.queryParams.subscribe(async (params) => {
-      const data = params['data'];
-      console.log(JSON.parse(data));
-      this.issue = JSON.parse(data);
+      const url = params['url'];
+      const issue = await this.gitApiService.sendRequest(url);
+      this.issue = issue;
+
+      await this.issueTrackerService.setIssueTrackerDataById(issue);
     });
 
     this.user = await this.gitApiService.getAuthUserInformation();
-    console.log(this.user);
   }
 
   commentEdit(){

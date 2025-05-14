@@ -71,7 +71,6 @@ export class GitApiService {
       })
     ).then((response: any) => {
       const filteredIssues = response.filter((issue: any) => !issue.pull_request);
-      console.log(filteredIssues);
 
       return filteredIssues;
     });

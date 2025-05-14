@@ -209,3 +209,7 @@ mat-checkbox .mdc-label{
   margin-right: 4px !important; /* Space between icon and text */
   position: relative !important;
 }
+
+.viewed-item{
+  color: var(--mat-sys-outline);
+}
