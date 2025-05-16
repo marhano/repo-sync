@@ -5,11 +5,12 @@
     // position: fixed;
     top: 0;
     left: 0;
-    z-index: 11;
+    z-index: 1000;
     padding: 0px 0 4px;
     -webkit-user-select: none;
     user-select: none;
     border-bottom: 1px solid var(--mat-sys-outline-variant);
+    position: relative;
 
     &.fixed{
         position: fixed;

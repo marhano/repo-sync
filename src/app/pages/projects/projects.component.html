@@ -1,1 +1,57 @@
-<p>projects works!</p>
+<div class="container">
+    <div class="sticky flex-group gap-16 space-between align-center">
+        <div class="flex-group gap-8">
+            <button mat-button>Recent projects</button>
+            <button mat-button>Open issues</button>
+        </div>
+        <div class="flex-group">
+            <button mat-button [matMenuTriggerFor]="menu">
+                All repositories
+                <mat-icon>arrow_drop_down</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+                <mat-icon>dialpad</mat-icon>
+                <span>Redial</span>
+            </button>
+            <button mat-menu-item disabled>
+                <mat-icon>voicemail</mat-icon>
+                <span>Check voice mail</span>
+            </button>
+            <button mat-menu-item>
+                <mat-icon>notifications_off</mat-icon>
+                <span>Disable alerts</span>
+            </button>
+            </mat-menu>
+            <div class="button-toggle-container flex-group align-center">
+                <button class="active">
+                    <mat-icon>grid_view</mat-icon>
+                </button>
+                <button>
+                    <mat-icon>view_list</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="flex-group pb-48 gap-16 flex-wrap h-inherit overflow-scroll p-relative">
+        <ng-container *ngFor="let item of repositories">
+            <div tabindex="0" class="card" (click)="open($event, item)">
+                <span *ngIf="item.unread > 0 " class="new">{{item.unread}}</span>
+                <mat-icon>favorite_border</mat-icon>
+                <div class="card-header">
+                    <h2>{{item.name}}</h2>
+                </div>
+                <div class="card-body">
+                    <p>{{item.description}}</p>
+                </div>
+            </div>
+        </ng-container>
+
+        <div class="repository-container pt-48">
+            <button (click)="close()" class="close-button"><mat-icon>close</mat-icon></button>
+            <div class="flex-group flex-column gap-8 pt-8">
+                <markdown [data]="selectedRepo?.readme"></markdown>
+            </div>
+        </div>
+    </div>
+</div>

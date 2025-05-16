@@ -9,6 +9,7 @@ import { WindowNavBarComponent } from './components/window-nav-bar/window-nav-ba
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { SessionService } from './services/session/session.service';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -30,6 +31,7 @@ import { SessionService } from './services/session/session.service';
 export class AppComponent {
   title = 'repo-sync';
   public showSidebar: boolean = true; 
+  public appVersion = environment.APP_VERSION;
  
   constructor(
     private electronService: ElectronService,
