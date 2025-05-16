@@ -152,7 +152,7 @@ export class ProjectsComponent implements OnInit{
     card.classList.remove('selected');
     card.style.order = '0';
     sidebard.style.minWidth = '250px';
-    repositoryContainer.style.transform = 'translateX(1200px)';
+    repositoryContainer.style.transform = 'translateX(100%)';
 
     setTimeout(() => {      
       card.scrollIntoView({ behavior: 'instant', block: 'center' });
