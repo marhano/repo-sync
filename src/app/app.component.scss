@@ -5,6 +5,13 @@
 //     height: 100%;
 // }
 
+main{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
 .sidebar{
     background: var(--mat-sys-surface-container);
     min-width: 250px;

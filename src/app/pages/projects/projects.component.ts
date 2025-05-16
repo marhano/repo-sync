@@ -72,6 +72,7 @@ export class ProjectsComponent implements OnInit{
 
     const repositoryContainer = document.querySelector('.repository-container') as HTMLElement;
     const card = event.target as HTMLElement;
+    const cardParent = card.parentElement as HTMLElement;
     const cards = document.querySelectorAll('.card');
     const sidebard = document.querySelector('.sidebar') as HTMLElement;
     const sticky = document.querySelector('.sticky') as HTMLElement;
@@ -97,6 +98,7 @@ export class ProjectsComponent implements OnInit{
     card.style.order = '-1';
     card.classList.add('selected');
     repositoryContainer.style.transform = 'translateX(0px)';
+    repositoryContainer.style.opacity = '100%';
 
     this.showOverlay();
 
@@ -112,8 +114,11 @@ export class ProjectsComponent implements OnInit{
       const cardRect = card.getBoundingClientRect();
       const containerLeft = cardRect.right;
       repositoryContainer.style.left = `${containerLeft + 16}px`;
-    }, 200);
-    
+    }, 300);
+    cardParent.scrollTo({
+      top: card.offsetTop - cardParent.offsetTop,
+      behavior: 'smooth'
+    });
   }
 
   showOverlay() {
@@ -143,6 +148,7 @@ export class ProjectsComponent implements OnInit{
 
   hideOverlay(){
     const card = document.querySelector('.card.selected') as HTMLElement;
+    const cardParent = card.parentElement as HTMLElement;
     const overlay = document.querySelector('.overlay') as HTMLElement;
     const sidebard = document.querySelector('.sidebar') as HTMLElement;
     const sticky = document.querySelector('.sticky') as HTMLElement;
@@ -153,9 +159,13 @@ export class ProjectsComponent implements OnInit{
     card.style.order = '0';
     sidebard.style.minWidth = '250px';
     repositoryContainer.style.transform = 'translateX(100%)';
+    repositoryContainer.style.transform = '0';
 
     setTimeout(() => {      
-      card.scrollIntoView({ behavior: 'instant', block: 'center' });
+      cardParent.scrollTo({
+        top: card.offsetTop - cardParent.offsetTop,
+        behavior: 'instant'
+      });
       card.classList.add('focus');
 
       sticky.style.height = 'initial';
