@@ -34,24 +34,6 @@
         </div>
     </div>
     <div class="flex-group pb-48 gap-16 flex-wrap h-inherit overflow-scroll p-relative">
-        <ng-container *ngFor="let item of repositories">
-            <div tabindex="0" class="card" (click)="open($event, item)">
-                <span *ngIf="item.unread > 0 " class="new">{{item.unread}}</span>
-                <mat-icon>favorite_border</mat-icon>
-                <div class="card-header">
-                    <h2>{{item.name}}</h2>
-                </div>
-                <div class="card-body">
-                    <p>{{item.description}}</p>
-                </div>
-            </div>
-        </ng-container>
-
-        <div class="repository-container pt-48">
-            <button (click)="close()" class="close-button"><mat-icon>close</mat-icon></button>
-            <div class="flex-group flex-column gap-8 pt-8">
-                <markdown [data]="selectedRepo?.readme"></markdown>
-            </div>
-        </div>
+        <app-card-repo [repos]="repositories"></app-card-repo>
     </div>
 </div>

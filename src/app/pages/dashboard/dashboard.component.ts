@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../components/confirmation-dialog/confirmation-dialog.component';
 import { SessionService } from '../../services/session/session.service';
 import { IssueTrackerService } from '../../services/issue-tracker/issue-tracker.service';
+import { CardRepoComponent } from '../../components/card-repo/card-repo.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,20 +25,14 @@ import { IssueTrackerService } from '../../services/issue-tracker/issue-tracker.
     MarkdownModule,
     MatProgressSpinnerModule,
     MatMenuModule,
-    MatTableModule
+    MatTableModule,
+    CardRepoComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
   public repositories: any[] = [];
-  public isHovered: boolean = false;
-  public mouseX: number = 0;
-  public mouseY: number = 0;
-  public readme: any;
-  public hoverDirection: string = 'right'; 
-  public isLoading: boolean = true;
-  public containerWidth: number = 0;
   public viewedData: any;
 
   public dataSource: any;
@@ -110,37 +105,6 @@ export class DashboardComponent {
 
   navigateIssue(data: any){
     this.router.navigate(['/issue'], { queryParams: { url: data.url }});
-  }
-
-  async onMouseEnter(item: any){
-    this.isHovered = true;
-    this.isLoading = true;
-
-    try{
-      const response: any = await this.gitApiService.getRepositoryReadme(item.full_name);
-      this.readme = response.content ? atob(response.content) : null;
-    }catch(error){
-      console.error('Error fetching README:', error);
-      this.readme = null;
-    }
-
-    this.isLoading = false;
-    
-  }
-
-  onMouseMove(event: MouseEvent){
-    this.mouseX = event.clientX + 4;
-    this.mouseY = event.clientY + 4;
-
-    const viewportWidth = window.innerWidth;
-
-    this.containerWidth  = this.hoverContainer?.nativeElement.clientWidth || 300;
-    this.hoverDirection = this.mouseX + this.containerWidth > viewportWidth ? 'left' : 'right';
-  }
-
-  onMouseLeave(){
-    this.isHovered = false;
-    this.readme = null
   }
 
   async closeIssue(issue: any){
