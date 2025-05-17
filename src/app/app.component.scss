@@ -5,19 +5,28 @@
 //     height: 100%;
 // }
 
+main{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
 .sidebar{
     background: var(--mat-sys-surface-container);
     min-width: 250px;
     user-select: none;
     border-right: 1px solid var(--mat-sys-outline-variant);
+    transition: all 0.2s ease;
 
     ul{
         list-style-type: none;
         margin: 0;
-        padding: 1rem;
+        padding: 1rem 1rem 4rem;
         display: flex;
         flex-direction: column;
         gap: 0.2rem;
+        height: 100%;
 
         li{
             padding: 0.5rem;
@@ -59,6 +68,13 @@
 
         mat-slide-toggle{
             margin-top: 1rem;
+        }
+
+        > span{
+            margin: auto auto 0;
+            color: var(--mat-sys-on-surface);
+            font-size: 12px;
+            opacity: 0.1;
         }
     }
 }
