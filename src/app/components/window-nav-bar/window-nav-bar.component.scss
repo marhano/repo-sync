@@ -6,7 +6,6 @@
     top: 0;
     left: 0;
     z-index: 1000;
-    padding: 0px 0 4px;
     -webkit-user-select: none;
     user-select: none;
     border-bottom: 1px solid var(--mat-sys-outline-variant);
@@ -26,11 +25,8 @@
 }
 
 .profile-button{
-    margin-right: 0.5rem;
+    padding: 8px 16px !important;
 
-    mat-icon{
-        pointer-events: none;
-    }
     span{
         pointer-events: none;
     }
@@ -91,8 +87,35 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 14px 16px;
+    color: var(---mat-sys-on-surface);
 
     &:hover{
         background-color: var(--mat-sys-outline-variant);
+        
+        div:has(fa-icon){
+            animation: fa-bounce 1s infinite;
+        }
+
+        div:has(fa-icon[icon="bell"]){
+            animation: fa-shake 1s infinite;
+        }
+
+        
     }
+
+    &.window-close:hover{
+        background-color: var(--mat-sys-error);
+        color: var(--mat-sys-on-error);
+        
+        ::ng-deep fa-icon svg{
+            transition: transform 0.2s ease;
+            transform: rotateZ(90deg);
+        }
+    }
+}
+
+fa-icon{
+    font-size: 14px;
 }

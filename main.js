@@ -81,8 +81,8 @@ function updateApp(){
 
 function createWindow(){
   mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 800,
+    width: 1200,
+    height: 920,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,

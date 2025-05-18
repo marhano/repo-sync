@@ -10,6 +10,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { SessionService } from './services/session/session.service';
 import { environment } from '../environments/environment';
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +22,8 @@ import { environment } from '../environments/environment';
     RouterLinkActive,
     WindowNavBarComponent,
     MatIconModule,
-    CommonModule
+    CommonModule,
+    FontAwesomeModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -37,8 +41,12 @@ export class AppComponent {
     private electronService: ElectronService,
     private dialog: MatDialog,
     private router: Router,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private library: FaIconLibrary
   ){
+
+    library.addIconPacks(fas, far);
+
     if(this.electronService.isElectronApp){
       this.electronService.ipcRenderer.on('update-available', (_: any, data: any) => {
         // dialog to display release notes and to download the available updates
