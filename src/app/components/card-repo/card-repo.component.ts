@@ -57,8 +57,6 @@ export class CardRepoComponent {
     
     card.style.order = '-1';
     card.classList.add('selected');
-    
-    repositoryContainer.classList.add('repository-container-open', 'animating');
 
     this.showOverlay();
 
@@ -73,6 +71,8 @@ export class CardRepoComponent {
       const cardRect = card.getBoundingClientRect();
       const containerLeft = cardRect.right;
       repositoryContainer.style.left = `${containerLeft + 16}px`;
+
+      repositoryContainer.classList.add('repository-container-open', 'animating');
     }, 300);
   }
 
