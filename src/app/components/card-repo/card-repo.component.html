@@ -9,7 +9,10 @@
         (mouseenter)="onMouseEnter(item)"
         (mouseleave)="onMouseLeave()"
         >
-        <span *ngIf="item.unread > 0 " class="new">{{item.unread}}</span>
+        <div class="card-labels">
+            <span *ngIf="item.open_issues_count > 0 " class="open-issues">{{item.open_issues_count}}</span>
+            <span *ngIf="item.unread > 0 " class="unread">{{item.unread}}</span>
+        </div>
         <mat-icon>favorite_border</mat-icon>
         <div class="card-header">
             <h2>{{item.name}}</h2>
@@ -17,6 +20,7 @@
         <div class="card-body">
             <p>{{item.description}}</p>
         </div>
+        <span class="visibility">{{item.visibility}}</span>
     </div>
 
     <div class="repository-container pt-48">

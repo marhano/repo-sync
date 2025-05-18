@@ -34,6 +34,7 @@ import { CardRepoComponent } from '../../components/card-repo/card-repo.componen
 export class DashboardComponent {
   public repositories: any[] = [];
   public viewedData: any;
+  public isLoaded: boolean = false;
 
   public dataSource: any;
   public displayedColumns: string[] = ['issue_number', 'title', 'author', 'assignee', 'actions'];
@@ -51,31 +52,39 @@ export class DashboardComponent {
   }
   
   async ngOnInit() {
-    const response = await this.gitApiService.listRepositories({
-      params: {
-        visibility: 'all',
-        affiliation: 'owner,collaborator,organization_member',
-        per_page: 5,
-        sort: "updated",
-      },
-      owner: await this.sessionService.getSession('owner')
-    });
 
-    console.log(response);
+    try{
+      const response = await this.gitApiService.listRepositories({
+        params: {
+          visibility: 'all',
+          affiliation: 'owner,collaborator,organization_member',
+          per_page: 5,
+          sort: "updated",
+        },
+        owner: await this.sessionService.getSession('owner')
+      });
 
-    this.dataSource = await this.gitApiService.listIssuesAssigned({
-      owner: await this.sessionService.getSession('owner')
-    });
+      console.log(response);
 
-    this.repositories = response;
+      this.dataSource = await this.gitApiService.listIssuesAssigned({
+        owner: await this.sessionService.getSession('owner')
+      });
 
-    this.viewedData = await this.sessionService.getSession('viewed') || [];
+      this.repositories = response;
 
-    this.repositories.forEach(async element => {
-      const read = await this.newIssues(element);
+      this.viewedData = await this.sessionService.getSession('viewed') || [];
 
-      element.unread = read;
-    });
+      this.repositories.forEach(async element => {
+        const read = await this.newIssues(element);
+
+        element.unread = read;
+      });
+    }catch(error){
+      console.error(error);
+    }finally{
+      this.isLoaded = true;
+    }
+    
   }
 
   isViewed(issue: any){

@@ -27,6 +27,7 @@ import { CardRepoComponent } from '../../components/card-repo/card-repo.componen
 export class ProjectsComponent implements OnInit{
   public repositories: any;
   public selectedRepo: any;
+  public isLoaded: boolean = false;
 
   constructor(
     private gitApiService: GitApiService,
@@ -35,22 +36,26 @@ export class ProjectsComponent implements OnInit{
   ){}
 
   async ngOnInit() {
-    this.repositories = await this.gitApiService.listRepositories({
-      params: {
-        visibility: 'all',
-        affiliation: 'owner,collaborator,organization_member',
-        per_page: 100,
-      },
-      owner: await this.sessionService.getSession('owner')
-    });
+    try{
+      this.repositories = await this.gitApiService.listRepositories({
+        params: {
+          visibility: 'all',
+          affiliation: 'owner,collaborator,organization_member',
+          per_page: 100,
+        },
+        owner: await this.sessionService.getSession('owner')
+      });
 
-    this.repositories.forEach(async (element: any) => {
-      const read = await this.newIssues(element);
+      this.repositories.forEach(async (element: any) => {
+        const read = await this.newIssues(element);
 
-      element.unread = read;
-    });
-
-    
+        element.unread = read;
+      });
+    }catch(error){
+      console.error(error);
+    }finally{
+      this.isLoaded = true;
+    } 
   }
 
   async newIssues(data: any){

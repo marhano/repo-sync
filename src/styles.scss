@@ -83,6 +83,12 @@ body {
   z-index: 10;
   padding: 1rem 1rem 0;
   background: var(--mat-sys-background);
+
+  &.sticky-collapsed{
+    height: 0 !important;
+    transform: translateY(-500px);
+    padding: 0 !important;
+  }
 }
 
 .mat-select-search-input{
@@ -223,4 +229,30 @@ mat-checkbox .mdc-label{
   background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent black */
   z-index: 99; /* Ensure it appears above other elements */
   display: none; /* Initially hidden */
+}
+
+
+
+//loader
+/* HTML: <div class="loader"></div> */
+.loading-container{
+    min-height: 200px;
+
+    .loader{
+        margin: auto;
+    }
+}
+.loader {
+  color: var(--mat-sys-outline);
+  width: 4px;
+  aspect-ratio: 1;
+  border-radius: 100%;
+  box-shadow: 19px 0 0 7px, 38px 0 0 3px, 57px 0 0 0;
+  transform: translateX(-38px) scale(0.9);
+  animation: l21 .5s infinite alternate linear;
+}
+
+@keyframes l21 {
+  50%  {box-shadow: 19px 0 0 3px, 38px 0 0 7px, 57px 0 0 3px}
+  100% {box-shadow: 19px 0 0 0  , 38px 0 0 3px, 57px 0 0 7px}
 }

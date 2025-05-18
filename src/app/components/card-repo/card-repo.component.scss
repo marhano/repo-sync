@@ -13,18 +13,39 @@
         pointer-events: none;
     }
 
-    .new{
-        background: var(--mat-sys-primary);
-        color: var(--mat-sys-on-primary);
-        padding: 2px 4px;
+    .card-labels{
         position: absolute;
         top: 8px;
         left: 8px;
-        border-radius: 0.2rem;
-        font-size: 12px;
+        display: flex;
+        gap: 2px;
+
+        .unread, .open-issues{
+            background: var(--mat-sys-primary);
+            color: var(--mat-sys-on-primary);
+            padding: 2px 4px;
+            border-radius: 0.2rem;
+            font-size: 12px;
+        }
+
+        .open-issues{
+            background: var(--mat-sys-error);
+        }
     }
 
-    &:hover, &.focus{
+    
+
+    .visibility{
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        font-size: 12px;
+        border: 1px solid var(--mat-sys-outline);
+        border-radius: 8px;
+        padding: 2px 4px;
+    }
+
+    &:not(.selected):hover, &.focus{
         transform: scale(1.03);
         border-radius: 1rem;
         background: var(--mat-sys-outline-variant);
@@ -33,6 +54,7 @@
     &.selected{
         z-index: 100;
         background: var(--mat-sys-background);
+        pointer-events: none;
     }
 
     mat-icon{
@@ -51,13 +73,17 @@
     position: fixed;
     top: 0;
     transform: translateX(100%);
-    transition: all 0.4s ease;
+    transition:
+        transform 0.4s cubic-bezier(0.4,0,0.2,1),
+        opacity 0.4s cubic-bezier(0.4,0,0.2,1),
+        filter 0.4s cubic-bezier(0.4,0,0.2,1);
     box-shadow: 0 4px 6px 2px rgba($color: #000000, $alpha: 0.2);
     z-index: 100;
     border-radius: 24px 0 0 0;
     padding: 56px 16px 0;
     overflow: scroll;
     opacity: 0;
+    filter: blur(8px);
 
     .close-button{
         border: 1px solid var(--mat-sys-outline-variant);
@@ -83,6 +109,12 @@
                 transform: rotateZ(90deg);
             }
         }
+    }
+
+    &.repository-container-open {
+        transform: translateX(0px);
+        opacity: 1;
+        filter: blur(0px);
     }
 }
 

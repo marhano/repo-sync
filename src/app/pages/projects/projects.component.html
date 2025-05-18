@@ -33,7 +33,9 @@
             </div>
         </div>
     </div>
-    <div class="flex-group pb-48 gap-16 flex-wrap h-inherit overflow-scroll p-relative">
-        <app-card-repo [repos]="repositories"></app-card-repo>
+    <div class="flex-group pb-96 gap-16 flex-wrap h-inherit overflow-scroll p-relative loading-container">
+        <app-card-repo *ngIf="isLoaded" [repos]="repositories"></app-card-repo>
+
+        <div *ngIf="!isLoaded" class="loader"></div>
     </div>
 </div>

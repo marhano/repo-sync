@@ -1,11 +1,13 @@
 <div class="container flex-group flex-column gap-16">
-    <div class="flex-group flex-column gap-8">
+    <div class="flex-group flex-column gap-8 loading-container">
         <h3>Recent projects</h3>
-        <app-card-repo [repos]="repositories"></app-card-repo>
-        <a class="align-self-end" href="#">See more...</a>
+        <app-card-repo *ngIf="isLoaded" [hover]="true" [repos]="repositories"></app-card-repo>
+        <!-- <a class="align-self-end" href="#">See more...</a> -->
+
+        <div *ngIf="!isLoaded" class="loader"></div>
     </div>
 
-    <div class="flex-group flex-column gap-8">
+    <div class="flex-group flex-column gap-8 loading-container">
         <h3>New issues</h3>
         <div class="flex-group flex-column gap-8">
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -76,5 +78,6 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
         </div>
+        <div *ngIf="!isLoaded" class="loader"></div>
     </div>
 </div>
