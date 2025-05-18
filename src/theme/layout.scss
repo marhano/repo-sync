@@ -1,5 +1,5 @@
 %spacing {
-  $spaces: 8, 16, 24, 32, 40, 48, 56, 64;
+  $spaces: 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96;
   @each $space in $spaces {
     &.gap-#{$space} {
       gap: $space + px;

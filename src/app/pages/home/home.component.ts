@@ -61,6 +61,8 @@ export class HomeComponent implements OnInit {
   repos!: any[];
   public viewedData: any;
 
+  public isLoaded: boolean = false;
+
   constructor(
     private gitApiService: GitApiService,
     private dialog: MatDialog,
@@ -71,40 +73,47 @@ export class HomeComponent implements OnInit {
   ){}
 
   async ngOnInit(){
-    const token = await this.sessionService.getSession('token');
-    if(token){
-      this.gitApiService.token = token;
-    }else{
-      this.router.navigate(['/login']);
-    }
+    try{
+      const token = await this.sessionService.getSession('token');
+      if(token){
+        this.gitApiService.token = token;
+      }else{
+        this.router.navigate(['/login']);
+      }
 
-    const response = await this.gitApiService.listRepositories({
-      params: {
-        visibility: 'all',
-        affiliation: 'owner,collaborator,organization_member',
-        per_page: 100,
-      },
-      owner: await this.sessionService.getSession('owner')
-    });
-
-    this.repos = response;
-
-    this.filteredRepo.next(this.repos.slice());
-
-    this.repoFilterCtrl.valueChanges
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.filterRepo();
+      const response = await this.gitApiService.listRepositories({
+        params: {
+          visibility: 'all',
+          affiliation: 'owner,collaborator,organization_member',
+          per_page: 100,
+        },
+        owner: await this.sessionService.getSession('owner')
       });
 
-    const savedProject = await this.sessionService.getSession('selectedProject');
-    if(savedProject){
-      this.selectedProject = savedProject;
-      this.dataSource = await this.gitApiService.listRepositoryIssues(savedProject);
-      this.assignees = await this.gitApiService.listAssignees(savedProject);
-    }
+      this.repos = response;
 
-    this.viewedData = await this.sessionService.getSession('viewed') || [];
+      this.filteredRepo.next(this.repos.slice());
+
+      this.repoFilterCtrl.valueChanges
+        .pipe(takeUntil(this._onDestroy))
+        .subscribe(() => {
+          this.filterRepo();
+        });
+
+      const savedProject = await this.sessionService.getSession('selectedProject');
+      if(savedProject){
+        this.selectedProject = savedProject;
+        this.dataSource = await this.gitApiService.listRepositoryIssues(savedProject);
+        this.assignees = await this.gitApiService.listAssignees(savedProject);
+      }
+
+      this.viewedData = await this.sessionService.getSession('viewed') || [];
+    }catch(error) {
+      console.error(error);
+    }finally{
+      this.isLoaded = true;
+    }
+    
   }
 
   async ngAfterViewInit(){

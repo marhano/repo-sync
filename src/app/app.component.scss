@@ -17,7 +17,7 @@ main{
     min-width: 250px;
     user-select: none;
     border-right: 1px solid var(--mat-sys-outline-variant);
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
 
     ul{
         list-style-type: none;
@@ -76,6 +76,11 @@ main{
             font-size: 12px;
             opacity: 0.1;
         }
+    }
+
+    &.sidebar-collapsed{
+        min-width: 0 !important;
+        width: 0 !important;
     }
 }
 

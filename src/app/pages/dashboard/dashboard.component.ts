@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../components/confirmation-dialog/confirmation-dialog.component';
 import { SessionService } from '../../services/session/session.service';
 import { IssueTrackerService } from '../../services/issue-tracker/issue-tracker.service';
+import { CardRepoComponent } from '../../components/card-repo/card-repo.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,21 +25,16 @@ import { IssueTrackerService } from '../../services/issue-tracker/issue-tracker.
     MarkdownModule,
     MatProgressSpinnerModule,
     MatMenuModule,
-    MatTableModule
+    MatTableModule,
+    CardRepoComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
   public repositories: any[] = [];
-  public isHovered: boolean = false;
-  public mouseX: number = 0;
-  public mouseY: number = 0;
-  public readme: any;
-  public hoverDirection: string = 'right'; 
-  public isLoading: boolean = true;
-  public containerWidth: number = 0;
   public viewedData: any;
+  public isLoaded: boolean = false;
 
   public dataSource: any;
   public displayedColumns: string[] = ['issue_number', 'title', 'author', 'assignee', 'actions'];
@@ -56,31 +52,39 @@ export class DashboardComponent {
   }
   
   async ngOnInit() {
-    const response = await this.gitApiService.listRepositories({
-      params: {
-        visibility: 'all',
-        affiliation: 'owner,collaborator,organization_member',
-        per_page: 5,
-        sort: "updated",
-      },
-      owner: await this.sessionService.getSession('owner')
-    });
 
-    console.log(response);
+    try{
+      const response = await this.gitApiService.listRepositories({
+        params: {
+          visibility: 'all',
+          affiliation: 'owner,collaborator,organization_member',
+          per_page: 5,
+          sort: "updated",
+        },
+        owner: await this.sessionService.getSession('owner')
+      });
 
-    this.dataSource = await this.gitApiService.listIssuesAssigned({
-      owner: await this.sessionService.getSession('owner')
-    });
+      console.log(response);
 
-    this.repositories = response;
+      this.dataSource = await this.gitApiService.listIssuesAssigned({
+        owner: await this.sessionService.getSession('owner')
+      });
 
-    this.viewedData = await this.sessionService.getSession('viewed') || [];
+      this.repositories = response;
 
-    this.repositories.forEach(async element => {
-      const read = await this.newIssues(element);
+      this.viewedData = await this.sessionService.getSession('viewed') || [];
 
-      element.unread = read;
-    });
+      this.repositories.forEach(async element => {
+        const read = await this.newIssues(element);
+
+        element.unread = read;
+      });
+    }catch(error){
+      console.error(error);
+    }finally{
+      this.isLoaded = true;
+    }
+    
   }
 
   isViewed(issue: any){
@@ -110,37 +114,6 @@ export class DashboardComponent {
 
   navigateIssue(data: any){
     this.router.navigate(['/issue'], { queryParams: { url: data.url }});
-  }
-
-  async onMouseEnter(item: any){
-    this.isHovered = true;
-    this.isLoading = true;
-
-    try{
-      const response: any = await this.gitApiService.getRepositoryReadme(item.full_name);
-      this.readme = response.content ? atob(response.content) : null;
-    }catch(error){
-      console.error('Error fetching README:', error);
-      this.readme = null;
-    }
-
-    this.isLoading = false;
-    
-  }
-
-  onMouseMove(event: MouseEvent){
-    this.mouseX = event.clientX + 4;
-    this.mouseY = event.clientY + 4;
-
-    const viewportWidth = window.innerWidth;
-
-    this.containerWidth  = this.hoverContainer?.nativeElement.clientWidth || 300;
-    this.hoverDirection = this.mouseX + this.containerWidth > viewportWidth ? 'left' : 'right';
-  }
-
-  onMouseLeave(){
-    this.isHovered = false;
-    this.readme = null
   }
 
   async closeIssue(issue: any){
