@@ -25,9 +25,17 @@
 
     <div class="repository-container pt-48">
         <button (click)="close()" class="close-button"><mat-icon>close</mat-icon></button>
-        <div class="flex-group flex-column gap-8 pt-8">
-            <markdown [data]="selectedRepo?.readme"></markdown>
-        </div>
+        
+        <mat-tab-group mat-stretch-tabs="false" class="mt-16 h-100">
+            <mat-tab label="Documentation">
+                <div class="flex-group flex-column gap-8 pt-8">
+                    <markdown [data]="selectedRepo?.readme"></markdown>
+                </div>
+            </mat-tab>
+            <mat-tab label="Issues"> Content 2 </mat-tab>
+            <mat-tab label="Coming soon" disabled> Content 3 </mat-tab>
+        </mat-tab-group>
+        
     </div>
 
     <div #hoverContainer class="hover-container" *ngIf="isHovered" [ngStyle]="{ 

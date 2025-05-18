@@ -1,9 +1,11 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, ElementRef, inject, Input, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { GitApiService } from '../../services/git-api/git-api.service';
 import { MarkdownModule } from 'ngx-markdown';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NavigationStart, Router } from '@angular/router';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-card-repo',
@@ -11,7 +13,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatIconModule,
     CommonModule,
     MarkdownModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTabsModule
   ],
   templateUrl: './card-repo.component.html',
   styleUrl: './card-repo.component.scss'
@@ -30,8 +33,6 @@ export class CardRepoComponent {
   public hoverDirection: string = 'right'; 
   public isLoading: boolean = true;
   public containerWidth: number = 0;
-
-  
 
   private gitApiService = inject(GitApiService);
 
@@ -71,6 +72,7 @@ export class CardRepoComponent {
       const cardRect = card.getBoundingClientRect();
       const containerLeft = cardRect.right;
       repositoryContainer.style.left = `${containerLeft + 16}px`;
+      repositoryContainer.style.paddingRight = `${containerLeft + 32}px`;
 
       repositoryContainer.classList.add('repository-container-open', 'animating');
     }, 300);
@@ -99,7 +101,10 @@ export class CardRepoComponent {
 
   hideOverlay(){
     const card = document.querySelector('.card.selected') as HTMLElement;
-    const cardParent = card.parentElement?.parentElement?.parentElement as HTMLElement;
+    let cardParent: any;
+    if(card){
+      cardParent = card.parentElement?.parentElement?.parentElement as HTMLElement;
+    }
     const overlay = document.querySelector('.overlay') as HTMLElement;
     const sidebard = document.querySelector('.sidebar') as HTMLElement;
     const sticky = document.querySelector('.sticky') as HTMLElement;
@@ -166,4 +171,5 @@ export class CardRepoComponent {
       this.isLoading = false;
     }    
   }
+
 }
