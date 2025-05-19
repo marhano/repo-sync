@@ -13,6 +13,8 @@ import { SessionService } from '../../services/session/session.service';
 import { GitApiService } from '../../services/git-api/git-api.service';
 import { FormsModule } from '@angular/forms';
 import { ElectronService } from 'ngx-electronyzer';
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+// import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-window-nav-bar',
@@ -23,13 +25,18 @@ import { ElectronService } from 'ngx-electronyzer';
     MatInputModule,
     MatToolbarModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    FontAwesomeModule
   ],
   templateUrl: './window-nav-bar.component.html',
   styleUrl: './window-nav-bar.component.scss'
 })
 export class WindowNavBarComponent {
-  maximizeIcon = signal('crop_square');
+  // public icons: any = {
+  //   faCoffee: faCoffee
+  // }
+
+  maximizeIcon = signal('window-maximize');
   userProfile!: any;
 
   @Input() positionFixed: boolean = false;
@@ -42,16 +49,16 @@ export class WindowNavBarComponent {
 
   constructor(
     private location: Location,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ){
     try{
       if(this.electronService.isElectronApp){
         this.electronService.ipcRenderer.on('unmaximize-window', () => {
-          this.maximizeIcon.set('crop_square');
+          this.maximizeIcon.set('window-maximize');
         });
   
         this.electronService.ipcRenderer.on('maximized-window', () => {
-          this.maximizeIcon.set('filter_none');
+          this.maximizeIcon.set('window-restore');
         });
       }
     }catch(error){

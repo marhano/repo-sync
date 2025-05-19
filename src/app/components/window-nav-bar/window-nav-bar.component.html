@@ -1,24 +1,26 @@
 <div [class.fixed]="positionFixed" class="flex-group space-between window-nav-bar">
     <div class="flex-group">
-        <button mat-icon-button>
-            <mat-icon>menu</mat-icon>
+        <button class="btn">
+            <fa-icon icon="bars"></fa-icon>
         </button>
         <div *ngIf="default" class="flex-group">
-            <button (click)="goBack()" mat-icon-button>
-                <mat-icon>arrow_back</mat-icon>
+            <button class="btn" (click)="goBack()">
+                <fa-icon icon="chevron-left"></fa-icon>
             </button>
-            <button (click)="goForward()" mat-icon-button>
-                <mat-icon>arrow_forward</mat-icon>
+            <button class="btn" (click)="goForward()">
+                <fa-icon icon="chevron-right"></fa-icon>
             </button>
         </div>
     </div>
     <span class="example-spacer"></span>
     <div class="flex-group" *ngIf="default">
-        <button mat-icon-button>
-            <mat-icon>notifications</mat-icon>
+        <button class="btn">
+            <div>
+                <fa-icon icon="bell"></fa-icon>
+            </div>
         </button>
         <div class="profile-menu-container">
-            <button (click)="showProfileMenu($event)" mat-icon-button class="profile-button">
+            <button (click)="showProfileMenu($event)" class="btn profile-button">
                 <img class="user-avatar" src="{{userProfile?.avatar_url}}" alt="">
             </button>
     
@@ -40,13 +42,20 @@
     </div>
     <div class="flex-group">
         <button class="btn" (click)="minimizeWindow()">
-            <mat-icon>minimize</mat-icon>
+            <div>
+                <fa-icon [icon]="['far', 'window-minimize']"></fa-icon>
+            </div>
         </button>
         <button class="btn" (click)="maximizeWindow()">
-            <mat-icon>{{maximizeIcon()}}</mat-icon>
+            <!-- <mat-icon></mat-icon> -->
+            <div>
+                <fa-icon [icon]="['far', maximizeIcon()]"></fa-icon>
+            </div>
         </button>
         <button class="btn window-close" (click)="closeWindow()">
-            <mat-icon>close</mat-icon>
+            <div>
+                <fa-icon icon="xmark"></fa-icon>
+            </div>
         </button>
     </div>
 </div>
