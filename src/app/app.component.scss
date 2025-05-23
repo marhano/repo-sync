@@ -28,6 +28,18 @@ main{
         gap: 0.2rem;
         height: 100%;
 
+        ul{
+            padding: 0;
+
+            li{
+                padding: 0.5rem 0.5rem 0.5rem 2rem;
+
+                &.active{
+                    background: var(--mat-sys-surface-container-highest);
+                }
+            }
+        }
+
         li{
             padding: 0.5rem;
             font-size: 12px;
@@ -40,7 +52,7 @@ main{
             color: var(--mat-sys-on-surface);
 
             &:hover{
-                background: var(--mat-sys-outline-variant);
+                background: var(--mat-sys-surface-container-high);
             }
 
             mat-icon{
@@ -84,6 +96,11 @@ main{
     }
 }
 
+.content {
+    flex: 1; /* Ensures the content takes up the remaining horizontal space */
+    overflow-y: hidden; /* Allows scrolling if content overflows vertically */
+   // padding: 1rem; /* Optional padding for the content area */
+    background: var(--mat-sys-background); /* Optional background color */
+}
 
-  
-  
+

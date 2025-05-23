@@ -102,7 +102,7 @@ export class DashboardComponent {
   async newIssues(data: any){
     const url = this.issueTrackerService.extractRepositoryName(data.url);
     const issueTrackerData = this.viewedData[url.owner][url.repo] || [];
-
+    
     if(!issueTrackerData){
       return data.open_issues;
     } 

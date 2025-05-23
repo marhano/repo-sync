@@ -1,0 +1,114 @@
+.container{
+    height: 100%;
+    width: 100%;
+    overflow: scroll;
+}
+
+.content{
+    overflow: scroll;
+    height: 100%;
+}
+
+aside{
+    min-width: 250px;
+    // border-right: 1px solid var(--mat-sys-outline-variant);
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+
+    ul{
+        padding: 0;
+
+        li{
+            list-style: none;
+
+            a:hover{
+                text-decoration: none;    
+                color: inherit;
+            }
+
+            &:hover{
+                background: var(--mat-sys-surface-container-high);
+                color: var(--mat-sys-on-surface);
+                border-radius: 6px;
+            }
+
+            &.active{
+                background: var(--mat-sys-surface-container);
+                color: var(--mat-sys-on-surface);
+                border-radius: 4px;
+                position: relative;
+
+                &::before{
+                    content: "";
+                    width: 6px;
+                    height: 80%;
+                    background: var(--mat-sys-primary);
+                    display: block;
+                    position: absolute;
+                    top: 50%;
+                    left: -10px;
+                    border-radius: 3px;
+                    transform: translateY(-50%);
+                }
+            }
+        }
+    }
+
+    &.collapsed{
+        width: 0px;
+        min-width: 0px;
+        padding: 0px;
+        overflow: hidden;
+    }
+}
+
+.is-sticky{
+    position: sticky !important;
+    top: 1rem;
+    height: fit-content;
+}
+
+.btn{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 14px 16px;
+    color: var(---mat-sys-on-surface);
+
+    &:hover{
+        background-color: var(--mat-sys-outline-variant);
+        
+        div:has(fa-icon){
+            animation: fa-bounce 1s infinite;
+        }
+
+        div:has(fa-icon[icon="bell"]){
+            animation: fa-shake 1s infinite;
+        }
+
+        
+    }
+}
+
+.collapse-sidebar{
+    background: var(--mat-sys-surface-container-high);
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    border-radius: 8px;
+}
+.uncollapse-sidebar{
+    background: transparent;
+    position: sticky;
+    top: 8px;
+    border-radius: 8px;
+    opacity: 0;
+    pointer-events: none;
+
+    &.show{
+        opacity: 1;
+        pointer-events: all;
+        transition: all 0.2s ease;
+    }
+}

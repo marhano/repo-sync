@@ -12,7 +12,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }), 
     environment.production
     ? provideRouter(routes, withComponentInputBinding(), withHashLocation())
-    : provideRouter(routes, withComponentInputBinding()), 
+    : provideRouter(routes, withComponentInputBinding(), withHashLocation()), 
     provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch()),
     provideMarkdown()

@@ -1,0 +1,108 @@
+<div class="is-flex is-clipped h-100">
+    <aside class="menu is-relative">
+        <button (click)="collpaseSidebar()" class="btn collapse-sidebar"><fa-icon [icon]="['fas', 'caret-left']"></fa-icon></button>
+        <p class="menu-label">Quickstart</p>
+        <ul class="menu-list">
+          <li  [class.active]="active === docs.value()?.title"><a (click)="scrollToSection(docs.value()?.title)">About the {{docs.value()?.title}}</a></li>
+          <li><a>Authentication</a></li>
+        </ul>
+        <p class="menu-label">Endpoints</p>
+        <ul class="menu-list">
+            @for (link of docs.value()?.endpoints; track link.name) {
+                <li [class.active]="active === link.name"><a (click)="scrollToSection(link.name)">{{link.name}}</a></li>
+            }          
+        </ul>
+    </aside>
+
+    <div class="container is-fluid pb-5 content is-relative">
+        <button (click)="collpaseSidebar()" class="btn uncollapse-sidebar"><fa-icon [icon]="['fas', 'caret-right']"></fa-icon></button>
+        <h1 class="is-size-2">API endpoints for {{docs.value()?.title}}</h1>
+        <p class="is-size-5 has-text-grey">{{docs.value()?.description}}</p>
+    
+        <div class="my-5">
+            <h2 class="is-size-4 border-bottom pb-2" #section id="{{docs.value()?.title}}">
+                <a class="heading-link" href="#">About the {{docs.value()?.title}}<fa-icon icon="link"></fa-icon></a>
+            </h2>
+            <p class="is-size-6">{{docs.value()?.about}}</p>
+        </div>
+    
+        <div class="my-5 py-4">
+    
+            @for (endpoint of docs.value()?.endpoints; track endpoint.name) {
+                <div class="pb-8" id="{{endpoint.name}}" #section>
+                    <h2 class="is-size-4 border-bottom mb-0 pb-2">
+                        <a class="heading-link" href="#">{{endpoint.name}} <fa-icon icon="link"></fa-icon></a>
+                    </h2>
+                    <div class="columns">
+                        <div class="column is-half">
+                            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit.</p>
+                            <p>Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. </p>
+                            <p>Tempus leo eu aenean sed diam urna tempor. </p>
+                            <p>Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
+                        
+                            <h3 class="is-size-6">
+                                <a class="heading-link" href="#">Parameters for "{{endpoint.name}}"</a>
+                            </h3>
+                            <div class="py-3">
+                                <h4 class="is-size-7">Query parameters</h4>
+                                @for (param of endpoint.queryParam; track $index) {
+                                    <div class="py-3 border-bottom">
+                                        <div class="is-flex gap-8">
+                                            <code>{{param.name}}</code>
+                                            <span class="property-type">{{param.propertyType}}</span>
+                                            @if (param.required) { <span class="required">Required</span> }
+                                        </div>
+                                        <p>{{param.description}}</p>
+                                    </div>
+                                }
+                            </div>
+                            <h3 class="is-size-6">
+                                <a class="heading-link" href="#">Lorem ipsum dolor sit amet consectetur adipiscing elit.</a>
+                            </h3>
+                            <div class="py-3">
+                                <table>
+                                    <tr class="has-text-left">
+                                      <th class="border-bottom p-2">Status Code</th>
+                                      <th class="border-bottom p-2">Description</th>
+                                    </tr>
+                                    <tr>
+                                      <td class="p-2"><code>200</code></td>
+                                      <td class="p-2">OK</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="column is-half is-sticky">
+                            <h3 class="is-size-6">
+                                <a class="heading-link" href="#">Code samples for "{{endpoint.name}}"</a>
+                            </h3>
+                            <h4 class="is-size-7">Request example</h4>
+                            <div class="markdown-container">
+                                <div class="border-1 p-3 corner-xsm-top">
+                                    <span class="badge is-size-7 mr-2">{{endpoint.type}}</span>
+                                    <span>{{endpoint.url}}</span>
+                                </div>
+                                <mat-tab-group (selectedTabChange)="onTabChange()" class="border-bottom-side corner-xsm-bottom" mat-stretch-tabs="false" animationDuration="300ms">
+                                    @for (response of endpoint.sampleRequest; track $index) {
+                                        <mat-tab [label]="response.lang">
+                                            <pre><code class="lang-javascript is-size-7 text-wrap">{{response.code}}</code></pre>
+                                        </mat-tab>
+                                    }
+                                </mat-tab-group>
+                            </div>
+                            <h4 class="is-size-7">Response</h4>
+                            <mat-tab-group (selectedTabChange)="onTabChange()" class="border-1 corner-1" mat-stretch-tabs="false" animationDuration="300ms">
+                                <mat-tab label="Example response">
+                                    <pre><code class="lang-javascript">{{endpoint.sampleResponse.response}}</code></pre>
+                                </mat-tab>
+                                <mat-tab label="Response schema">
+                                    <pre><code class="lang-javascript is-size-7">{{endpoint.sampleResponse.schema}}</code></pre>
+                                </mat-tab>
+                            </mat-tab-group>
+                        </div>
+                    </div>
+                </div> 
+            }
+        </div>
+    </div>
+</div>

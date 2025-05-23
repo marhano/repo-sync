@@ -32,9 +32,13 @@
               }
             ],
             "styles": [
+              "node_modules/prismjs/themes/prism.css",
               "src/styles.scss"
             ],
             "scripts": [
+              "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/components/prism-javascript.min.js",
+              "node_modules/prismjs/components/prism-bash.min.js"
             ]
           },
           "configurations": {
@@ -49,7 +53,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kB",
-                  "maximumError": "2MB"
+                  "maximumError": "4MB"
                 },
                 {
                   "type": "anyComponentStyle",

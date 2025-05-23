@@ -25,6 +25,10 @@ export const routes: Routes = [
         path: 'projects',
         loadComponent: () => import('./pages/projects/projects.component').then(c => c.ProjectsComponent)
     },
+    {
+        path: 'api-docs/:id',
+        loadComponent: () => import('./pages/api-docs/api-docs.component').then(c => c.ApiDocsComponent)
+    },
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { 
         path: '**', 
