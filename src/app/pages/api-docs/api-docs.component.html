@@ -40,15 +40,18 @@
                             <p>Tempus leo eu aenean sed diam urna tempor. </p>
                             <p>Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
                         
-                            <h3 class="is-size-6">
-                                <a class="heading-link" href="#">Parameters for "{{endpoint.name}}"</a>
-                            </h3>
-                            <div class="py-3">
-                                <h4 class="is-size-7">Query parameters</h4>
+                            @if (endpoint.queryParam.length > 0){ 
+                                <h3 class="is-size-6"> 
+                                    <a class="heading-link" href="#">Parameters for "{{endpoint.name}}"</a>
+                                </h3>
+                            }
+                            @if(endpoint.queryParam.length > 0){
+                                <div class="py-3">
+                                    <h4 class="is-size-7">Query parameters</h4>
                                 @for (param of endpoint.queryParam; track $index) {
                                     <div class="py-3 border-bottom">
                                         <div class="is-flex gap-8">
-                                            <code>{{param.name}}</code>
+                                            <code class="highlight">{{param.name}}</code>
                                             <span class="property-type">{{param.propertyType}}</span>
                                             @if (param.required) { <span class="required">Required</span> }
                                         </div>
@@ -56,8 +59,10 @@
                                     </div>
                                 }
                             </div>
+                            }
+                            
                             <h3 class="is-size-6">
-                                <a class="heading-link" href="#">Lorem ipsum dolor sit amet consectetur adipiscing elit.</a>
+                                <a class="heading-link" href="#">HTTP response status code for "{{endpoint.name}}"</a>
                             </h3>
                             <div class="py-3">
                                 <table>
@@ -80,7 +85,7 @@
                             <div class="markdown-container">
                                 <div class="border-1 p-3 corner-xsm-top">
                                     <span class="badge is-size-7 mr-2">{{endpoint.type}}</span>
-                                    <span>{{endpoint.url}}</span>
+                                    <span><code>{{endpoint.url}}</code></span>
                                 </div>
                                 <mat-tab-group (selectedTabChange)="onTabChange()" class="border-bottom-side corner-xsm-bottom" mat-stretch-tabs="false" animationDuration="300ms">
                                     @for (response of endpoint.sampleRequest; track $index) {

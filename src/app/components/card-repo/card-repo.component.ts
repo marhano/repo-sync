@@ -129,6 +129,8 @@ export class CardRepoComponent {
 
     overlay.style.display = 'none';
 
+
+    console.log(card);
     card.classList.remove('selected');
     card.style.order = '0';
 
