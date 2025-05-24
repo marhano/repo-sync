@@ -6,6 +6,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NavigationStart, Router } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
+import e from 'cors';
 
 @Component({
   selector: 'app-card-repo',
@@ -47,10 +48,19 @@ export class CardRepoComponent {
     const cards = document.querySelectorAll('.card');
     const sidebard = document.querySelector('.sidebar') as HTMLElement;
     const sticky = document.querySelector('.sticky') as HTMLElement;
+    const container = document.querySelectorAll('.container');
 
     cards.forEach((element) => {
       element.classList.remove('selected', 'focus', 'animating' );
       (element as HTMLElement).style.order = '0';
+    });
+
+    container.forEach((element) => {
+      if((element as HTMLElement).style.margin !== '0px'){
+        (element as HTMLElement).style.margin = '0px';
+      }else{
+        (element as HTMLElement).style.margin = '0px auto';
+      }
     });
 
     sidebard.classList.add('sidebar-collapsed');
@@ -109,9 +119,18 @@ export class CardRepoComponent {
     const sidebard = document.querySelector('.sidebar') as HTMLElement;
     const sticky = document.querySelector('.sticky') as HTMLElement;
     const repositoryContainer = document.querySelector('.repository-container') as HTMLElement;
+    const container = document.querySelectorAll('.container');
+
+    container.forEach((element) => {
+      if((element as HTMLElement).style.margin === '0px'){
+        (element as HTMLElement).style.margin = '0px auto';
+      }
+    });
 
     overlay.style.display = 'none';
 
+
+    console.log(card);
     card.classList.remove('selected');
     card.style.order = '0';
 

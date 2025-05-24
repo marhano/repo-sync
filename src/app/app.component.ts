@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, resource } from '@angular/core';
 import { GitApiService } from './services/git-api/git-api.service';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ElectronService } from 'ngx-electronyzer';
@@ -36,6 +36,12 @@ export class AppComponent {
   title = 'repo-sync';
   public showSidebar: boolean = true; 
   public appVersion = environment.APP_VERSION;
+
+  private gitApiService = inject(GitApiService);
+  
+  docsResource = resource({
+    loader: () => this.gitApiService.getApiDocs()
+  });
  
   constructor(
     private electronService: ElectronService,
@@ -74,10 +80,18 @@ export class AppComponent {
     this.showSidebar = !excludedRoutes.includes(`/${path}`);
   }
 
+  transformItemName(item: string): string {
+    return item
+      .replace('.json', '') // Remove the .json extension
+      .replace(/-/g, ' ') // Replace hyphens with spaces
+      .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize each word
+  }
+
   async ngAfterViewInit(){
+
     //const user = await this.gitApiService.getAuthUserInformation();
     // Set default repo owner
-    this.sessionService.setSession({ owner: 'sddteam' });
+    this.sessionService.setSession({ owner: 'marhano' });
     const mode = await this.sessionService.getSession('darkMode');
     const theme = await this.sessionService.getSession('theme');
 

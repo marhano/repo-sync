@@ -128,4 +128,44 @@ export class GitApiService {
     }))
   }
 
+ async getApiDocs() {
+  const url = `${this.baseUrl}/repos/marhano/api-docs/contents/docs`;
+
+  try {
+    // Fetch the list of files in the 'docs' folder
+    const result: any[] = await lastValueFrom(this.http.get<any[]>(url, { headers: await this.getHeaders() }));
+
+    // Filter for JSON files
+    const jsonFiles = result.filter((item) => item.type === 'file' && item.name.endsWith('.json'));
+
+    if (jsonFiles.length > 0) {
+      
+      const docs: any[] = [];
+
+      for (const element of jsonFiles) {
+        docs.push(element.name);
+      }
+      // Fetch the contents of the first JSON file
+
+
+      return docs;
+    } else {
+      console.warn('No JSON files found in the specified folder.');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching API docs:', error);
+    throw error; // Re-throw the error for further handling
+  }
+}
+
+async getApiDocFile(name: string){
+  const url = `${this.baseUrl}/repos/marhano/api-docs/contents/docs/${name}`;
+  return lastValueFrom(this.http.get(url, { headers: await this.getHeaders() })).then((response: any) => {
+    const decodedContent = atob(response.content);
+
+    return JSON.parse(decodedContent);
+  });
+}
+
 }

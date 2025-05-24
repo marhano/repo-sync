@@ -1,17 +1,26 @@
 
 <main>
     <app-window-nav-bar class="navbar"></app-window-nav-bar>
-    <div class="flex-group h-100">
+    <div class="flex-group flex-1 h-100">
         <nav class="sidebar" *ngIf="showSidebar">
             <ul>
                 <li routerLink="/dashboard" routerLinkActive="active" ariaCurrentWhenActive="page"><fa-icon icon="gauge"></fa-icon> Dashboard</li>
                 <li routerLink="/projects" routerLinkActive="active" ariaCurrentWhenActive="page"><fa-icon icon="layer-group"></fa-icon> Projects</li>
                 <li routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page"><fa-icon icon="bug"></fa-icon> Issues</li>
-            
+                <li routerLinkActive="active" ariaCurrentWhenActive="page"><fa-icon icon="book"></fa-icon> API Docs<fa-icon class="ml-auto" icon="chevron-down"></fa-icon></li>
+                <ul>
+                    @for (item of docsResource.value(); track $index) {
+                        <li routerLink="/api-docs/{{item}}" routerLinkActive="active" ariaCurrentWhenActive="page">
+                            {{ transformItemName(item) }}
+                        </li>
+                    }
+                </ul>
                 <span>{{appVersion}}</span>
             </ul>
         </nav>
-        <router-outlet></router-outlet>
+        <div class="content">
+            <router-outlet></router-outlet>
+        </div>
     </div>
 </main>
 
