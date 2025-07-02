@@ -8,7 +8,6 @@
 @use "bulma/sass/helpers";
 @use "bulma/sass/layout";
 @use "bulma/sass/grid";
-@use "bulma/sass/components";
 
 @import "prismjs/themes/prism-twilight.css";
 @import "prismjs/plugins/line-highlight/prism-line-highlight.css";
@@ -208,6 +207,10 @@ mat-checkbox .mdc-label{
 
 .container{
   background: var(--mat-sys-background);
+}
+
+.bg-medium{
+  background-color: var(--mat-sys-surface-container-lowest);
 }
 
 .small-button {

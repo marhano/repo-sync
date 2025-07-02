@@ -44,3 +44,5 @@ Thumbs.db
 .env.keys
 /out
 /environments
+
+*storybook.log

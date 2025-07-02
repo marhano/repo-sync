@@ -32,7 +32,7 @@ export class ApiDocsComponent {
 
   private gitApiService = inject(GitApiService);
 
-  async ngAfterViewInit() {
+  async ngOnInit() {
     setTimeout(() => {
       Prism.highlightAll();
     }, 200);

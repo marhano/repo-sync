@@ -1,0 +1,25 @@
+<aside class="menu">
+    @for (items of model; track $index) {
+        <ul class="menu-list">
+            @for (item of items.items; track $index) {
+                <li 
+                    class="menu-item" 
+                    >
+                    <a 
+                        (click)="openAccordion($event)" 
+                        [routerLink]="item.link" 
+                        routerLinkActive="active"
+                        >
+                        <fa-icon [icon]="item.icon"></fa-icon>
+                        <span>{{item.label}}</span>
+                    </a>
+                    <ul class="menu-submenu">
+                        @for (submenu of item.items; track $index) {
+                            <li class="submenu-item">{{submenu.label}}</li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+    }
+</aside>

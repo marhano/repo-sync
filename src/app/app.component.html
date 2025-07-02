@@ -2,6 +2,53 @@
 <main>
     <app-window-nav-bar class="navbar"></app-window-nav-bar>
     <div class="flex-group flex-1 h-100">
+        <!-- <app-menu 
+            [model]="[
+        {
+          items: [
+            {
+              label: 'Dashboard',
+              icon: ['fas', 'gauge'],
+              link: '/dashboard',
+            },
+            {
+              label: 'Projects',
+              icon: ['fas', 'layer-group'],
+              link: '/projects',
+            },
+            {
+              label: 'Issues',
+              icon: ['fas', 'bug'],
+              link: '/home',
+            },
+            {
+              label: 'Documentation',
+              icon: ['fas', 'book'],
+              items: [
+                {
+                  label: 'API Documentation',
+                  icon: [],
+                  link: '',
+                },
+                {
+                  label: 'User Guide',
+                  icon: [],
+                  link: '',
+                }
+              ]
+            }
+          ],
+        },
+        {
+          items: [
+            {
+              label: 'Sign Out',
+              icon: ['fas', 'right-from-bracket'],
+              link: '/sign-out',
+            }
+          ]
+        }
+      ]"></app-menu> -->
         <nav class="sidebar" *ngIf="showSidebar">
             <ul>
                 <li routerLink="/dashboard" routerLinkActive="active" ariaCurrentWhenActive="page"><fa-icon icon="gauge"></fa-icon> Dashboard</li>

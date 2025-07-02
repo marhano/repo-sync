@@ -1,0 +1,94 @@
+.menu{
+    min-width: 250px;
+    max-width: 250px;
+    padding: 1rem;
+
+    .menu-list{
+        padding: 0;
+
+        li{
+            list-style: none;
+            cursor: pointer;
+            
+        }
+        .menu-item{
+            color: var(--mat-sys-on-background);
+            transition: all 0.2s ease;
+           
+            a{
+                text-decoration: none;
+                display: block;
+                padding: 0.5rem;
+
+                span{
+                    pointer-events: none;
+                }
+
+                fa-icon{
+                    pointer-events: none;
+                    margin-right: 0.5rem;
+                }
+
+                &:hover{
+                    background: var(--mat-sys-surface-container-high);
+                    color: var(--mat-sys-on-surface);
+                    border-radius: 6px;
+                }
+
+                &.active{
+                    background: var(--mat-sys-surface-container);
+                    color: var(--mat-sys-on-surface);
+                    border-radius: 4px;
+                    position: relative;
+    
+                    &::before{
+                        content: "";
+                        width: 6px;
+                        height: 80%;
+                        background: var(--mat-sys-primary);
+                        display: block;
+                        position: absolute;
+                        top: 50%;
+                        left: -10px;
+                        border-radius: 3px;
+                        transform: translateY(-50%);
+                    }
+                }
+            }           
+        }
+
+        .menu-submenu{
+            padding: 0;
+            overflow: hidden;
+            transition: all 0.2s ease;
+            height: 0;
+
+            li{
+                padding: 0.3rem 0.3rem 0.3rem 1.5rem;
+                color: var(--mat-sys-surface-container-highest);
+                position: relative;
+
+                &::before{
+                    content: "";
+                    width: 1px;
+                    height: 100%;
+                    background: var(--mat-sys-surface-container-highest);
+                    display: block;
+                    position: absolute;
+                    left: 0.4rem;
+                    top: 0;
+                    transition: background 0.2s ease;
+                }
+
+                &:hover::before{
+                    background: var(--mat-sys-primary);
+                }
+            }
+        }
+
+        &:not(:last-child){
+            border-bottom: 1px solid var(--mat-sys-outline-variant);
+            padding-bottom: 1rem;
+        }
+    }
+}

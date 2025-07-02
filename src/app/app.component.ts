@@ -13,6 +13,7 @@ import { environment } from '../environments/environment';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
+import { MenuComponent } from './components/menu/menu.component';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,8 @@ import { far } from '@fortawesome/free-regular-svg-icons';
     WindowNavBarComponent,
     MatIconModule,
     CommonModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MenuComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
